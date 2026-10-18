@@ -1,0 +1,81 @@
+# themes/diagram-mono.yaml — black on white for documentation
+#
+# Diagram theme. See themes/README.md for what this layer controls.
+# Deliberately colourless so diagrams print cleanly in documentation, on
+# monochrome printers and in accessibility-first contexts. Emphasis comes from
+# stroke width and dash, never hue. Hex values are PLACEHOLDERS only in the
+# sense that the greys may be tuned; the intent is fixed.
+
+name: mono
+description: Black on white with no colour; emphasis by weight and dash only.
+
+palette:
+  black:  "#000000"
+  ink:    "#111111"
+  dark:   "#444444"
+  mid:    "#888888"
+  light:  "#CCCCCC"
+  paper:  "#FFFFFF"
+  tint:   "#F2F2F2"
+
+fonts:
+  label: "Inter, system-ui, sans-serif"
+  mono:  "JetBrains Mono, monospace"
+
+grid:
+  size: 20
+  color: "#EEEEEE"
+  visible: false
+
+exportBackground: "#FFFFFF"   # what export paints behind the drawing
+canvasBackground: "#FFFFFF"   # what the editor paints behind the drawing
+
+nodes:
+  default:    { fill: "#FFFFFF", stroke: "#111111", strokeWidth: 1.5, textColor: "#111111" }
+  # flowchart
+  process:    { fill: "#FFFFFF", stroke: "#111111", strokeWidth: 1.5, textColor: "#111111" }
+  decision:   { fill: "#FFFFFF", stroke: "#111111", strokeWidth: 1.5, textColor: "#111111" }
+  terminal:   { fill: "#111111", stroke: "#111111", strokeWidth: 1.5, textColor: "#FFFFFF" }
+  io:         { fill: "#F2F2F2", stroke: "#111111", strokeWidth: 1.5, textColor: "#111111" }
+  subprocess: { fill: "#FFFFFF", stroke: "#111111", strokeWidth: 2.5, textColor: "#111111" }
+  # architecture
+  service:    { fill: "#FFFFFF", stroke: "#111111", strokeWidth: 1.5, textColor: "#111111" }
+  database:   { fill: "#F2F2F2", stroke: "#111111", strokeWidth: 1.5, textColor: "#111111" }
+  queue:      { fill: "#F2F2F2", stroke: "#111111", strokeWidth: 1.5, textColor: "#111111" }
+  actor:      { fill: "#FFFFFF", stroke: "#111111", strokeWidth: 1.5, textColor: "#111111" }
+  external:   { fill: "#FFFFFF", stroke: "#444444", strokeWidth: 1.5, textColor: "#444444", dash: dashed }
+  # shared
+  note:       { fill: "#FFFFFF", stroke: "#888888", strokeWidth: 1,   textColor: "#444444", dash: dotted }
+  container:  { fill: "#FFFFFF", stroke: "#444444", strokeWidth: 1,   textColor: "#444444", dash: dashed }
+  # swimlane
+  pool:       { fill: "#FFFFFF", stroke: "#111111", strokeWidth: 2,   textColor: "#111111" }
+  lane:       { fill: "#FFFFFF", stroke: "#444444", strokeWidth: 1,   textColor: "#111111" }
+  text:       { fill: "transparent", stroke: "transparent", strokeWidth: 0, textColor: "#111111" }
+  image:      { fill: "transparent", stroke: "transparent", strokeWidth: 0, textColor: "#111111" }
+  sticky:     { fill: "#F2F2F2", stroke: "#888888", strokeWidth: 1, textColor: "#111111" }
+  # org chart
+  role:       { fill: "#FFFFFF", stroke: "#111111", strokeWidth: 1.5, textColor: "#111111" }
+  executive:  { fill: "#FFFFFF", stroke: "#111111", strokeWidth: 2.5, textColor: "#111111" }
+  assistant:  { fill: "#F2F2F2", stroke: "#444444", strokeWidth: 1.5, textColor: "#444444" }
+  vacancy:    { fill: "transparent", stroke: "#888888", strokeWidth: 1.5, textColor: "#444444", dash: dashed }
+  # sequence (actor is shared with architecture)
+  participant: { fill: "#FFFFFF", stroke: "#111111", strokeWidth: 1.5, textColor: "#111111" }
+  fragment:    { fill: "transparent", stroke: "#888888", strokeWidth: 1.5, textColor: "#444444" }
+
+edges:
+  default:       { stroke: "#111111", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: arrow }
+  flow:          { stroke: "#111111", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: arrow }
+  data:          { stroke: "#111111", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: open }
+  dependency:    { stroke: "#444444", strokeWidth: 1.5, dash: dashed, arrowStart: none, arrowEnd: open }
+  association:   { stroke: "#444444", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: none }
+  dotted-report: { stroke: "#444444", strokeWidth: 1.5, dash: dashed, arrowStart: none, arrowEnd: none }
+  message-flow:     { stroke: "#111111", strokeWidth: 1.5, dash: dashed, arrowStart: circle, arrowEnd: open }
+  bpmn-association: { stroke: "#444444", strokeWidth: 1.5, dash: dotted, arrowStart: none, arrowEnd: none }
+  data-association: { stroke: "#444444", strokeWidth: 1.5, dash: dotted, arrowStart: none, arrowEnd: open }
+  sync:             { stroke: "#111111", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: arrow }
+  async:            { stroke: "#111111", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: open }
+  return:           { stroke: "#111111", strokeWidth: 1.5, dash: dashed, arrowStart: none, arrowEnd: open }
+  create:           { stroke: "#111111", strokeWidth: 1.5, dash: dashed, arrowStart: none, arrowEnd: open }
+  destroy:          { stroke: "#111111", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: arrow }
+  note:             { stroke: "#111111", strokeWidth: 1,   dash: solid,  arrowStart: none, arrowEnd: none }
+  interaction-use:  { stroke: "#111111", strokeWidth: 1,   dash: solid,  arrowStart: none, arrowEnd: none }

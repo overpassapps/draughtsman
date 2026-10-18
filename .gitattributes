@@ -1,0 +1,10 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff2 binary
+*.gz binary
+# The upgrade fixtures are tarballs and dumps of throwaway data: never let a checkout rewrite a byte of them (tests/upgrade-fixtures/README.md).
+tests/upgrade-fixtures/** -text
+# The official JSON-Schema-Test-Suite files are third-party test data copied verbatim (tests/Draughtsman.Core.Tests/JsonSchemaTestSuite/README.md): keep every byte, trailing spaces included.
+tests/Draughtsman.Core.Tests/JsonSchemaTestSuite/** -text -whitespace

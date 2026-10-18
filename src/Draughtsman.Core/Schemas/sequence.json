@@ -1,0 +1,121 @@
+{
+  "type": "sequence",
+  "description": "Sequence diagram: participants (nodes) send messages (edges) to each other over time. THE ORDER OF THE EDGES ARRAY IS TIME ORDER: the first edge is the first message and the last edge the last, so write messages top to bottom exactly as they happen, and insert a message mid-stream by inserting the edge at that position (patch_document addEdge takes before/after, moveEdge reorders). THE ORDER OF THE NODES ARRAY IS LEFT-TO-RIGHT ORDER of the lifelines. No positions are stored or needed: every node's geometry and every message's y are derived from those two orders each time the diagram is drawn, so write nodes and edges without '@ x,y', style or routing. A message whose from and to are the same participant is a self message, drawn as a small loop. Write the DSL like: `node p_web participant \"Web app\"`, `node p_api participant \"Orders API\"`, `edge m_1 sync p_web -> p_api \"POST /orders\" activate=true`, `edge m_2 return p_api -> p_web \"201 Created\" deactivate=true` (string prop values are quoted; booleans are not). For a combined fragment (alt, opt, loop, par, ...) add a node of kind `fragment` and put `in=\"<fragment id>\"` (and `operand=<index>` for an else/and branch) on each MESSAGE that belongs to it, e.g. `node f_1 fragment \"alt\" operator=\"alt\" operands=[\"[card ok]\",\"[declined]\"]`, `edge m_3 sync p_api -> p_pay \"charge\" in=\"f_1\" operand=0`, `edge m_5 async p_api -> p_web \"declined\" in=\"f_1\" operand=1`; the frame is drawn around its members, so keep them next to each other in the edge order and never store a fragment's extent. A `note` edge is a row holding text across the participants from its `from` to its `to`; an `interaction-use` edge is a `ref` frame across them, its label the name of another interaction that runs there (`edge u_1 interaction-use p_web -> p_api \"Authenticate\"`); a `create` message makes its target's header appear at that row (the participant does not exist above it) and a `destroy` message ends its target's lifeline with an X.",
+  "nodeKinds": [
+    {
+      "name": "participant",
+      "description": "A lifeline: a service, component or system taking part in the interaction, drawn as a box with a dashed line down from it. Node order is left-to-right order.",
+      "defaultShape": "rectangle"
+    },
+    {
+      "name": "actor",
+      "description": "A person or role that starts or takes part in the interaction; same lifeline as a participant, drawn as a UML stick figure with its name beside it (whatever shape it stores).",
+      "defaultShape": "rounded"
+    },
+    {
+      "name": "fragment",
+      "description": "A combined fragment: a labelled frame around a run of messages (alt, opt, loop, par, break, critical, ...). It is not a lifeline and takes no column; the frame is derived from the messages that name it, so a fragment with no member message draws as an empty one-row frame (critique flags it). Membership is written on each message with in=\"<this id>\" (and operand=<index> to pick a guard), never here. Nest a fragment in another by setting its parent to the outer fragment's id (and operand=<index> on it to say which operand of the outer one it sits in). Write it like `node f_1 fragment \"alt\" operator=\"alt\" operands=[\"[card ok]\",\"[declined]\"]`.",
+      "defaultShape": "rectangle",
+      "props": {
+        "operator": "the frame's tab text: alt, opt, loop, par, break, critical, neg, assert, ref, seq or strict (any other text is allowed but critique warns unknown-fragment); defaults to the label",
+        "operands": "array of guard strings, one per operand, e.g. [\"card ok\",\"declined\"] (the brackets are drawn, not stored) for an alt with an else; a message's operand=<index> picks one; opt, loop and break have one",
+        "operand": "only when this fragment is nested in another: the index of the outer fragment's operand it sits in (default: the operand of the outer fragment's preceding message)"
+      }
+    }
+  ],
+  "edgeKinds": [
+    {
+      "name": "sync",
+      "description": "A synchronous message or call: the sender waits for the reply. Solid line, filled arrowhead. Edge order is time order.",
+      "defaultStyle": {
+        "dash": "solid",
+        "arrowEnd": "arrow"
+      },
+      "props": {
+        "activate": "true starts an activation bar on the receiver (to) at this message; pair it with a later deactivate",
+        "deactivate": "true ends the sender's (from) innermost open activation bar at this message; put it on the reply that finishes the work",
+        "in": "the id of the fragment node this message is a member of (a quoted string); leave it off for a message outside every fragment",
+        "operand": "which of that fragment's operands the message is under, a whole number from 0 (default 0); a new operand starts a new guard and a dashed divider"
+      }
+    },
+    {
+      "name": "async",
+      "description": "An asynchronous message (fire and forget, an event, a queue publish): the sender carries on without waiting. Solid line, open arrowhead. Edge order is time order.",
+      "defaultStyle": {
+        "dash": "solid",
+        "arrowEnd": "open"
+      },
+      "props": {
+        "activate": "true starts an activation bar on the receiver (to) at this message; pair it with a later deactivate",
+        "deactivate": "true ends the sender's (from) innermost open activation bar at this message",
+        "in": "the id of the fragment node this message is a member of (a quoted string); leave it off for a message outside every fragment",
+        "operand": "which of that fragment's operands the message is under, a whole number from 0 (default 0); a new operand starts a new guard and a dashed divider"
+      }
+    },
+    {
+      "name": "return",
+      "description": "A reply to an earlier message, drawn from the responder back to the caller. Dashed line, open arrowhead. Edge order is time order.",
+      "defaultStyle": {
+        "dash": "dashed",
+        "arrowEnd": "open"
+      },
+      "props": {
+        "activate": "true starts an activation bar on the receiver (to) at this message; rarely wanted on a reply",
+        "deactivate": "true ends the sender's (from) innermost open activation bar at this message; the usual way to close the bar an earlier message opened",
+        "in": "the id of the fragment node this message is a member of (a quoted string); leave it off for a message outside every fragment",
+        "operand": "which of that fragment's operands the message is under, a whole number from 0 (default 0); a new operand starts a new guard and a dashed divider"
+      }
+    },
+    {
+      "name": "note",
+      "description": "A note: a row of text drawn as a box across the lifelines from `from` (the first participant it covers) to `to` (the last; the same participant for a note over one lifeline), at its place in the edge order. Not an arrow: it has no activation and no arrowhead. The label is the note text (one line). It can sit inside a fragment like a message.",
+      "defaultStyle": {
+        "dash": "solid",
+        "arrowEnd": "none"
+      },
+      "props": {
+        "in": "the id of the fragment node this message is a member of (a quoted string); leave it off for a message outside every fragment",
+        "operand": "which of that fragment's operands the message is under, a whole number from 0 (default 0); a new operand starts a new guard and a dashed divider"
+      }
+    },
+    {
+      "name": "interaction-use",
+      "description": "An interaction use: a `ref` frame across the lifelines from `from` (the first participant it covers) to `to` (the last; the same participant for one lifeline), at its place in the edge order, standing for another interaction (a whole other sequence diagram) that runs at this point. The label is the NAME of the interaction it refers to (one line, e.g. `Authenticate`). Not an arrow: it has no activation and no arrowhead. It can sit inside a fragment like a message.",
+      "defaultStyle": {
+        "dash": "solid",
+        "arrowEnd": "none"
+      },
+      "props": {
+        "in": "the id of the fragment node this message is a member of (a quoted string); leave it off for a message outside every fragment",
+        "operand": "which of that fragment's operands the message is under, a whole number from 0 (default 0); a new operand starts a new guard and a dashed divider"
+      }
+    },
+    {
+      "name": "create",
+      "description": "A message that creates its target: the receiver's header is drawn at this row and its lifeline starts there, so no earlier message should touch it. Dashed line, open arrowhead, ending at the header's edge. Use it for `new Foo()`. Only the first create for a participant creates it.",
+      "defaultStyle": {
+        "dash": "dashed",
+        "arrowEnd": "open"
+      },
+      "props": {
+        "activate": "true starts an activation bar on the receiver (to) under its header",
+        "deactivate": "true ends the sender's (from) innermost open activation bar at this message",
+        "in": "the id of the fragment node this message is a member of (a quoted string); leave it off for a message outside every fragment",
+        "operand": "which of that fragment's operands the message is under, a whole number from 0 (default 0); a new operand starts a new guard and a dashed divider"
+      }
+    },
+    {
+      "name": "destroy",
+      "description": "A message that destroys its target: the receiver's lifeline ends here with an X and any activation bar still open on it ends too. Solid line, filled arrowhead. Use it for `close()` or `delete`. Only the first destroy for a participant ends it.",
+      "defaultStyle": {
+        "dash": "solid",
+        "arrowEnd": "arrow"
+      },
+      "props": {
+        "deactivate": "true ends the sender's (from) innermost open activation bar at this message",
+        "in": "the id of the fragment node this message is a member of (a quoted string); leave it off for a message outside every fragment",
+        "operand": "which of that fragment's operands the message is under, a whole number from 0 (default 0); a new operand starts a new guard and a dashed divider"
+      }
+    }
+  ]
+}

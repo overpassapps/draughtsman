@@ -1,0 +1,82 @@
+<mxfile host="app.diagrams.net" modified="2026-09-30T09:31:02.000Z" agent="Mozilla/5.0" etag="Vb4tR7nM1kXc9Ee2Zq0w" version="24.7.17" type="device">
+  <diagram id="Pm1dK6uY3oHs8Bz4Tx7q" name="Edges">
+    <mxGraphModel dx="1100" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="A" value="A" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="B" value="B" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="40" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="C" value="C" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="200" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="D" value="D" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="200" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="X" value="Zone" style="swimlane;whiteSpace=wrap;html=1;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="480" y="40" width="240" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="X1" value="Inside" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="X">
+          <mxGeometry x="60" y="80" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="go" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="A" target="B">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="160" y="20" />
+              <mxPoint x="260" y="20" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" value="" style="endArrow=open;html=1;dashed=1;strokeColor=#FF0000;strokeWidth=2;rounded=0;" edge="1" parent="1" source="B" target="C">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2-label" value="&lt;i&gt;retry&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="e2">
+          <mxGeometry x="-0.2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="C" target="D">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="curved link" style="curved=1;endArrow=oval;endFill=1;startArrow=diamondThin;startFill=0;html=1;" edge="1" parent="1" source="D" target="A">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="20" y="150" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" value="1..*" style="endArrow=ERoneToMany;startArrow=ERmandOne;endFill=0;startFill=0;html=1;" edge="1" parent="1" source="A" target="C">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="" style="endArrow=block;endFill=0;html=1;rounded=0;" edge="1" parent="1" source="C" target="X">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" value="straight with bends" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="X1" target="B">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="420" y="290" />
+              <mxPoint x="420" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8" value="loose end" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="A">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="80" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9" value="to nowhere" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="D" target="does-not-exist">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" value="box head" style="endArrow=box;startArrow=halfCircle;html=1;rounded=0;" edge="1" parent="1" source="B" target="X1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" value="to itself" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="D" target="D">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

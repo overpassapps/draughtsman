@@ -1,0 +1,83 @@
+{
+  "provider": "postgres",
+  "files": [
+    {
+      "path": "ai/settings.json",
+      "size": 334,
+      "sha256": "44093266536e5784135754ac3ae768e4bb68a7b6e1e2cb413989a77fe14a9d2d"
+    },
+    {
+      "path": "assets/3b/3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e.png",
+      "size": 88,
+      "sha256": "3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e"
+    },
+    {
+      "path": "branding/branding.json",
+      "size": 134,
+      "sha256": "8c9e67cb9db7131d05cd7773df124d81801ad4d2ab552e7b153829ce51273309"
+    },
+    {
+      "path": "branding/favicon.png",
+      "size": 79,
+      "sha256": "6432a7a1adf1f205fbe8831e08b57a72ae05ba5470e7953da5aacdd18788cf2d"
+    },
+    {
+      "path": "branding/logo-light.svg",
+      "size": 174,
+      "sha256": "a0dda6e0c1b0742e7d4f9e38ef5a76e101300538ee3d46baf0193d01b52c2f84"
+    },
+    {
+      "path": "branding/logo.png",
+      "size": 99,
+      "sha256": "b4c18a5be60fe1c811be5c7fc0b83ade087bb22e56ba21204f817c33bf06e143"
+    },
+    {
+      "path": "draughtsman.yaml",
+      "size": 261,
+      "sha256": "062a0433b372494c7d315d1ad800553803ad966ef741b6ec823d75b6978c7d17"
+    },
+    {
+      "path": "keys/key-fe684ff7-ec73-4a8b-888c-91d782122519.xml",
+      "size": 1418,
+      "sha256": "64b655c751259ac5e32f0c980b843c56591dea0bca1389b5dfbf3b1ae5eefc06"
+    },
+    {
+      "path": "licence.key",
+      "size": 375,
+      "sha256": "a69cc3155ea4ef89091c755ee8d985c697b95cc039517acebf2b2333d9d4e710"
+    },
+    {
+      "path": "themes/org/_settings.json",
+      "size": 39,
+      "sha256": "e98de673ece3d143015df690b6809cb7b6bebddfe8406ae5d8fe0e8904fdee59"
+    },
+    {
+      "path": "themes/org/fixture-second-theme-throwaway.yaml",
+      "size": 611,
+      "sha256": "a4817cdbc3b7679d231c6082771deb1af8168ed116698f6a3adc5decf682866c"
+    },
+    {
+      "path": "themes/org/fixture-theme-throwaway.yaml",
+      "size": 664,
+      "sha256": "fb4c20120c2e4ec57fbaa7ab6f52d127343539e943472b68b6a417f871bc4bd1"
+    }
+  ],
+  "migrations": [
+    "20260921080136_Initial",
+    "20260929083332_Assets",
+    "20260929094225_AddAuth",
+    "20260929101734_AddAuditActorUserId"
+  ],
+  "rowCounts": {
+    "__EFMigrationsHistory": 4,
+    "api_tokens": 5,
+    "assets": 1,
+    "audit": 16,
+    "document_versions": 6,
+    "documents": 9,
+    "sessions": 4,
+    "users": 3
+  },
+  "dumpSha256": "9d73f2b32b65362d5659c085849747bfec2f926be68cb6bbf60a48cc562b4e3c",
+  "dataFolderSha256": "683b04f8750742a648aacd1d70cb7701357405c8acb617f3a7af2afcc55a39c7"
+}

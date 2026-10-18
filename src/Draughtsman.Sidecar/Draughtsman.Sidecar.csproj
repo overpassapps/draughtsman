@@ -1,0 +1,77 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Draughtsman.Sidecar</RootNamespace>
+    <Description>Client for the bundled Node sidecar (ELK layout and Yjs materialisation) that Draughtsman.Server spawns over stdio JSON-RPC, per ADR 0002.</Description>
+  </PropertyGroup>
+
+  <!--
+    Building this project builds the sidecar bundle (sidecar/dist/sidecar.js) and copies sidecar/dist into the output
+    of every project that references it, as sidecar/. That is how `dotnet build` of the server produces a runnable
+    tree and how the test projects find the real bundle. Set BuildSidecar=false to skip when Node is not installed
+    (the bundle is then expected to exist already, and its absence is a warning, not an error).
+    NodeExe and NpmCommand can be overridden for machines where the right Node is not first on PATH.
+  -->
+  <PropertyGroup>
+    <SidecarRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', '..', '..', 'sidecar'))</SidecarRoot>
+    <SidecarDist>$([MSBuild]::NormalizeDirectory('$(SidecarRoot)', 'dist'))</SidecarDist>
+    <SidecarBundle>$(SidecarDist)sidecar.js</SidecarBundle>
+    <BuildSidecar Condition="'$(BuildSidecar)' == ''">true</BuildSidecar>
+    <NodeExe Condition="'$(NodeExe)' == ''">node</NodeExe>
+    <NpmCommand Condition="'$(NpmCommand)' == ''">npm</NpmCommand>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Draughtsman.Core\Draughtsman.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SidecarSource Include="$(SidecarRoot)src\**\*.ts" />
+    <SidecarSource Include="$(SidecarRoot)scripts\build.mjs;$(SidecarRoot)package.json;$(SidecarRoot)package-lock.json;$(SidecarRoot)tsconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Draughtsman.Sidecar.Tests" />
+  </ItemGroup>
+
+  <!-- npm writes node_modules/.package-lock.json on every install, which makes it a reliable up-to-date marker. -->
+  <Target Name="RestoreSidecarPackages"
+          Condition="'$(BuildSidecar)' == 'true'"
+          Inputs="$(SidecarRoot)package-lock.json"
+          Outputs="$(SidecarRoot)node_modules\.package-lock.json">
+    <Message Importance="high" Text="Installing sidecar packages: npm ci in $(SidecarRoot)" />
+    <Exec Command="$(NpmCommand) ci --no-audit --no-fund" WorkingDirectory="$(SidecarRoot)" />
+  </Target>
+
+  <!-- Calls the build script with node directly rather than through `npm run` so the build does not depend on npm's PATH rewriting. -->
+  <Target Name="BuildSidecarBundle"
+          DependsOnTargets="RestoreSidecarPackages"
+          Condition="'$(BuildSidecar)' == 'true'"
+          Inputs="@(SidecarSource)"
+          Outputs="$(SidecarBundle)">
+    <Message Importance="high" Text="Building sidecar bundle: $(SidecarBundle)" />
+    <Exec Command="&quot;$(NodeExe)&quot; scripts/build.mjs" WorkingDirectory="$(SidecarRoot)" />
+  </Target>
+
+  <!-- Runs before AssignTargetPaths so the items reach GetCopyToOutputDirectoryItems of referencing projects too. -->
+  <Target Name="IncludeSidecarBundle" DependsOnTargets="BuildSidecarBundle" BeforeTargets="AssignTargetPaths">
+    <Error Condition="'$(BuildSidecar)' == 'true' And !Exists('$(SidecarBundle)')"
+           Text="The sidecar bundle $(SidecarBundle) was not produced. Check the npm output above." />
+    <Warning Condition="'$(BuildSidecar)' != 'true' And !Exists('$(SidecarBundle)')"
+             Text="BuildSidecar=false and $(SidecarBundle) does not exist; the server will report the sidecar as unavailable." />
+    <ItemGroup>
+      <!-- Two steps: well-known metadata inside a target batches over existing items, so the glob is materialised first. -->
+      <SidecarDistFile Include="$(SidecarDist)**\*" />
+      <Content Include="@(SidecarDistFile)"
+               Link="sidecar\%(SidecarDistFile.RecursiveDir)%(SidecarDistFile.Filename)%(SidecarDistFile.Extension)"
+               CopyToOutputDirectory="PreserveNewest"
+               CopyToPublishDirectory="PreserveNewest" />
+    </ItemGroup>
+  </Target>
+
+</Project>

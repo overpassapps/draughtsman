@@ -1,0 +1,93 @@
+{
+  "provider": "sqlite",
+  "files": [
+    {
+      "path": "ai/settings.json",
+      "size": 334,
+      "sha256": "7766a1f4e9029bd1ac0056836bd7b7f09366382a6682dd0142a7f61bdc8731c4"
+    },
+    {
+      "path": "assets/3b/3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e.png",
+      "size": 88,
+      "sha256": "3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e"
+    },
+    {
+      "path": "branding/branding.json",
+      "size": 134,
+      "sha256": "8c9e67cb9db7131d05cd7773df124d81801ad4d2ab552e7b153829ce51273309"
+    },
+    {
+      "path": "branding/favicon.png",
+      "size": 79,
+      "sha256": "6432a7a1adf1f205fbe8831e08b57a72ae05ba5470e7953da5aacdd18788cf2d"
+    },
+    {
+      "path": "branding/logo-light.svg",
+      "size": 174,
+      "sha256": "a0dda6e0c1b0742e7d4f9e38ef5a76e101300538ee3d46baf0193d01b52c2f84"
+    },
+    {
+      "path": "branding/logo.png",
+      "size": 99,
+      "sha256": "b4c18a5be60fe1c811be5c7fc0b83ade087bb22e56ba21204f817c33bf06e143"
+    },
+    {
+      "path": "data.db",
+      "size": 1531904,
+      "sha256": "41dc8b7145defc3853abb717c9a2b8424c5052bc7ef2817ed2ce6a22a42c6c86"
+    },
+    {
+      "path": "draughtsman.yaml",
+      "size": 223,
+      "sha256": "5d1dab87791776a99bb4709ab62aff8b5fb8cbd0c0d0bc38c4c9ddb30f320772"
+    },
+    {
+      "path": "keys/key-cc433486-cc13-4010-ab9e-04d1eaf1240c.xml",
+      "size": 1418,
+      "sha256": "ded4b05ac54d63bb86841c25177f97b3863dc6be9e3793d600d58263464850db"
+    },
+    {
+      "path": "licence.key",
+      "size": 375,
+      "sha256": "93cfefbe341a32d290da1c589935b43e5cc4108badb4caf096f1721e344ea862"
+    },
+    {
+      "path": "themes/org/_settings.json",
+      "size": 39,
+      "sha256": "e98de673ece3d143015df690b6809cb7b6bebddfe8406ae5d8fe0e8904fdee59"
+    },
+    {
+      "path": "themes/org/fixture-second-theme-throwaway.yaml",
+      "size": 611,
+      "sha256": "a4817cdbc3b7679d231c6082771deb1af8168ed116698f6a3adc5decf682866c"
+    },
+    {
+      "path": "themes/org/fixture-theme-throwaway.yaml",
+      "size": 664,
+      "sha256": "fb4c20120c2e4ec57fbaa7ab6f52d127343539e943472b68b6a417f871bc4bd1"
+    }
+  ],
+  "migrations": [
+    "20260921080129_Initial",
+    "20260929083325_Assets",
+    "20260929094216_AddAuth",
+    "20260929101728_AddAuditActorUserId",
+    "20260930214345_AddSecurityEventsAndTokenExpiry",
+    "20260930222757_AddDocumentEtag"
+  ],
+  "rowCounts": {
+    "__EFMigrationsHistory": 6,
+    "__EFMigrationsLock": 0,
+    "api_tokens": 5,
+    "assets": 1,
+    "audit": 20,
+    "document_updates": 0,
+    "document_versions": 8,
+    "documents": 11,
+    "security_events": 15,
+    "sessions": 4,
+    "users": 3
+  },
+  "integrityCheck": "ok",
+  "dataFolderSha256": "abf834bf47b82b94be9bb08e6de0b1ca9f384655d92bf786e29c25952fd39874"
+}

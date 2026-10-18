@@ -1,0 +1,93 @@
+# themes/diagram-overpass.yaml — shipped default diagram theme
+#
+# Diagram theme: default node/edge styles per `kind`, palette, fonts, grid and
+# the canvas and export backgrounds. Owned by the workspace admin, overridable per document.
+# Documents store only deviations from these values. See themes/README.md.
+#
+# Overpass brand palette, confirmed 2026-09-21 from the live overpass.co.uk
+# stylesheet. Brand red #e04832 is a graphic and large-text colour only (4.08:1
+# on white); wherever red carries or backs body text, use redDeep #c0392b
+# (5.44:1 on white). Brand black #151e33 is a very dark navy, and every grey and
+# shadow pulls toward navy-900 #0f1729 rather than sitting neutral. Red accents
+# on dark navy for the canvas; export background is white paper so a PDF drops
+# straight into a client deck, so every stroke must read on both dark navy and
+# white (steel does; ash and near-white do not).
+
+name: overpass
+description: Red accents on dark navy for architecture work; white paper for print.
+
+palette:
+  red:        "#e04832"   # Overpass brand red — graphic and large text only
+  redDeep:    "#c0392b"   # deeper hover red — the red that carries or backs body text
+  charcoal:   "#151e33"   # Overpass brand black — very dark navy
+  graphite:   "#202a42"   # navy-tinted dark grey
+  slate:      "#2e3b56"   # navy-tinted mid-dark grey
+  ash:        "#9aa4b8"   # navy-tinted light grey
+  steel:      "#7f8aa0"   # navy-tinted mid-grey legible on both navy and paper
+  paper:      "#FFFFFF"
+  ink:        "#111111"
+  amber:      "#E0A526"
+
+fonts:
+  label: "Inter, system-ui, sans-serif"
+  mono:  "JetBrains Mono, monospace"
+
+grid:
+  size: 20
+  color: "#202a42"
+  visible: true
+
+exportBackground: "#FFFFFF"   # what export paints behind the drawing
+canvasBackground: "#151e33"   # what the editor paints behind the drawing
+
+nodes:
+  default:    { fill: "#202a42", stroke: "#7f8aa0", strokeWidth: 1.5, textColor: "#F2F2F2" }
+  # flowchart
+  process:    { fill: "#202a42", stroke: "#e04832", strokeWidth: 1.5, textColor: "#F2F2F2" }
+  decision:   { fill: "#151e33", stroke: "#e04832", strokeWidth: 2,   textColor: "#F2F2F2" }
+  terminal:   { fill: "#c0392b", stroke: "#c0392b", strokeWidth: 1.5, textColor: "#FFFFFF" }
+  io:         { fill: "#202a42", stroke: "#7f8aa0", strokeWidth: 1.5, textColor: "#F2F2F2" }
+  subprocess: { fill: "#202a42", stroke: "#e04832", strokeWidth: 2,   textColor: "#F2F2F2" }
+  # architecture
+  service:    { fill: "#202a42", stroke: "#e04832", strokeWidth: 1.5, textColor: "#F2F2F2" }
+  database:   { fill: "#2e3b56", stroke: "#7f8aa0", strokeWidth: 1.5, textColor: "#F2F2F2" }
+  queue:      { fill: "#2e3b56", stroke: "#7f8aa0", strokeWidth: 1.5, textColor: "#F2F2F2" }
+  actor:      { fill: "#151e33", stroke: "#7f8aa0", strokeWidth: 1.5, textColor: "#F2F2F2" }
+  external:   { fill: "#151e33", stroke: "#7f8aa0", strokeWidth: 1.5, textColor: "#9aa4b8", dash: dashed }
+  # shared
+  note:       { fill: "#2e3b56", stroke: "#7f8aa0", strokeWidth: 1,   textColor: "#F2F2F2", dash: dashed }
+  # A container (a group, the SQL import's legend) is a see-through outline: filled with the canvas colour it read as
+  # transparent on screen but exported as a dark slab on white paper, so it takes no fill and a neutral stroke.
+  container:  { fill: "transparent", stroke: "#7f8aa0", strokeWidth: 1.5, textColor: "#9aa4b8", dash: dashed }
+  # swimlane
+  pool:       { fill: "#151e33", stroke: "#e04832", strokeWidth: 1.5, textColor: "#F2F2F2" }
+  lane:       { fill: "#1a2439", stroke: "#7f8aa0", strokeWidth: 1,   textColor: "#9aa4b8" }
+  text:       { fill: "transparent", stroke: "transparent", strokeWidth: 0, textColor: "#F2F2F2" }
+  image:      { fill: "transparent", stroke: "transparent", strokeWidth: 0, textColor: "#F2F2F2" }
+  sticky:     { fill: "#E0A526", stroke: "#E0A526", strokeWidth: 0, textColor: "#111111" }
+  # org chart
+  role:       { fill: "#202a42", stroke: "#7f8aa0", strokeWidth: 1.5, textColor: "#F2F2F2" }
+  executive:  { fill: "#202a42", stroke: "#e04832", strokeWidth: 2,   textColor: "#F2F2F2" }
+  assistant:  { fill: "#151e33", stroke: "#7f8aa0", strokeWidth: 1.5, textColor: "#9aa4b8" }
+  vacancy:    { fill: "transparent", stroke: "#7f8aa0", strokeWidth: 1.5, textColor: "#9aa4b8", dash: dashed }
+  # sequence (actor is shared with architecture)
+  participant: { fill: "#202a42", stroke: "#7f8aa0", strokeWidth: 1.5, textColor: "#F2F2F2" }
+  fragment:    { fill: "transparent", stroke: "#7f8aa0", strokeWidth: 1.5, textColor: "#9aa4b8" }
+
+edges:
+  default:       { stroke: "#7f8aa0", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: arrow }
+  flow:          { stroke: "#7f8aa0", strokeWidth: 2,   dash: solid,  arrowStart: none, arrowEnd: arrow }
+  data:          { stroke: "#e04832", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: open }
+  dependency:    { stroke: "#7f8aa0", strokeWidth: 1.5, dash: dashed, arrowStart: none, arrowEnd: open }
+  association:   { stroke: "#7f8aa0", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: none }
+  dotted-report: { stroke: "#7f8aa0", strokeWidth: 1.5, dash: dashed, arrowStart: none, arrowEnd: none }
+  message-flow:     { stroke: "#7f8aa0", strokeWidth: 1.5, dash: dashed, arrowStart: circle, arrowEnd: open }
+  bpmn-association: { stroke: "#7f8aa0", strokeWidth: 1.5, dash: dotted, arrowStart: none, arrowEnd: none }
+  data-association: { stroke: "#7f8aa0", strokeWidth: 1.5, dash: dotted, arrowStart: none, arrowEnd: open }
+  sync:             { stroke: "#7f8aa0", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: arrow }
+  async:            { stroke: "#7f8aa0", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: open }
+  return:           { stroke: "#7f8aa0", strokeWidth: 1.5, dash: dashed, arrowStart: none, arrowEnd: open }
+  create:           { stroke: "#7f8aa0", strokeWidth: 1.5, dash: dashed, arrowStart: none, arrowEnd: open }
+  destroy:          { stroke: "#7f8aa0", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: arrow }
+  note:             { stroke: "#7f8aa0", strokeWidth: 1,   dash: solid,  arrowStart: none, arrowEnd: none }
+  interaction-use:  { stroke: "#7f8aa0", strokeWidth: 1,   dash: solid,  arrowStart: none, arrowEnd: none }

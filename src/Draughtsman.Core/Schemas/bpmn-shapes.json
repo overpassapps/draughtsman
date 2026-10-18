@@ -1,0 +1,447 @@
+{
+  "library": "bpmn",
+  "description": "BPMN 2.0 process shapes, drawn from scratch to the standard notation and typed the way the generic icons are: an event, activity or gateway is a native outline plus an inner glyph. Each shape is placed as the presentation shape custom:bpmn/<name> (a branch the document schema already admits, so no schema change) and names its own flowchart kind, bpmn-<name>, whose default shape is that shape, so the DSL prints by kind and get_schema teaches an agent when to use it. Events are circles whose border weight tells them apart (single = start, double = intermediate, thick = end) and whose glyph gives the trigger (message, timer, error, signal, link); a filled glyph means the event or task throws or sends rather than catches. Activities are rounded rectangles with a task-type marker in the corner (a sub-process shows its plus marker at the bottom; a call activity has a thick border). Gateways are diamonds typed by a centred glyph (exclusive X, parallel +, inclusive O, event-based pentagon in a double ring, complex asterisk). Data objects, data stores and text annotations complete the artefact set. Pools and lanes are not here: use custom:swimlane/pool and custom:swimlane/lane, and parent a BPMN node to the lane it belongs to. Sequence flow is the existing `flow` edge kind; message-flow, bpmn-association and data-association are the BPMN edge kinds (see flowchart.json). `family` is event, activity, gateway, data or annotation; `position`, `border`, `glyph`, `placement` and `throwing` are drawing data both renderers read (web/src/model/bpmnShapes.ts, web/src/canvas/shapes.tsx and src/Draughtsman.Mcp/Rendering/SvgRenderer.cs), so the two cannot drift; `size` is the size the palette places the shape at (events and gateways are drawn to fill their box, so keep them square). `glyphs` are line art on a 24x24 grid in the icon library's element format; an element flagged `solid` is always filled with the stroke colour, and one flagged `detail` is drawn in the node's fill colour when the glyph is filled. Left out on purpose: see docs/bpmn.md.",
+  "viewBox": 24,
+  "layout": {"labelGap": 4, "labelBand": 32, "labelMinWidth": 120, "eventRingInset": 0.09, "thickBorder": 2.5, "eventGlyph": 0.5, "gatewayGlyph": 0.5, "markerSize": 16, "markerInset": 6, "cornerRadius": 10, "dataFold": 0.3, "dataFoldMax": 14, "annotationBracket": 0.2, "annotationBracketMax": 20},
+  "glyphs": {
+    "message": [
+      {"tag": "rect", "x": 3, "y": 6, "width": 18, "height": 12, "rx": 1},
+      {"tag": "polyline", "points": "3,7 12,14 21,7", "detail": true}
+    ],
+    "timer": [
+      {"tag": "circle", "cx": 12, "cy": 12, "r": 9},
+      {"tag": "line", "x1": 12, "y1": 12, "x2": 12, "y2": 6.5},
+      {"tag": "line", "x1": 12, "y1": 12, "x2": 15.5, "y2": 14},
+      {"tag": "line", "x1": 12, "y1": 3.5, "x2": 12, "y2": 5.2},
+      {"tag": "line", "x1": 20.5, "y1": 12, "x2": 18.8, "y2": 12},
+      {"tag": "line", "x1": 12, "y1": 20.5, "x2": 12, "y2": 18.8},
+      {"tag": "line", "x1": 3.5, "y1": 12, "x2": 5.2, "y2": 12}
+    ],
+    "error": [
+      {"tag": "polygon", "points": "13,2 5,13 11,13 9,22 19,9 13,9 15,2"}
+    ],
+    "signal": [
+      {"tag": "polygon", "points": "12,4 21,19 3,19"}
+    ],
+    "link": [
+      {"tag": "polygon", "points": "3,9 13,9 13,5 21,12 13,19 13,15 3,15"}
+    ],
+    "user": [
+      {"tag": "circle", "cx": 12, "cy": 8, "r": 4},
+      {"tag": "path", "d": "M4,21 V19 C4,15.5 8,14 12,14 C16,14 20,15.5 20,19 V21"}
+    ],
+    "service": [
+      {"tag": "circle", "cx": 12, "cy": 12, "r": 3.2},
+      {"tag": "circle", "cx": 12, "cy": 12, "r": 6},
+      {"tag": "line", "x1": 18, "y1": 12, "x2": 21.2, "y2": 12},
+      {"tag": "line", "x1": 16.24, "y1": 16.24, "x2": 18.51, "y2": 18.51},
+      {"tag": "line", "x1": 12, "y1": 18, "x2": 12, "y2": 21.2},
+      {"tag": "line", "x1": 7.76, "y1": 16.24, "x2": 5.49, "y2": 18.51},
+      {"tag": "line", "x1": 6, "y1": 12, "x2": 2.8, "y2": 12},
+      {"tag": "line", "x1": 7.76, "y1": 7.76, "x2": 5.49, "y2": 5.49},
+      {"tag": "line", "x1": 12, "y1": 6, "x2": 12, "y2": 2.8},
+      {"tag": "line", "x1": 16.24, "y1": 7.76, "x2": 18.51, "y2": 5.49}
+    ],
+    "script": [
+      {"tag": "path", "d": "M8,3 H19 V18 Q19,21 16,21 H5 Q8,21 8,18 Z"},
+      {"tag": "line", "x1": 11, "y1": 8, "x2": 16, "y2": 8},
+      {"tag": "line", "x1": 11, "y1": 12, "x2": 16, "y2": 12}
+    ],
+    "manual": [
+      {"tag": "path", "d": "M6,21 V12.5 L3.5,9.5 M6,12.5 V6.5 A1.5,1.5 0 0 1 9,6.5 V11 M9,10.5 V4.5 A1.5,1.5 0 0 1 12,4.5 V11 M12,10.5 V5.5 A1.5,1.5 0 0 1 15,5.5 V12 M15,11.5 V7.5 A1.5,1.5 0 0 1 18,7.5 V15 C18,19 16,21 12,21 H6"}
+    ],
+    "business-rule": [
+      {"tag": "rect", "x": 3, "y": 5, "width": 18, "height": 14, "rx": 1},
+      {"tag": "rect", "x": 3, "y": 5, "width": 18, "height": 5, "solid": true},
+      {"tag": "line", "x1": 3, "y1": 14.5, "x2": 21, "y2": 14.5},
+      {"tag": "line", "x1": 9, "y1": 10, "x2": 9, "y2": 19}
+    ],
+    "sub-process": [
+      {"tag": "rect", "x": 3, "y": 3, "width": 18, "height": 18, "rx": 1.5},
+      {"tag": "line", "x1": 12, "y1": 7.5, "x2": 12, "y2": 16.5},
+      {"tag": "line", "x1": 7.5, "y1": 12, "x2": 16.5, "y2": 12}
+    ],
+    "exclusive": [
+      {"tag": "line", "x1": 6.5, "y1": 6.5, "x2": 17.5, "y2": 17.5, "stroke-width": 3.4},
+      {"tag": "line", "x1": 17.5, "y1": 6.5, "x2": 6.5, "y2": 17.5, "stroke-width": 3.4}
+    ],
+    "parallel": [
+      {"tag": "line", "x1": 12, "y1": 4.5, "x2": 12, "y2": 19.5, "stroke-width": 3.4},
+      {"tag": "line", "x1": 4.5, "y1": 12, "x2": 19.5, "y2": 12, "stroke-width": 3.4}
+    ],
+    "inclusive": [
+      {"tag": "circle", "cx": 12, "cy": 12, "r": 7.2, "stroke-width": 3}
+    ],
+    "event-based": [
+      {"tag": "circle", "cx": 12, "cy": 12, "r": 9.5},
+      {"tag": "circle", "cx": 12, "cy": 12, "r": 7.6},
+      {"tag": "polygon", "points": "12,7.4 16.37,10.58 14.7,15.72 9.3,15.72 7.63,10.58"}
+    ],
+    "complex": [
+      {"tag": "line", "x1": 12, "y1": 3.5, "x2": 12, "y2": 20.5, "stroke-width": 2.6},
+      {"tag": "line", "x1": 3.5, "y1": 12, "x2": 20.5, "y2": 12, "stroke-width": 2.6},
+      {"tag": "line", "x1": 6, "y1": 6, "x2": 18, "y2": 18, "stroke-width": 2.6},
+      {"tag": "line", "x1": 18, "y1": 6, "x2": 6, "y2": 18, "stroke-width": 2.6}
+    ]
+  },
+  "shapes": [
+    {
+      "name": "start",
+      "label": "Start event",
+      "kind": "bpmn-start",
+      "family": "event",
+      "position": "start",
+      "border": "single",
+      "size": {"w": 40, "h": 40}
+    },
+    {
+      "name": "start-message",
+      "label": "Message start event",
+      "kind": "bpmn-start-message",
+      "family": "event",
+      "position": "start",
+      "border": "single",
+      "size": {"w": 40, "h": 40},
+      "glyph": "message",
+      "placement": "centre"
+    },
+    {
+      "name": "start-timer",
+      "label": "Timer start event",
+      "kind": "bpmn-start-timer",
+      "family": "event",
+      "position": "start",
+      "border": "single",
+      "size": {"w": 40, "h": 40},
+      "glyph": "timer",
+      "placement": "centre"
+    },
+    {
+      "name": "start-signal",
+      "label": "Signal start event",
+      "kind": "bpmn-start-signal",
+      "family": "event",
+      "position": "start",
+      "border": "single",
+      "size": {"w": 40, "h": 40},
+      "glyph": "signal",
+      "placement": "centre"
+    },
+    {
+      "name": "intermediate",
+      "label": "Intermediate event",
+      "kind": "bpmn-intermediate",
+      "family": "event",
+      "position": "intermediate",
+      "border": "double",
+      "size": {"w": 40, "h": 40}
+    },
+    {
+      "name": "intermediate-message",
+      "label": "Message catch event",
+      "kind": "bpmn-intermediate-message",
+      "family": "event",
+      "position": "intermediate",
+      "border": "double",
+      "size": {"w": 40, "h": 40},
+      "glyph": "message",
+      "placement": "centre"
+    },
+    {
+      "name": "intermediate-message-throw",
+      "label": "Message throw event",
+      "kind": "bpmn-intermediate-message-throw",
+      "family": "event",
+      "position": "intermediate",
+      "border": "double",
+      "size": {"w": 40, "h": 40},
+      "glyph": "message",
+      "placement": "centre",
+      "throwing": true
+    },
+    {
+      "name": "intermediate-timer",
+      "label": "Timer event",
+      "kind": "bpmn-intermediate-timer",
+      "family": "event",
+      "position": "intermediate",
+      "border": "double",
+      "size": {"w": 40, "h": 40},
+      "glyph": "timer",
+      "placement": "centre"
+    },
+    {
+      "name": "intermediate-error",
+      "label": "Error boundary event",
+      "kind": "bpmn-intermediate-error",
+      "family": "event",
+      "position": "intermediate",
+      "border": "double",
+      "size": {"w": 40, "h": 40},
+      "glyph": "error",
+      "placement": "centre"
+    },
+    {
+      "name": "intermediate-signal",
+      "label": "Signal catch event",
+      "kind": "bpmn-intermediate-signal",
+      "family": "event",
+      "position": "intermediate",
+      "border": "double",
+      "size": {"w": 40, "h": 40},
+      "glyph": "signal",
+      "placement": "centre"
+    },
+    {
+      "name": "intermediate-signal-throw",
+      "label": "Signal throw event",
+      "kind": "bpmn-intermediate-signal-throw",
+      "family": "event",
+      "position": "intermediate",
+      "border": "double",
+      "size": {"w": 40, "h": 40},
+      "glyph": "signal",
+      "placement": "centre",
+      "throwing": true
+    },
+    {
+      "name": "intermediate-link",
+      "label": "Link catch event",
+      "kind": "bpmn-intermediate-link",
+      "family": "event",
+      "position": "intermediate",
+      "border": "double",
+      "size": {"w": 40, "h": 40},
+      "glyph": "link",
+      "placement": "centre"
+    },
+    {
+      "name": "intermediate-link-throw",
+      "label": "Link throw event",
+      "kind": "bpmn-intermediate-link-throw",
+      "family": "event",
+      "position": "intermediate",
+      "border": "double",
+      "size": {"w": 40, "h": 40},
+      "glyph": "link",
+      "placement": "centre",
+      "throwing": true
+    },
+    {
+      "name": "end",
+      "label": "End event",
+      "kind": "bpmn-end",
+      "family": "event",
+      "position": "end",
+      "border": "thick",
+      "size": {"w": 40, "h": 40}
+    },
+    {
+      "name": "end-message",
+      "label": "Message end event",
+      "kind": "bpmn-end-message",
+      "family": "event",
+      "position": "end",
+      "border": "thick",
+      "size": {"w": 40, "h": 40},
+      "glyph": "message",
+      "placement": "centre",
+      "throwing": true
+    },
+    {
+      "name": "end-error",
+      "label": "Error end event",
+      "kind": "bpmn-end-error",
+      "family": "event",
+      "position": "end",
+      "border": "thick",
+      "size": {"w": 40, "h": 40},
+      "glyph": "error",
+      "placement": "centre",
+      "throwing": true
+    },
+    {
+      "name": "end-signal",
+      "label": "Signal end event",
+      "kind": "bpmn-end-signal",
+      "family": "event",
+      "position": "end",
+      "border": "thick",
+      "size": {"w": 40, "h": 40},
+      "glyph": "signal",
+      "placement": "centre",
+      "throwing": true
+    },
+    {
+      "name": "task",
+      "label": "Task",
+      "kind": "bpmn-task",
+      "family": "activity",
+      "border": "single",
+      "size": {"w": 100, "h": 70}
+    },
+    {
+      "name": "user-task",
+      "label": "User task",
+      "kind": "bpmn-user-task",
+      "family": "activity",
+      "border": "single",
+      "size": {"w": 100, "h": 70},
+      "glyph": "user",
+      "placement": "corner"
+    },
+    {
+      "name": "service-task",
+      "label": "Service task",
+      "kind": "bpmn-service-task",
+      "family": "activity",
+      "border": "single",
+      "size": {"w": 100, "h": 70},
+      "glyph": "service",
+      "placement": "corner"
+    },
+    {
+      "name": "script-task",
+      "label": "Script task",
+      "kind": "bpmn-script-task",
+      "family": "activity",
+      "border": "single",
+      "size": {"w": 100, "h": 70},
+      "glyph": "script",
+      "placement": "corner"
+    },
+    {
+      "name": "manual-task",
+      "label": "Manual task",
+      "kind": "bpmn-manual-task",
+      "family": "activity",
+      "border": "single",
+      "size": {"w": 100, "h": 70},
+      "glyph": "manual",
+      "placement": "corner"
+    },
+    {
+      "name": "send-task",
+      "label": "Send task",
+      "kind": "bpmn-send-task",
+      "family": "activity",
+      "border": "single",
+      "size": {"w": 100, "h": 70},
+      "glyph": "message",
+      "placement": "corner",
+      "throwing": true
+    },
+    {
+      "name": "receive-task",
+      "label": "Receive task",
+      "kind": "bpmn-receive-task",
+      "family": "activity",
+      "border": "single",
+      "size": {"w": 100, "h": 70},
+      "glyph": "message",
+      "placement": "corner"
+    },
+    {
+      "name": "business-rule-task",
+      "label": "Business rule task",
+      "kind": "bpmn-business-rule-task",
+      "family": "activity",
+      "border": "single",
+      "size": {"w": 100, "h": 70},
+      "glyph": "business-rule",
+      "placement": "corner"
+    },
+    {
+      "name": "sub-process",
+      "label": "Sub-process",
+      "kind": "bpmn-sub-process",
+      "family": "activity",
+      "border": "single",
+      "size": {"w": 100, "h": 70},
+      "glyph": "sub-process",
+      "placement": "bottom"
+    },
+    {
+      "name": "call-activity",
+      "label": "Call activity",
+      "kind": "bpmn-call-activity",
+      "family": "activity",
+      "border": "thick",
+      "size": {"w": 100, "h": 70}
+    },
+    {
+      "name": "exclusive-gateway",
+      "label": "Exclusive gateway",
+      "kind": "bpmn-exclusive-gateway",
+      "family": "gateway",
+      "glyph": "exclusive",
+      "placement": "centre",
+      "border": "single",
+      "size": {"w": 50, "h": 50}
+    },
+    {
+      "name": "parallel-gateway",
+      "label": "Parallel gateway",
+      "kind": "bpmn-parallel-gateway",
+      "family": "gateway",
+      "glyph": "parallel",
+      "placement": "centre",
+      "border": "single",
+      "size": {"w": 50, "h": 50}
+    },
+    {
+      "name": "inclusive-gateway",
+      "label": "Inclusive gateway",
+      "kind": "bpmn-inclusive-gateway",
+      "family": "gateway",
+      "glyph": "inclusive",
+      "placement": "centre",
+      "border": "single",
+      "size": {"w": 50, "h": 50}
+    },
+    {
+      "name": "event-gateway",
+      "label": "Event-based gateway",
+      "kind": "bpmn-event-gateway",
+      "family": "gateway",
+      "glyph": "event-based",
+      "placement": "centre",
+      "border": "single",
+      "size": {"w": 50, "h": 50}
+    },
+    {
+      "name": "complex-gateway",
+      "label": "Complex gateway",
+      "kind": "bpmn-complex-gateway",
+      "family": "gateway",
+      "glyph": "complex",
+      "placement": "centre",
+      "border": "single",
+      "size": {"w": 50, "h": 50}
+    },
+    {
+      "name": "data-object",
+      "label": "Data object",
+      "kind": "bpmn-data-object",
+      "family": "data",
+      "border": "single",
+      "size": {"w": 36, "h": 48}
+    },
+    {
+      "name": "data-store",
+      "label": "Data store",
+      "kind": "bpmn-data-store",
+      "family": "data",
+      "border": "single",
+      "size": {"w": 50, "h": 50}
+    },
+    {
+      "name": "annotation",
+      "label": "Text annotation",
+      "kind": "bpmn-annotation",
+      "family": "annotation",
+      "border": "single",
+      "size": {"w": 100, "h": 50}
+    }
+  ]
+}

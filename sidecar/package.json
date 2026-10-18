@@ -1,0 +1,27 @@
+{
+  "name": "@draughtsman/sidecar",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Node sidecar for Draughtsman.Server: Yjs materialisation and ELK layout over newline-delimited JSON-RPC 2.0 on stdio (docs/adr/0002-crdt-and-layout-engine.md).",
+  "license": "UNLICENSED",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "node scripts/build.mjs",
+    "pretest": "npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "elkjs": "0.12.0",
+    "yjs": "13.6.32"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "esbuild": "^0.28.2",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.1"
+  },
+  "engines": {
+    "node": ">=22.12"
+  }
+}

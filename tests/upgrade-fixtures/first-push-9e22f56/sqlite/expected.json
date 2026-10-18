@@ -1,0 +1,367 @@
+{
+  "formatVersion": 1,
+  "label": "first-push-9e22f56",
+  "createdAt": "2026-10-01T13:00:36.875Z",
+  "features": {
+    "tokenExpiry": "skipped: this build issues no token lifetimes",
+    "tokenScope": "skipped: this build has no read scope",
+    "flythrough": "skipped: 400 Document is not valid (document): Some additional properties did not match the required schema: [\"flythrough\"]; /flythrough: All values fail against the false schema",
+    "agentCheckpoints": true,
+    "namedSnapshots": "skipped: POST .../versions answered 405",
+    "assets": true,
+    "bin": "skipped: GET /api/bin answered 404 (deleting is permanent in this build, so nothing is deleted)",
+    "branding": true,
+    "orgThemes": "skipped: GET /api/admin/themes answered 404",
+    "aiSettings": true,
+    "licence": "skipped: GET /api/admin/licence answered 404",
+    "securityEvents": "skipped: GET /api/admin/security-events answered 404",
+    "audit": "skipped: GET /api/admin/audit answered 404"
+  },
+  "users": [
+    {
+      "key": "admin",
+      "id": "usr_08c36bd49451",
+      "email": "fixture-admin@example.invalid",
+      "displayName": "Fixture Admin (throwaway)",
+      "role": "Admin",
+      "password": "Fixture-Admin-THROWAWAY-pw-1",
+      "active": true
+    },
+    {
+      "key": "editor",
+      "id": "usr_e9817c00caa4",
+      "email": "fixture-editor@example.invalid",
+      "displayName": "Fixture Editor (throwaway)",
+      "role": "Editor",
+      "password": "Fixture-Editor-THROWAWAY-pw-2",
+      "active": true
+    },
+    {
+      "key": "retired",
+      "id": "usr_4e7d95e901c1",
+      "email": "fixture-retired@example.invalid",
+      "displayName": "Fixture Retired (throwaway)",
+      "role": "Editor",
+      "password": "Fixture-Retired-THROWAWAY-pw-3",
+      "active": false
+    }
+  ],
+  "tokens": [
+    {
+      "id": "tok_4c835327dd45",
+      "name": "fixture-agent (throwaway)",
+      "owner": "admin",
+      "secret": "dst_Zcj4VRIz5gxoVXbpU6rtZCVyqS6QY4Umcby7yFVhpF8",
+      "scope": null,
+      "expiresAt": null,
+      "revoked": false
+    },
+    {
+      "id": "tok_a9a333077bcf",
+      "name": "fixture-expiring-90d (throwaway)",
+      "owner": "admin",
+      "secret": "dst_ZCi0jfakHaDvgO7P0oOpipLJF9B-tBPf4GYtEZDyiPw",
+      "scope": null,
+      "expiresAt": null,
+      "revoked": false
+    },
+    {
+      "id": "tok_4af45ee2c021",
+      "name": "fixture-read-only (throwaway)",
+      "owner": "admin",
+      "secret": "dst_NH7szEVrdgPcWxeBb2rGp2Ss6C8eVUP9ynec2SaJ9Qs",
+      "scope": null,
+      "expiresAt": null,
+      "revoked": false
+    },
+    {
+      "id": "tok_f2174042c44d",
+      "name": "fixture-editor-token (throwaway)",
+      "owner": "editor",
+      "secret": "dst_ZxJcNgbiQVXLZhBbWnZE_UGXI1M5Bvxh7KVpkXcSX3A",
+      "scope": null,
+      "expiresAt": null,
+      "revoked": false
+    },
+    {
+      "id": "tok_b3b4f465fae4",
+      "name": "fixture-revoked (throwaway)",
+      "owner": "admin",
+      "secret": "dst_A-C7a2wmtv8y3X24SDzYqkAs9sHMcIoFwm_z17fNf94",
+      "scope": null,
+      "expiresAt": null,
+      "revoked": true
+    }
+  ],
+  "documents": [
+    {
+      "id": "fx_image_node",
+      "title": "A diagram with an uploaded image",
+      "type": "freeform",
+      "nodes": 1,
+      "edges": 0,
+      "bytes": 396,
+      "hasFlythrough": false,
+      "createdBy": "user:Fixture Admin (throwaway)",
+      "updatedAt": "2026-10-01T13:00:39.062Z",
+      "etag": "\"dv1:7a33e3a2d82666f6c1ad50932210b468\"",
+      "sha256": "50c88ac0c307e265cd9baa9128df344b979b5a0e5f18b776ad08d9e7bdb68f8e",
+      "dslSha256": "e67ffbffa770d9d062e7a4f0c46814b4127739c5b88ecc1c9d3902732ef00eb1"
+    },
+    {
+      "id": "fx_order-service",
+      "title": "Order service",
+      "type": "architecture",
+      "nodes": 5,
+      "edges": 3,
+      "bytes": 1511,
+      "hasFlythrough": false,
+      "createdBy": "user:Fixture Editor (throwaway)",
+      "updatedAt": "2026-10-01T13:00:39.022Z",
+      "etag": "\"dv1:ea3deb52a54a88181e695b9917a35313\"",
+      "sha256": "b86578190151744a0a56c1daccf2476ead29b5776ac6748fbbf6c5e21c4fa3f7",
+      "dslSha256": "d4ea2ddec06d4ee24e0c1bcd42c809b50d13dfc8fd7dc9afba4f6eb094f5cbef"
+    },
+    {
+      "id": "fx_perf-2000n-2500e",
+      "title": "Perf benchmark (2000 nodes, 2500 edges)",
+      "type": "architecture",
+      "nodes": 2000,
+      "edges": 2500,
+      "bytes": 434950,
+      "hasFlythrough": false,
+      "createdBy": "agent:upgrade-fixture/throwaway-model",
+      "updatedAt": "2026-10-01T13:00:38.637Z",
+      "etag": "\"dv1:d73ebfa39b87f0e2e38f43e2a2b65fd7\"",
+      "sha256": "c826b124670356482def5a4c6697dc0fc686173a713929ad41efba70d4b36201",
+      "dslSha256": "94ce905f6c63eacea3ecfa51a5153661cd365aa2441dc2eee1b095cf53517726"
+    },
+    {
+      "id": "fx_medium_chain",
+      "title": "A 40-node chain",
+      "type": "architecture",
+      "nodes": 40,
+      "edges": 39,
+      "bytes": 7459,
+      "hasFlythrough": false,
+      "createdBy": "user:Fixture Admin (throwaway)",
+      "updatedAt": "2026-10-01T13:00:38.109Z",
+      "etag": "\"dv1:a5ee56734ae76543a9daf68ff62d3a7f\"",
+      "sha256": "ce9ba002e206b563ef28b30a002be9066c12a66a2e4052a9e21cb229855edbde",
+      "dslSha256": "c2c97e99ed41968fe9b0c0a4acc387d32b16c5db4de6afd784ed1bd95d95ab08"
+    },
+    {
+      "id": "fx_empty",
+      "title": "An empty diagram",
+      "type": "architecture",
+      "nodes": 0,
+      "edges": 0,
+      "bytes": 238,
+      "hasFlythrough": false,
+      "createdBy": "user:Fixture Admin (throwaway)",
+      "updatedAt": "2026-10-01T13:00:38.042Z",
+      "etag": "\"dv1:81603e5fdfa92f7346110df010c125ff\"",
+      "sha256": "017930ee3417d4c6987fd9749cb50ba7e4bfbc8978b852f8c326b50b1001c837",
+      "dslSha256": "6309ee17cca8c7799934c453af2ee198e6f3553a43ce241361e1f94536e83bf6"
+    },
+    {
+      "id": "fx_unicode",
+      "title": "Unicode & quoting: café ☕ 日本語 العربية \"quoted\" <angle> & ampersand",
+      "type": "freeform",
+      "nodes": 5,
+      "edges": 1,
+      "bytes": 1061,
+      "hasFlythrough": false,
+      "createdBy": "user:Fixture Admin (throwaway)",
+      "updatedAt": "2026-10-01T13:00:38.039Z",
+      "etag": "\"dv1:28678031b726ddce8b16bce5a064608d\"",
+      "sha256": "34ad2bf99804a3da95e2779d4b48653f843c97e9ec8dce5f3a5f780e65fbe2ac",
+      "dslSha256": "db870c9cb579e9b390ff16538ff4e005248b8e982fd6be5b67d928a010671b7f"
+    },
+    {
+      "id": "fx_editor-session",
+      "title": "Full editing session",
+      "type": "freeform",
+      "nodes": 106,
+      "edges": 5,
+      "bytes": 29935,
+      "hasFlythrough": false,
+      "createdBy": "user:Fixture Admin (throwaway)",
+      "updatedAt": "2026-10-01T13:00:37.542Z",
+      "etag": "\"dv1:83f3c2b92a599b588927f0baf076422b\"",
+      "sha256": "8cff548e1b27160f70a0547082fb60ddf4f8baff519065d34f426eff68bd4644",
+      "dslSha256": "7de56f62008dca948eddd7c51b93fd815ea05efe0e331bebff2e1653ed738614"
+    }
+  ],
+  "binned": [],
+  "versions": [
+    {
+      "documentId": "fx_order-service",
+      "id": "v_8df1fbbfd6a55f277ab39",
+      "name": "checkpoint",
+      "actor": "agent:upgrade-fixture/throwaway-model",
+      "reason": "Before replace by agent:upgrade-fixture/throwaway-model",
+      "size": null,
+      "createdAt": "2026-10-01T13:00:38.084Z",
+      "documentSha256": "fe015f37f43ca6d245aa4853a286288a1ecd968d5b04ab874d8c22bef35d46c8"
+    },
+    {
+      "documentId": "fx_order-service",
+      "id": "v_8df1fbbfd67dd36893920",
+      "name": "checkpoint",
+      "actor": "agent:upgrade-fixture/throwaway-model",
+      "reason": "Before replace by agent:upgrade-fixture/throwaway-model",
+      "size": null,
+      "createdAt": "2026-10-01T13:00:38.068Z",
+      "documentSha256": "9bf927719f996046cfb794156e185bf7aef944565c36ae5fcb4949ab9719821c"
+    },
+    {
+      "documentId": "fx_perf-2000n-2500e",
+      "id": "v_8df1fbbfdeeb97826d29d",
+      "name": "checkpoint",
+      "actor": "agent:upgrade-fixture/throwaway-model",
+      "reason": "Before replace by agent:upgrade-fixture/throwaway-model",
+      "size": null,
+      "createdAt": "2026-10-01T13:00:38.952Z",
+      "documentSha256": "3fd8b99ab87ac48ef131191b1653107f1ad90dbc4022c9031ae40743648c4f6d"
+    },
+    {
+      "documentId": "fx_perf-2000n-2500e",
+      "id": "v_8df1fbbfdaaf436b8857c",
+      "name": "checkpoint",
+      "actor": "agent:upgrade-fixture/throwaway-model",
+      "reason": "Before replace by agent:upgrade-fixture/throwaway-model",
+      "size": null,
+      "createdAt": "2026-10-01T13:00:38.508Z",
+      "documentSha256": "feaf6a7c0f8922492d96c337cc8528b4b0f1c7045d09ce007ae7c669bc14bfe1"
+    },
+    {
+      "documentId": "fx_medium_chain",
+      "id": "v_8df1fbbfd6eae0e606f1b",
+      "name": "checkpoint",
+      "actor": "agent:upgrade-fixture/throwaway-model",
+      "reason": "Before replace by agent:upgrade-fixture/throwaway-model",
+      "size": null,
+      "createdAt": "2026-10-01T13:00:38.113Z",
+      "documentSha256": "ecfd703d2952f305e7a8da902eeb08188c9b73106e1486d232fabc18b0085628"
+    },
+    {
+      "documentId": "fx_medium_chain",
+      "id": "v_8df1fbbfd6cb31a17d437",
+      "name": "checkpoint",
+      "actor": "agent:upgrade-fixture/throwaway-model",
+      "reason": "Before replace by agent:upgrade-fixture/throwaway-model",
+      "size": null,
+      "createdAt": "2026-10-01T13:00:38.100Z",
+      "documentSha256": "7ce5cf139b9cb97aea43993b852896c059257ff33ed56def6245be354675062c"
+    }
+  ],
+  "assets": [
+    {
+      "id": "asset_43f2d419571f",
+      "sha256": "3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e",
+      "bytes": 88,
+      "contentType": "image/png"
+    }
+  ],
+  "audit": {},
+  "securityEvents": null,
+  "skippedDocuments": [
+    {
+      "id": "fx_flythrough",
+      "source": "generated",
+      "reason": "400 Document is not valid (document): Some additional properties did not match the required schema: [\"flythrough\"]; /flythrough: All values fail against the false schema"
+    }
+  ],
+  "build": {
+    "reportedVersion": "0.1.0"
+  },
+  "branding": {
+    "productName": "Fixture Diagrams (throwaway)",
+    "uploads": {
+      "logo": {
+        "status": 200,
+        "sha256": "b4c18a5be60fe1c811be5c7fc0b83ade087bb22e56ba21204f817c33bf06e143",
+        "bytes": 99
+      },
+      "logo-light": {
+        "status": 200,
+        "sha256": "a0dda6e0c1b0742e7d4f9e38ef5a76e101300538ee3d46baf0193d01b52c2f84",
+        "bytes": 174
+      },
+      "favicon": {
+        "status": 200,
+        "sha256": "6432a7a1adf1f205fbe8831e08b57a72ae05ba5470e7953da5aacdd18788cf2d",
+        "bytes": 79
+      }
+    },
+    "served": {
+      "logo": {
+        "sha256": "b4c18a5be60fe1c811be5c7fc0b83ade087bb22e56ba21204f817c33bf06e143",
+        "contentType": "image/png"
+      },
+      "logo-light": {
+        "sha256": "a0dda6e0c1b0742e7d4f9e38ef5a76e101300538ee3d46baf0193d01b52c2f84",
+        "contentType": "image/svg+xml"
+      },
+      "favicon": {
+        "sha256": "6432a7a1adf1f205fbe8831e08b57a72ae05ba5470e7953da5aacdd18788cf2d",
+        "contentType": "image/png"
+      }
+    },
+    "state": {
+      "themeName": "Overpass",
+      "themeProductName": "Draughtsman",
+      "productName": "Fixture Diagrams (throwaway)",
+      "mode": "dark",
+      "logo": "/api/theme/logo",
+      "logoLight": "/api/theme/logo-light",
+      "favicon": "/api/theme/favicon",
+      "overridden": {
+        "productName": true,
+        "logo": true,
+        "logoLight": true,
+        "favicon": true
+      }
+    },
+    "themeProductName": "Fixture Diagrams (throwaway)"
+  },
+  "ai": {
+    "provider": "openai",
+    "model": "fixture-model-throwaway",
+    "endpoint": "https://ai.example.invalid/v1",
+    "apiKey": "sk-THROWAWAY-upgrade-fixture-not-a-real-key-0123456789",
+    "putStatus": 200,
+    "keyStatus": 200,
+    "state": {
+      "enabled": true,
+      "effective": {
+        "provider": "openai",
+        "model": "fixture-model-throwaway",
+        "endpoint": "https://ai.example.invalid/v1"
+      },
+      "file": {},
+      "overrides": {
+        "provider": "openai",
+        "model": "fixture-model-throwaway",
+        "endpoint": "https://ai.example.invalid/v1"
+      },
+      "key": {
+        "source": "stored",
+        "environmentVariable": "DRAUGHTSMAN_AI_KEY",
+        "environmentSet": false,
+        "storedSet": true,
+        "storedUnreadable": false,
+        "required": true
+      },
+      "providers": [
+        "ollama",
+        "openai",
+        "anthropic",
+        "azure-openai"
+      ]
+    }
+  },
+  "documentListTotal": 7,
+  "dslExport": true
+}

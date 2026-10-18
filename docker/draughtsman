@@ -1,0 +1,5 @@
+#!/bin/sh
+# The documented command line inside the image: `docker exec <container> draughtsman backup ...` is the short form of
+# `docker exec <container> dotnet /app/draughtsman.dll backup ...`, which keeps working. The image ships the server
+# framework-dependent (a dll, not a native executable), so this one line is all the launcher there is.
+exec dotnet /app/draughtsman.dll "$@"

@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+    <!-- An MCP client so the MCP tests drive the tools over the real streamable-HTTP transport, not by calling them in-process. -->
+    <PackageReference Include="ModelContextProtocol" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Draughtsman.Server\Draughtsman.Server.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\docs\examples\editor-session.json" Link="contract\editor-session.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\order-service.json" Link="contract\order-service.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\checkout-sequence.json" Link="contract\checkout-sequence.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\checkout-fragments.json" Link="contract\checkout-fragments.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\sample-order-approval.json" Link="contract\sample-order-approval.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\perf-2000n-2500e.json" Link="contract\perf-2000n-2500e.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\order-service.dsl" Link="contract\order-service.dsl" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\checkout-sequence.dsl" Link="contract\checkout-sequence.dsl" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\checkout-fragments.dsl" Link="contract\checkout-fragments.dsl" CopyToOutputDirectory="PreserveNewest" />
+    <!-- A real key ring and stored AI key as main wrote them before key ring protection, for the migration tests. -->
+    <Content Include="Fixtures\key-ring-from-main\**\*.xml;Fixtures\key-ring-from-main\**\*.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\schema\document.schema.json" Link="contract\document.schema.json" CopyToOutputDirectory="PreserveNewest" />
+    <!-- The shipped Overpass brand assets, so the asset test reads the real bytes rather than a fixture. -->
+    <Content Include="..\..\themes\assets\overpass-logo.svg" Link="themes\overpass-logo.svg" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\themes\assets\overpass-logo-light.svg" Link="themes\overpass-logo-light.svg" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\themes\assets\overpass-logo-compact.svg" Link="themes\overpass-logo-compact.svg" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\themes\assets\overpass-logo-compact-light.svg" Link="themes\overpass-logo-compact-light.svg" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\themes\assets\overpass-favicon.svg" Link="themes\overpass-favicon.svg" CopyToOutputDirectory="PreserveNewest" />
+    <!-- The shipped theme itself, for the tests that need it with logos added (LogoThemedServerFactory). -->
+    <Content Include="..\..\themes\chrome.yaml" Link="themes\chrome.yaml" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Compile Include="..\Shared\LoadScale.cs" Link="Shared\LoadScale.cs" />
+    <Compile Include="..\Shared\UpgradeFixturePaths.cs" Link="Shared\UpgradeFixturePaths.cs" />
+    <Compile Include="..\Shared\DrawioFixtures.cs" Link="Shared\DrawioFixtures.cs" />
+    <Compile Include="..\Shared\VisioPackageBuilder.cs" Link="Shared\VisioPackageBuilder.cs" />
+    <Compile Include="..\Shared\VisioFixtures.cs" Link="Shared\VisioFixtures.cs" />
+    <Compile Include="..\Shared\ZipTamper.cs" Link="Shared\ZipTamper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The hand-written draw.io files the importer tests in Draughtsman.Core.Tests read, so the endpoint and the MCP tool are tested on the same bytes. -->
+    <Content Include="..\Draughtsman.Core.Tests\Import\DrawioFixtures\*" Link="drawio-fixtures\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!--
+      Optimised code from the first call, on every platform. A .NET method starts at tier 0 and is recompiled optimised only after 30 calls, so a JIT fault that
+      lives only in optimised code stays hidden from a test that runs a method once (CI found one in SqliteTableCounts.ReadVerified on Linux x64 only after
+      enough earlier tests had called it). The storage safety checks run once per start in production, but their tests must see the code the JIT is
+      most likely to get wrong. See SqliteTableCountsVerifiedTests.
+    -->
+    <TieredCompilation>false</TieredCompilation>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+    <!-- Dynamic skip: the Postgres leg of the provider suite skips, rather than fails, when no database is reachable. -->
+    <PackageReference Include="Xunit.SkippableFact" Version="1.5.23" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Draughtsman.Storage\Draughtsman.Storage.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Shared\UpgradeFixturePaths.cs" Link="Shared\UpgradeFixturePaths.cs" />
+    <None Include="MigrationSafety\allowed-destructive-migrations.json" CopyToOutputDirectory="PreserveNewest" Link="MigrationSafety\allowed-destructive-migrations.json" />
+  </ItemGroup>
+
+</Project>

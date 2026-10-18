@@ -1,0 +1,304 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://draughtsman.overpass.co.uk/schema/document/v1",
+  "title": "Draughtsman document",
+  "description": "A Draughtsman diagram: a typed graph of nodes and edges plus a small header. This JSON form is the interchange format (REST, MCP, export); the same field names are used by the C# records in Draughtsman.Core and the TypeScript types in web/src/model/types.ts. Geometry is in canvas units (CSS pixels at zoom 1) and is always absolute, including for nodes inside containers; a node without geometry has not been laid out yet.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "schemaVersion", "title", "type", "nodes", "edges", "meta"],
+  "properties": {
+    "id": { "$ref": "#/$defs/id" },
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1,
+      "description": "Gates migrations. Every bump ships a migration; old files always open."
+    },
+    "title": { "type": "string" },
+    "type": { "$ref": "#/$defs/documentType" },
+    "theme": {
+      "type": "object",
+      "description": "Optional document-level diagram-theme token overrides, token name to value. A colour-valued override takes the same forms as an element style colour: a CSS colour literal or a theme token reference of the form token:<name>. Two narrowings: a palette.<name> override is a colour literal, never a token: reference, so key order cannot change the picture; and canvasBackground and exportBackground must be hex with a leading #, because the colour of text drawn straight on a surface is derived from it, and anything else leaves that text the theme's own colour. Absent means the workspace's diagram theme applies unchanged.",
+      "additionalProperties": { "type": "string" }
+    },
+    "nodes": { "type": "array", "items": { "$ref": "#/$defs/node" } },
+    "edges": { "type": "array", "items": { "$ref": "#/$defs/edge" } },
+    "meta": { "$ref": "#/$defs/meta" },
+    "flythrough": { "$ref": "#/$defs/flythrough" }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "description": "Stable short identifier. Never regenerated on load so agents and the DSL can reference it across edits. Conventionally n_ for nodes, e_ for edges, c_ for containers.",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "documentType": {
+      "type": "string",
+      "enum": ["flowchart", "architecture", "freeform", "sequence"]
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "label", "shape"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": {
+          "type": "string",
+          "description": "Semantic kind, from the vocabulary for the document type (src/Draughtsman.Core/Schemas/<type>.json). Unknown kinds are allowed but flagged by lint."
+        },
+        "label": { "type": "string" },
+        "shape": {
+          "type": "string",
+          "description": "Presentation only. One of rectangle | rounded | diamond | cylinder | pill | hexagon | parallelogram | document | predefined-process | manual-input | off-page-connector | delay | manual-operation | display | stored-data | multi-document | merge | extract | on-page-connector | summing-junction | or | collate | sort | loop-limit | internal-storage | card | text | image | custom:<lib>/<name>. Preparation is the hexagon (ISO 5807), not a shape of its own.",
+          "pattern": "^(rectangle|rounded|diamond|cylinder|pill|hexagon|parallelogram|document|predefined-process|manual-input|off-page-connector|delay|manual-operation|display|stored-data|multi-document|merge|extract|on-page-connector|summing-junction|or|collate|sort|loop-limit|internal-storage|card|text|image|custom:[A-Za-z0-9_-]+/[A-Za-z0-9_.-]+)$"
+        },
+        "geometry": {
+          "$ref": "#/$defs/geometry",
+          "description": "Absolute canvas position and size. Absent on a node that arrived without a position (DSL or Mermaid import) and is waiting for the layout step; always present once laid out."
+        },
+        "style": { "$ref": "#/$defs/nodeStyle" },
+        "props": { "$ref": "#/$defs/props" },
+        "parent": {
+          "$ref": "#/$defs/id",
+          "description": "Id of the container node this node sits inside."
+        },
+        "ports": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/port" }
+        }
+      }
+    },
+    "geometry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y", "w", "h"],
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "w": { "type": "number", "minimum": 0 },
+        "h": { "type": "number", "minimum": 0 },
+        "rotation": {
+          "type": "number",
+          "default": 0,
+          "description": "Degrees, clockwise, about the node centre."
+        }
+      }
+    },
+    "nodeStyle": {
+      "type": "object",
+      "description": "Sparse. Every field optional; absent means inherit from the diagram theme plus the kind's default.",
+      "additionalProperties": false,
+      "properties": {
+        "fill": { "$ref": "#/$defs/colour" },
+        "stroke": { "$ref": "#/$defs/colour" },
+        "strokeWidth": { "type": "number", "minimum": 0 },
+        "textColor": { "$ref": "#/$defs/colour" },
+        "font": { "type": "string" },
+        "dash": { "$ref": "#/$defs/dash" },
+        "fontSize": { "type": "number", "minimum": 0 },
+        "bold": { "type": "boolean" }
+      }
+    },
+    "edgeStyle": {
+      "type": "object",
+      "description": "Sparse. Every field optional; absent means inherit from the diagram theme plus the edge kind's default.",
+      "additionalProperties": false,
+      "properties": {
+        "stroke": { "$ref": "#/$defs/colour" },
+        "strokeWidth": { "type": "number", "minimum": 0 },
+        "dash": { "$ref": "#/$defs/dash" },
+        "arrowStart": { "$ref": "#/$defs/arrowHead" },
+        "arrowEnd": { "$ref": "#/$defs/arrowHead" }
+      }
+    },
+    "colour": {
+      "type": "string",
+      "maxLength": 64,
+      "pattern": "^(#([0-9A-Fa-f]{3,4}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})|(rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch|color)\\([0-9A-Za-z%.,/ +-]*\\)|token:[A-Za-z0-9._-]+|[A-Za-z]+)$",
+      "description": "A CSS colour literal (a hex colour, an rgb/hsl/hwb/lab/lch/oklab/oklch/color function, or a named colour) or a theme token reference of the form token:<name>. Nothing else: a url(), a variable or any other CSS value would reach the SVG paint attributes of an export."
+    },
+    "dash": {
+      "type": "string",
+      "enum": ["solid", "dashed", "dotted"]
+    },
+    "arrowHead": {
+      "type": "string",
+      "enum": ["none", "arrow", "open", "diamond", "circle", "one", "many", "zeroOrOne", "oneOrMany", "zeroOrMany", "oneAndOnlyOne", "inheritance", "aggregation", "composition"]
+    },
+    "props": {
+      "type": "object",
+      "description": "Free key/values preserved verbatim: owner, url, ticket, and anything an agent wants to keep.",
+      "additionalProperties": true
+    },
+    "port": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "x", "y"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "x": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Position across the node's width, 0 = left edge, 1 = right edge."
+        },
+        "y": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Position down the node's height, 0 = top edge, 1 = bottom edge."
+        }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "from", "to"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": {
+          "type": "string",
+          "description": "Semantic kind, from the edge vocabulary for the document type: flow | data | dependency | association."
+        },
+        "label": { "type": "string" },
+        "from": { "$ref": "#/$defs/endpoint" },
+        "to": { "$ref": "#/$defs/endpoint" },
+        "routing": { "$ref": "#/$defs/routing" },
+        "style": { "$ref": "#/$defs/edgeStyle" },
+        "props": { "$ref": "#/$defs/props" }
+      }
+    },
+    "portRef": {
+      "type": "string",
+      "description": "The port an edge end attaches to: the id of a port the node declares, or a derived column port on an ER entity, col:<name>. A column port is never declared: it addresses one row of the entity's props.columns by the column name, with every byte outside letters, digits, underscore and hyphen written %XX (UTF-8, upper-case hex), and resolves against the entity's own layout, so it stays attached when columns are added, removed or reordered. A name no column has attaches the end to the table, with a lint warning.",
+      "pattern": "^([A-Za-z_][A-Za-z0-9_.-]*|col:[A-Za-z0-9_%-]+)$",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "endpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node"],
+      "properties": {
+        "node": { "$ref": "#/$defs/id" },
+        "port": { "$ref": "#/$defs/portRef" }
+      }
+    },
+    "routing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode"],
+      "properties": {
+        "mode": { "type": "string", "enum": ["orthogonal", "straight", "curved"] },
+        "waypoints": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/point" }
+        }
+      }
+    },
+    "point": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y"],
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["createdAt", "updatedAt", "createdBy"],
+      "properties": {
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "createdBy": {
+          "type": "string",
+          "description": "User id, or agent identity for documents created through MCP."
+        },
+        "aiProvenance": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/aiProvenance" }
+        }
+      }
+    },
+    "flythrough": {
+      "type": "object",
+      "description": "Optional camera path over the diagram, the data behind Present (docs/flythrough.md). A presentation of the graph, never part of it: no node or edge refers to it, every renderer and the Mermaid export ignore it, and a document without one is unchanged. Absent means no tour; a tour with no keyframes is absent, not empty.",
+      "additionalProperties": false,
+      "required": ["keyframes"],
+      "properties": {
+        "keyframes": {
+          "type": "array",
+          "description": "The stops of the tour, in tour order. Keyframe ids are unique.",
+          "minItems": 1,
+          "maxItems": 500,
+          "items": { "$ref": "#/$defs/keyframe" }
+        },
+        "loop": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether the tour travels from the last keyframe back to the first and plays on. Absent means it stops at the last."
+        }
+      }
+    },
+    "keyframe": {
+      "type": "object",
+      "description": "One stop of a flythrough: a camera framing a rectangle of the canvas, an optional caption, and how the camera arrives and how long it stays. Timings and easing are sparse: absent means the player's default (1500 ms to arrive, 2500 ms hold, easeInOut).",
+      "additionalProperties": false,
+      "required": ["id", "view"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "view": { "$ref": "#/$defs/viewRect" },
+        "caption": { "type": "string", "description": "Text shown over the diagram while the camera is at this keyframe." },
+        "durationMs": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 600000,
+          "description": "Milliseconds the camera takes to travel here from the previous keyframe; on the first keyframe, from the last one when the tour loops. Ignored by easing cut."
+        },
+        "holdMs": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 600000,
+          "description": "Milliseconds an autoplaying tour stays at this keyframe before it travels on. A presenter stepping by hand is never held."
+        },
+        "easing": {
+          "type": "string",
+          "enum": ["cut", "linear", "easeIn", "easeOut", "easeInOut"],
+          "description": "How the camera's progress is eased on the way here: cut jumps, the rest shape a smooth fly. Absent means easeInOut."
+        }
+      }
+    },
+    "viewRect": {
+      "type": "object",
+      "description": "A rectangle of the canvas in canvas units, absolute like a geometry. The camera fits the whole rectangle into whatever window plays the tour, so width and height are above zero.",
+      "additionalProperties": false,
+      "required": ["x", "y", "w", "h"],
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "w": { "type": "number", "exclusiveMinimum": 0 },
+        "h": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "aiProvenance": {
+      "type": "object",
+      "description": "Records which agent and model created or last changed which elements, for audit in regulated environments.",
+      "additionalProperties": false,
+      "required": ["agent", "at", "action", "elementIds"],
+      "properties": {
+        "agent": { "type": "string", "description": "Agent identity, e.g. claude-code, codex." },
+        "model": { "type": "string", "description": "Model identifier if known." },
+        "at": { "type": "string", "format": "date-time" },
+        "action": { "type": "string", "enum": ["created", "updated", "removed"] },
+        "elementIds": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/id" },
+          "description": "Node and edge ids touched by this write."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "library": "er",
+  "description": "Entity-relationship (database table) shapes, drawn from scratch. Each is placed as the presentation shape custom:er/<name> (an architecture node gets it from its kind - entity or weak-entity - but a freeform document has no kind vocabulary, so write shape=custom:er/entity explicitly there): entity (a table box: a name band, then one row per column) and weak-entity (the same box with a double border, for an entity that cannot be identified without its owner). An entity is ONE node; its name is the node label and its columns are props.columns, an array of strings, ONE COLUMN PER STRING, each written in this line format: [PK] [FK] name type [not null | null]. The optional key markers PK (primary key) and FK (foreign key) come first, in either order, and a column that is both writes both (\"PK FK OrderId int not null\") - that is how a composite primary key or a primary key that is also a foreign key is written: one PK row per key column. Then the column name, one word; a name with spaces or other odd characters is written in double quotes (\"PK FK \\\"Order Id\\\" int not null\" in JSON). Then the data type, which may contain spaces, commas and parentheses (nvarchar(50), decimal(10, 2), datetime2, uniqueidentifier, rowversion, double precision). The line may end in not null or null (case does not matter); leave it off when nullability is unknown, and nothing is drawn for it. Examples: \"PK Id int not null\", \"FK UserId nvarchar(50) not null\", \"Email nvarchar(100) null\", \"PK FK OrderId int not null\". The renderers draw the rows as real aligned columns (key marker, name, type, null or not null), left-aligned, and a divider after the leading run of PK rows. A column line is stored exactly as typed, so it round-trips through JSON and the DSL unchanged. Relationships are edges between two entity nodes (edge kind association) whose style.arrowStart and style.arrowEnd are the crow's-foot ends already in the schema: one, zeroOrOne, oneAndOnlyOne, many, zeroOrMany, oneOrMany; a one-to-many relationship from Customer to Order is arrowStart oneAndOnlyOne, arrowEnd zeroOrMany. A relationship can attach to a column row rather than the table: an edge end whose port is col:<name> (the column's name, with every character outside letters, digits, underscore and hyphen written %XX in UTF-8, so \"Order Id\" is col:Order%20Id) attaches at the middle of that row on the side of the table facing the other end, and the connector leaves horizontally. In the DSL it is the port after the dot: edge e_1 association t_order.col:CustomerId -> t_customer.col:Id. The port is derived from the rows, never declared on the node, so it stays attached when columns are added, removed or reordered; a name no column has attaches the end to the table and lint warns. Draw a foreign key from the FK column of the child to the referenced key column of the parent. The box height comes from the content (a name band, one row per column, an empty entity keeps one row) using the metrics below, which the web canvas (web/src/model/erShapes.ts), the MCP SVG renderer (src/Draughtsman.Mcp/Rendering/SvgRenderer.cs) and the layout sidecar (sidecar/src/layout/erSize.ts) all read, so they cannot drift; a box taller than its content gives the extra to the bottom of the row area. The examples array is the parser's conformance suite: every implementation must produce exactly those parses.",
+  "metrics": {
+    "fontSize": 13,
+    "rowHeight": 18,
+    "padX": 8,
+    "padY": 5,
+    "charWidth": 7.5,
+    "boldWidth": 1.1,
+    "columnGap": 12,
+    "minWidth": 120,
+    "doubleInset": 3
+  },
+  "shapes": [
+    {
+      "name": "entity",
+      "label": "Entity",
+      "kind": "entity",
+      "defaultLabel": "TableName",
+      "double": false,
+      "defaultProps": { "columns": ["PK Id int not null", "Name nvarchar(100) not null", "Notes nvarchar(max) null"] }
+    },
+    {
+      "name": "weak-entity",
+      "label": "Weak entity",
+      "kind": "weak-entity",
+      "defaultLabel": "WeakTable",
+      "double": true,
+      "defaultProps": { "columns": ["PK FK OwnerId int not null", "PK Line int not null", "Detail nvarchar(200) null"] }
+    }
+  ],
+  "examples": [
+    { "line": "PK Id int not null", "keys": ["PK"], "name": "Id", "type": "int", "nullable": "notnull" },
+    { "line": "FK UserId nvarchar(50) not null", "keys": ["FK"], "name": "UserId", "type": "nvarchar(50)", "nullable": "notnull" },
+    { "line": "Email nvarchar(100) null", "keys": [], "name": "Email", "type": "nvarchar(100)", "nullable": "null" },
+    { "line": "PK FK OrderId int not null", "keys": ["PK", "FK"], "name": "OrderId", "type": "int", "nullable": "notnull" },
+    { "line": "fk pk OrderId int NOT NULL", "keys": ["PK", "FK"], "name": "OrderId", "type": "int", "nullable": "notnull" },
+    { "line": "Price decimal(10, 2) NULL", "keys": [], "name": "Price", "type": "decimal(10, 2)", "nullable": "null" },
+    { "line": "  Balance   double   precision  ", "keys": [], "name": "Balance", "type": "double precision", "nullable": null },
+    { "line": "RowVer rowversion not null", "keys": [], "name": "RowVer", "type": "rowversion", "nullable": "notnull" },
+    { "line": "PK \"Order Id\" uniqueidentifier not null", "keys": ["PK"], "name": "Order Id", "type": "uniqueidentifier", "nullable": "notnull" },
+    { "line": "PK Id", "keys": ["PK"], "name": "Id", "type": "", "nullable": null },
+    { "line": "PK Id not null", "keys": ["PK"], "name": "Id", "type": "", "nullable": "notnull" },
+    { "line": "PK", "keys": [], "name": "PK", "type": "", "nullable": null },
+    { "line": "pk pk int", "keys": ["PK"], "name": "pk", "type": "int", "nullable": null },
+    { "line": "Notes null", "keys": [], "name": "Notes", "type": "", "nullable": "null" },
+    { "line": "\"pk\" int not null", "keys": [], "name": "pk", "type": "int", "nullable": "notnull" },
+    { "line": "\"Odd name", "keys": [], "name": "Odd name", "type": "", "nullable": null },
+    { "line": "Flag bit notnull", "keys": [], "name": "Flag", "type": "bit notnull", "nullable": null }
+  ]
+}

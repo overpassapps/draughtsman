@@ -1,0 +1,88 @@
+{
+  "provider": "postgres",
+  "files": [
+    {
+      "path": "ai/settings.json",
+      "size": 334,
+      "sha256": "87db09e422f58c3a757d4d780e5805fbe6d1fc8ae0e7db94717a8856f7960057"
+    },
+    {
+      "path": "assets/3b/3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e.png",
+      "size": 88,
+      "sha256": "3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e"
+    },
+    {
+      "path": "branding/branding.json",
+      "size": 134,
+      "sha256": "8c9e67cb9db7131d05cd7773df124d81801ad4d2ab552e7b153829ce51273309"
+    },
+    {
+      "path": "branding/favicon.png",
+      "size": 79,
+      "sha256": "6432a7a1adf1f205fbe8831e08b57a72ae05ba5470e7953da5aacdd18788cf2d"
+    },
+    {
+      "path": "branding/logo-light.svg",
+      "size": 174,
+      "sha256": "a0dda6e0c1b0742e7d4f9e38ef5a76e101300538ee3d46baf0193d01b52c2f84"
+    },
+    {
+      "path": "branding/logo.png",
+      "size": 99,
+      "sha256": "b4c18a5be60fe1c811be5c7fc0b83ade087bb22e56ba21204f817c33bf06e143"
+    },
+    {
+      "path": "draughtsman.yaml",
+      "size": 268,
+      "sha256": "5137d626ba8ceecc9fc5396c53c4311ba2720b1b27dd287989a229788a67ca86"
+    },
+    {
+      "path": "keys/key-2114fc15-7781-4a13-9117-170d4b8cc0a6.xml",
+      "size": 1418,
+      "sha256": "d367b8a50f16e8f7f6e81364827801d58443a42401a62dfd70d19148a907b334"
+    },
+    {
+      "path": "licence.key",
+      "size": 375,
+      "sha256": "3436b96277e99184ee4cf47b66a60d6e77ef99af9cd35518acf2af88da0ce301"
+    },
+    {
+      "path": "themes/org/_settings.json",
+      "size": 39,
+      "sha256": "e98de673ece3d143015df690b6809cb7b6bebddfe8406ae5d8fe0e8904fdee59"
+    },
+    {
+      "path": "themes/org/fixture-second-theme-throwaway.yaml",
+      "size": 611,
+      "sha256": "a4817cdbc3b7679d231c6082771deb1af8168ed116698f6a3adc5decf682866c"
+    },
+    {
+      "path": "themes/org/fixture-theme-throwaway.yaml",
+      "size": 664,
+      "sha256": "fb4c20120c2e4ec57fbaa7ab6f52d127343539e943472b68b6a417f871bc4bd1"
+    }
+  ],
+  "migrations": [
+    "20260921080136_Initial",
+    "20260929083332_Assets",
+    "20260929094225_AddAuth",
+    "20260929101734_AddAuditActorUserId",
+    "20260930214350_AddSecurityEventsAndTokenExpiry",
+    "20260930222759_AddDocumentEtag",
+    "20260930233555_AddDocumentBin",
+    "20261001092928_AddPasswordResetTokens"
+  ],
+  "rowCounts": {
+    "__EFMigrationsHistory": 8,
+    "api_tokens": 5,
+    "assets": 1,
+    "audit": 25,
+    "document_versions": 9,
+    "documents": 13,
+    "security_events": 17,
+    "sessions": 4,
+    "users": 3
+  },
+  "dumpSha256": "6528549f89862e7569025bf7b90665cd6a8505ddba361e9ccbc7ac702f939142",
+  "dataFolderSha256": "8ad7ce2594f475fff427b5eeea10c5cdda6fe794381d85403b56a507c50461d7"
+}

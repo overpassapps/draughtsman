@@ -1,0 +1,151 @@
+{
+  "id": "doc_shop_schema",
+  "schemaVersion": 1,
+  "title": "Shop schema",
+  "type": "architecture",
+  "nodes": [
+    {
+      "id": "t_customer",
+      "kind": "entity",
+      "label": "customer",
+      "shape": "custom:er/entity",
+      "geometry": {
+        "x": 40,
+        "y": 60,
+        "w": 262,
+        "h": 92
+      },
+      "props": {
+        "columns": [
+          "PK id INT not null",
+          "name VARCHAR(120) not null",
+          "email VARCHAR(254) not null"
+        ]
+      }
+    },
+    {
+      "id": "t_product",
+      "kind": "entity",
+      "label": "product",
+      "shape": "custom:er/entity",
+      "geometry": {
+        "x": 1200,
+        "y": 60,
+        "w": 277,
+        "h": 92
+      },
+      "props": {
+        "columns": [
+          "PK id INT not null",
+          "name VARCHAR(120) not null",
+          "price DECIMAL(10, 2) not null"
+        ]
+      }
+    },
+    {
+      "id": "t_customer_order",
+      "kind": "entity",
+      "label": "customer_order",
+      "shape": "custom:er/entity",
+      "geometry": {
+        "x": 420,
+        "y": 60,
+        "w": 285,
+        "h": 92
+      },
+      "props": {
+        "columns": [
+          "PK id INT not null",
+          "FK customer_id INT not null",
+          "placed_at TIMESTAMP not null"
+        ]
+      }
+    },
+    {
+      "id": "t_order_line",
+      "kind": "weak-entity",
+      "label": "order_line",
+      "shape": "custom:er/weak-entity",
+      "geometry": {
+        "x": 800,
+        "y": 60,
+        "w": 257,
+        "h": 92
+      },
+      "props": {
+        "columns": [
+          "PK FK order_id INT not null",
+          "PK FK product_id INT not null",
+          "quantity INT not null"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_1",
+      "kind": "association",
+      "label": "customer_id",
+      "from": {
+        "node": "t_customer_order",
+        "port": "col:customer_id"
+      },
+      "to": {
+        "node": "t_customer",
+        "port": "col:id"
+      },
+      "routing": {
+        "mode": "orthogonal"
+      },
+      "style": {
+        "arrowStart": "zeroOrMany",
+        "arrowEnd": "oneAndOnlyOne"
+      }
+    },
+    {
+      "id": "e_2",
+      "kind": "association",
+      "label": "order_id",
+      "from": {
+        "node": "t_order_line",
+        "port": "col:order_id"
+      },
+      "to": {
+        "node": "t_customer_order",
+        "port": "col:id"
+      },
+      "routing": {
+        "mode": "orthogonal"
+      },
+      "style": {
+        "arrowStart": "zeroOrMany",
+        "arrowEnd": "oneAndOnlyOne"
+      }
+    },
+    {
+      "id": "e_3",
+      "kind": "association",
+      "label": "product_id",
+      "from": {
+        "node": "t_order_line",
+        "port": "col:product_id"
+      },
+      "to": {
+        "node": "t_product",
+        "port": "col:id"
+      },
+      "routing": {
+        "mode": "orthogonal"
+      },
+      "style": {
+        "arrowStart": "zeroOrMany",
+        "arrowEnd": "oneAndOnlyOne"
+      }
+    }
+  ],
+  "meta": {
+    "createdAt": "2026-10-01T00:00:00.000Z",
+    "updatedAt": "2026-10-01T00:00:00.000Z",
+    "createdBy": "eric"
+  }
+}

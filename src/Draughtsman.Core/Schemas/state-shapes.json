@@ -1,0 +1,15 @@
+{
+  "library": "state",
+  "description": "UML state-machine shapes drawn from scratch following the standard notation: pseudostates (initial, final, choice, shallow and deep history, entry and exit points) and the fork/join synchronisation bar, plus the composite state, which is a container. Each shape is placed as the presentation shape custom:state/<name>, a branch the document schema already admits, so no schema change is needed. Every shape carries its own flowchart kind as kind and paletteKind, so the DSL printer elides the shape and get_schema teaches an agent when to use it; the drawing lives natively beside every other shape in both renderers (web/src/canvas/shapes.tsx and src/Draughtsman.Mcp/Rendering/SvgRenderer.cs), swept against this file's names by a test on each side.",
+  "shapes": [
+    { "name": "initial", "label": "Initial", "kind": "initial", "paletteKind": "initial" },
+    { "name": "final", "label": "Final", "kind": "final", "paletteKind": "final" },
+    { "name": "choice", "label": "Choice", "kind": "choice", "paletteKind": "choice" },
+    { "name": "fork-join", "label": "Fork / join", "kind": "fork-join", "paletteKind": "fork-join" },
+    { "name": "shallow-history", "label": "Shallow history", "kind": "shallow-history", "paletteKind": "shallow-history" },
+    { "name": "deep-history", "label": "Deep history", "kind": "deep-history", "paletteKind": "deep-history" },
+    { "name": "entry-point", "label": "Entry point", "kind": "entry-point", "paletteKind": "entry-point" },
+    { "name": "exit-point", "label": "Exit point", "kind": "exit-point", "paletteKind": "exit-point" },
+    { "name": "composite-state", "label": "Composite state", "kind": "composite-state", "paletteKind": "composite-state" }
+  ]
+}

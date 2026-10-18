@@ -1,0 +1,4779 @@
+/*
+ * App shell styles. Every colour, radius and font is a token from src/generated/tokens.css (compiled from
+ * themes/*.yaml); nothing here names a literal colour.
+ */
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+/* The outline of a control (input, select, button, swatch) is derived from the theme's own text and surface so every
+   theme, including a client's, gets one that reads at 3:1 (QA-03); `--chrome-border` stays the hairline for dividers and
+   panel edges. The mix must match CONTROL_BORDER_MIX in src/theme/themeContrast.ts, which checks it. */
+:root {
+  --chrome-border-strong: color-mix(in srgb, var(--chrome-text) 52%, var(--chrome-surface));
+  /* The keyboard focus ring is the theme's text colour, not its accent: the accent is a red in the shipped theme, the
+     same family as the danger colour a failed field is outlined in, so a focused control and an error read alike (QA
+     P13). Text on surface is the pair every theme already holds to AA, so the ring reads on any of them. */
+  --chrome-focus-ring: var(--chrome-text);
+}
+
+body {
+  background: var(--chrome-surface);
+  color: var(--chrome-text);
+  font-family: var(--chrome-font-ui);
+  font-size: 14px;
+  color-scheme: var(--chrome-color-scheme);
+}
+
+a {
+  color: var(--chrome-accent);
+}
+
+.page {
+  padding: 24px;
+}
+
+.page-message {
+  padding: 24px;
+  color: var(--chrome-text-muted);
+}
+
+/* Keyboard focus is always visible (checklist item 28; design/atlas/editor-shell.md, "Focus rings use the focus token
+   and are never removed"): every focusable control gets the focus ring unless a rule below draws its own. :where()
+   keeps this at zero specificity, so those rules (and the canvas's pointer-focus exception) still win. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: 1px;
+}
+
+/* Viewer: bar on top, canvas filling the rest, zoom cluster floating bottom right of the canvas. */
+.viewer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.viewer-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 6px 12px;
+  background: var(--chrome-surface-raised);
+  border-bottom: 1px solid var(--chrome-border);
+  flex: none;
+}
+
+.viewer-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.viewer-title-button {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.viewer-title-button:hover {
+  color: var(--chrome-accent);
+}
+
+.viewer-title-input {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-accent);
+  border-radius: var(--chrome-radius);
+  padding: 2px 6px;
+}
+
+.viewer-meta {
+  color: var(--chrome-text-muted);
+  font-family: var(--chrome-font-mono);
+  font-size: 12px;
+}
+
+.viewer-notice {
+  color: var(--chrome-text);
+  font-size: 12px;
+}
+
+.viewer-save-status {
+  color: var(--chrome-text-muted);
+  font-size: 12px;
+}
+
+.viewer-error {
+  padding: 8px 12px;
+  color: var(--chrome-danger);
+  background: var(--chrome-surface-raised);
+  border-bottom: 1px solid var(--chrome-border);
+  flex: none;
+}
+
+.viewer-conflict {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface-raised);
+  border-bottom: 1px solid var(--chrome-border);
+  flex: none;
+}
+
+.viewer-conflict > span {
+  flex: 1 1 24ch;
+  min-width: 0;
+}
+
+.viewer-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  color: var(--chrome-text-muted);
+}
+
+.viewer-control + .viewer-control {
+  margin-left: 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viewer-zoom {
+  min-width: 4ch;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  color: var(--chrome-text);
+}
+
+.viewer-zoom-cluster {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  color: var(--chrome-text-muted);
+}
+
+.viewer-bar select,
+.viewer-bar button,
+.viewer-zoom-cluster button {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 2px 8px;
+  min-height: 26px;
+}
+
+.viewer-bar button,
+.viewer-zoom-cluster button {
+  cursor: pointer;
+}
+
+.viewer-zoom-cluster button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.viewer-zoom-cluster button[aria-pressed='true'] {
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+  border-color: var(--chrome-brand);
+}
+
+.viewer-bar select:focus-visible,
+.viewer-bar button:focus-visible,
+.viewer-zoom-cluster button:focus-visible {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: 1px;
+}
+
+.viewer-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.viewer-canvas {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+}
+
+/* A shape armed from the panel (DocumentViewer.tsx's onCanvasPointerDownCapture) places on the next click, so the
+   cursor shows a crosshair over the whole canvas surface until then. */
+.viewer-canvas[data-armed-shape] {
+  cursor: crosshair;
+}
+
+/* Menu button and its menu (editor/EditorMenu.tsx): the menu drops from the bar's left edge over the canvas, one
+   list with the atlas's five menus as headed sections, each item's shortcut right-aligned as in the palette. */
+.editor-menu {
+  position: relative;
+  display: inline-flex;
+}
+
+.viewer-bar .editor-menu-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 6px;
+}
+
+.viewer-bar .editor-menu-button[aria-expanded='true'] {
+  border-color: var(--chrome-accent);
+}
+
+.editor-menu-popup {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  min-width: 280px;
+  max-height: min(70vh, 640px);
+  padding: 4px;
+  overflow-y: auto;
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--chrome-text) 20%, transparent);
+}
+
+.editor-menu-section + .editor-menu-section {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid var(--chrome-border);
+}
+
+.editor-menu-heading {
+  padding: 4px 8px 2px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--chrome-text-muted);
+}
+
+.viewer-bar .editor-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  min-height: 28px;
+  padding: 2px 8px;
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.viewer-bar .editor-menu-item:hover,
+.viewer-bar .editor-menu-item:focus {
+  background: var(--chrome-surface);
+}
+
+.viewer-bar .editor-menu-item:focus-visible {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: -2px;
+}
+
+.viewer-bar .editor-menu-item[aria-disabled='true'] {
+  color: var(--chrome-text-muted);
+  cursor: default;
+  opacity: 0.6;
+}
+
+.editor-menu-label {
+  flex: 1;
+  min-width: 0;
+}
+
+.editor-menu-shortcut {
+  flex: none;
+  font-family: var(--chrome-font-mono);
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+/* Tool rail (design/atlas/editor-shell.md): 40px, left of the canvas, 20px icons. */
+.viewer-rail {
+  flex: none;
+  width: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 0;
+  background: var(--chrome-surface-raised);
+  border-right: 1px solid var(--chrome-border);
+}
+
+.viewer-rail button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--chrome-text);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--chrome-radius);
+  cursor: pointer;
+}
+
+.viewer-rail button:hover {
+  border-color: var(--chrome-border);
+}
+
+.viewer-rail button[aria-pressed='true'] {
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+}
+
+.viewer-rail button:focus-visible {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: 1px;
+}
+
+.viewer-rail button[aria-disabled='true'] {
+  color: var(--chrome-text-muted);
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* Undo and redo at the foot of the rail (editor-shell.md). */
+.viewer-rail-history {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: auto;
+}
+
+/* Shape panel (design/atlas/shape-connector-palette.md): 240px, docks beside the rail, its own scroll region. */
+.shape-panel {
+  flex: none;
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--chrome-surface-raised);
+  border-right: 1px solid var(--chrome-border);
+}
+
+.shape-panel-search {
+  flex: none;
+  padding: 8px;
+  border-bottom: 1px solid var(--chrome-border);
+}
+
+.shape-panel-search input {
+  width: 100%;
+  height: 28px;
+  padding: 0 8px;
+  font: inherit;
+  font-size: 12px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+}
+
+.shape-panel-search input:focus-visible {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: 1px;
+}
+
+.shape-panel-scroll {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.shape-panel-group {
+  border-bottom: 1px solid var(--chrome-border);
+}
+
+.shape-panel-group-header {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  color: var(--chrome-text);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.shape-panel-group-header:focus-visible {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: 1px;
+}
+
+.shape-panel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  padding: 0 8px 12px;
+}
+
+.shape-panel-glyph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 68px;
+  padding: 6px 4px 4px;
+  font: inherit;
+  color: var(--chrome-text-muted);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  cursor: grab;
+}
+
+/* QA-05: every glyph names itself, at most two lines then an ellipsis; the full name stays in title and aria-label. */
+.shape-panel-glyph-name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 11px;
+  line-height: 1.2;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.shape-panel-glyph:hover {
+  border-color: var(--chrome-accent);
+}
+
+.shape-panel-glyph:focus-visible {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: 1px;
+}
+
+/* Sequence commands in the shape panel (design/atlas/sequence-editor.md): text buttons, since a fragment or note is applied to the selection, not dragged. */
+.shape-panel-commands {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 8px 12px;
+}
+
+.shape-panel-command {
+  padding: 6px 8px;
+  font: inherit;
+  font-size: 12px;
+  text-align: left;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  cursor: pointer;
+}
+
+.shape-panel-command:hover:not(:disabled) {
+  border-color: var(--chrome-accent);
+}
+
+.shape-panel-command:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.shape-panel-command:focus-visible {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: 1px;
+}
+
+.shape-panel-command-hint {
+  display: block;
+  font-size: 11px;
+  color: var(--chrome-text-muted);
+}
+
+/* Properties panel (design/atlas/properties-panel.md): 280px, right of the canvas, compact 28px controls. */
+.viewer-panel {
+  flex: none;
+  width: 280px;
+  overflow-y: auto;
+  background: var(--chrome-surface-raised);
+  border-left: 1px solid var(--chrome-border);
+}
+
+.viewer-panel-wide {
+  /* The Text tab: DSL lines (a node with its geometry and style) run well past 280px, so it gets room to read them. */
+  width: min(480px, 45vw);
+}
+
+.panel-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-bottom: 1px solid var(--chrome-border);
+}
+
+.panel-heading {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--chrome-text);
+}
+
+.panel-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.panel-row-pairs {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.panel-row button {
+  font: inherit;
+  font-size: 12px;
+  min-height: 28px;
+  padding: 2px 6px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  cursor: pointer;
+}
+
+.panel-row button:disabled {
+  color: var(--chrome-text-muted);
+  cursor: default;
+  opacity: 0.6;
+}
+
+.panel-row button:focus-visible {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: 1px;
+}
+
+.panel-hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+/* Label-left, control-right rows. 68px keeps every dt label, including the connector panel's "Both ways", on one
+   line (M2 gap audit Finding 6); nowrap is the actual guarantee, the width just keeps it from bleeding into dd. */
+.panel-fields {
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr);
+  align-items: center;
+  gap: 6px 8px;
+  margin: 0;
+  font-size: 12px;
+  color: var(--chrome-text);
+}
+
+.panel-fields dt {
+  color: var(--chrome-text-muted);
+  white-space: nowrap;
+}
+
+.panel-fields dd {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.panel-muted {
+  color: var(--chrome-text-muted);
+}
+
+.panel-kind {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.panel-kind select,
+.panel-end select {
+  flex: 1;
+  min-width: 0;
+  min-height: 28px;
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+}
+
+.panel-kind select:focus-visible,
+.panel-end select:focus-visible {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: 1px;
+}
+
+.panel-end {
+  display: flex;
+  align-items: center;
+}
+
+.panel-end-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.panel-end-actions button {
+  font: inherit;
+  font-size: 12px;
+  min-height: 28px;
+  padding: 2px 8px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  cursor: pointer;
+}
+
+.panel-end-actions button:focus-visible {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: 1px;
+}
+
+.panel-kind-preview {
+  flex: none;
+  background: var(--chrome-surface);
+  border-radius: var(--chrome-radius);
+}
+
+.panel-routing {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.panel-routing select {
+  flex: 1;
+  min-width: 0;
+  min-height: 28px;
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+}
+
+.panel-routing select:focus-visible {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: 1px;
+}
+
+.panel-routing button {
+  flex: none;
+  font: inherit;
+  font-size: 12px;
+  min-height: 28px;
+  padding: 2px 6px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  cursor: pointer;
+}
+
+.panel-routing button:focus-visible {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: 1px;
+}
+
+/* The Style section: one editable property per row. A colour row (ColourField in StylePanel.tsx) has four cells —
+   label, swatches, hex input, reset — which no longer fit one 3-column line without either overflowing horizontally
+   or squeezing the swatches into a single-file column (M2 gap audit Finding 5), so it lays out over two lines: the
+   label and a compact swatch grid (several per row) on the first, the hex input and reset button under the swatches
+   on the second. A non-colour row (NumberField, FontField, ...) has only label/control/reset and never defines the
+   second line, so its content simply sits on the first. */
+.panel-style-row {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) auto;
+  grid-template-areas: 'label control reset';
+  align-items: center;
+  gap: 4px 8px;
+  font-size: 12px;
+  color: var(--chrome-text);
+}
+
+/* A colour row (ColourField) has a fourth cell, the hex input, that a 3-column single line has no room for: it
+   drops to a second line under the swatch grid instead. */
+.panel-style-row-colour {
+  grid-template-areas:
+    'label control reset'
+    '. control2 reset2';
+}
+
+.panel-style-label {
+  grid-area: label;
+  color: var(--chrome-text-muted);
+  overflow-wrap: anywhere;
+}
+
+.panel-style-swatches {
+  grid-area: control;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 18px);
+  gap: 4px;
+  min-width: 0;
+}
+
+.panel-style-swatch {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: 3px;
+  background: var(--swatch);
+  cursor: pointer;
+}
+
+.panel-style-swatch:hover {
+  border-color: var(--chrome-accent);
+}
+
+.panel-style-swatch[aria-pressed='true'] {
+  outline: 2px solid var(--chrome-accent);
+  outline-offset: 1px;
+}
+
+.panel-style-row-colour .panel-style-input {
+  grid-area: control2;
+}
+
+.panel-style-row-colour .panel-style-reset {
+  grid-area: reset2;
+}
+
+.panel-style-input {
+  grid-area: control;
+  min-width: 0;
+}
+
+.panel-style-input input {
+  width: 100%;
+  min-height: 28px;
+  min-width: 0;
+  font: inherit;
+  font-size: 12px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 2px 6px;
+}
+
+.panel-style-colour-name {
+  display: block;
+  font-size: 11px;
+  color: var(--chrome-text-muted);
+  min-height: 14px;
+  margin-bottom: 2px;
+}
+
+.panel-style-input input:focus-visible {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: 1px;
+}
+
+.panel-style-reset {
+  grid-area: reset;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--chrome-text-muted);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  cursor: pointer;
+}
+
+.panel-style-reset:hover {
+  color: var(--chrome-text);
+  border-color: var(--chrome-accent);
+}
+
+.panel-style-bold {
+  font: inherit;
+  font-weight: 700;
+  min-height: 24px;
+  min-width: 28px;
+  padding: 0 6px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  cursor: pointer;
+}
+
+.panel-style-bold[aria-pressed='true'] {
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+  border-color: var(--chrome-brand);
+}
+
+.panel-style-bold:focus-visible,
+.panel-style-reset:focus-visible {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: 1px;
+}
+
+/* Canvas: fills its box, swallows browser gestures so wheel and pinch reach the viewport. */
+.diagram-canvas {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none;
+  overscroll-behavior: contain;
+  background: var(--diagram-canvas-background, var(--chrome-surface));
+  cursor: default;
+}
+
+/* Keyboard focus only: a pointer press focuses the canvas by script, and Chromium still classes that as
+   :focus-visible, so the user-agent ring is switched off here and the accent ring below (higher specificity)
+   paints only for keyboard focus. */
+.diagram-canvas:focus {
+  outline: none;
+}
+
+.diagram-canvas:focus-visible:not([data-pointer-focus]) {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: -2px;
+}
+
+.diagram-canvas.is-pannable {
+  cursor: grab;
+}
+
+.diagram-canvas.is-dragging {
+  cursor: grabbing;
+}
+
+.diagram-canvas.is-connecting {
+  cursor: crosshair;
+}
+
+/* Selection overlay painted by the canvas editor: it reads the press, never intercepts it. */
+.selection-node,
+.selection-edge {
+  pointer-events: none;
+}
+
+.selection-outline {
+  fill: none;
+  stroke: var(--chrome-accent);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.selection-handle {
+  /* The handles alone take the press, for a resize; each carries its own resize cursor. */
+  pointer-events: all;
+  fill: var(--chrome-surface-raised);
+  stroke: var(--chrome-accent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+/* A selected connector's segment/waypoint drag handle: the shape of a selection handle, its cursor set inline along
+   the drag direction. A press on it starts the same segment drag a press on the route does (DiagramCanvas.tsx). */
+.segment-handle {
+  pointer-events: all;
+  fill: var(--chrome-surface-raised);
+  stroke: var(--chrome-accent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.selection-rotate-connector {
+  pointer-events: none;
+  stroke: var(--chrome-accent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.selection-rotate-handle {
+  /* The handle alone takes the press, for a rotate (checklist item 4); grab/grabbing shows the drag affordance. */
+  pointer-events: all;
+  fill: var(--chrome-surface-raised);
+  stroke: var(--chrome-accent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.selection-rotate-label {
+  pointer-events: none;
+  fill: var(--chrome-text);
+  font-size: 11px;
+  text-anchor: middle;
+}
+
+/* A halo rather than a hairline: drawn at the edge's own width it vanished on an edge already in the accent colour. */
+.selection-edge {
+  fill: none;
+  stroke: var(--chrome-accent);
+  stroke-width: 5;
+  stroke-opacity: 0.45;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Drop target while dragging (checklist item 27): the container a release would put the node in. */
+.drop-target {
+  pointer-events: none;
+  fill: var(--chrome-accent);
+  fill-opacity: 0.08;
+  stroke: var(--chrome-accent);
+  stroke-width: 2;
+  stroke-dasharray: 6 3;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Label editor: an HTML field laid over the node in its local space; the frame carries the viewport and node
+   transform, so only the field itself takes pointer input. Font, size, line height and colour are set inline from
+   the renderer's own values. */
+.label-editor-frame {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.label-editor-box {
+  position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.label-editor {
+  pointer-events: auto;
+  /* A node label's wrapping comes inline from LABEL_TEXT_LAYOUT (canvas/text.ts), shared with the renderer. */
+  outline: 1px solid var(--chrome-accent);
+  outline-offset: 2px;
+  cursor: text;
+}
+
+/* The reminder under a label being edited (canvas/LabelEditHint.tsx): at the foot of the canvas in screen space. */
+.label-edit-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  max-width: calc(100% - 32px);
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border-strong);
+  color: var(--chrome-text);
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* An edge label is one line centred on its route's midpoint, over a plate like the one EdgeView draws. */
+.edge-label-editor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  min-width: 1em;
+  white-space: pre;
+  text-align: center;
+  border-radius: 2px;
+}
+
+/* Connector tool: the ports of the node under the pointer, the one a gesture would attach to filled, and the preview. */
+.connector-overlay {
+  pointer-events: none;
+}
+
+.connector-port {
+  fill: var(--chrome-surface-raised);
+  stroke: var(--chrome-accent);
+  stroke-width: 1.5;
+}
+
+.connector-port.is-active {
+  fill: var(--chrome-accent);
+}
+
+/* The select tool's connection handles, set out from a hovered or selected node's ports; a press on one connects. */
+.connect-handle {
+  fill: var(--chrome-surface-raised);
+  stroke: var(--chrome-accent);
+  stroke-width: 1.5;
+}
+
+.connect-handle.is-active {
+  fill: var(--chrome-accent);
+}
+
+/* While connecting or re-attaching: the node a release would land on, and a ring on the port it would snap to. */
+.connector-target-outline {
+  fill: none;
+  stroke: var(--chrome-accent);
+  stroke-width: 2;
+  stroke-opacity: 0.6;
+}
+
+/* The column row of a database table a connector would attach to (model/columnPorts.ts). */
+.connector-column-row {
+  fill: var(--chrome-accent);
+  fill-opacity: 0.18;
+  stroke: var(--chrome-accent);
+  stroke-width: 1.5;
+}
+
+.connector-snap-ring {
+  fill: none;
+  stroke: var(--chrome-accent);
+  stroke-width: 2;
+}
+
+/* A selected edge's ends; a press on one re-attaches it (DiagramCanvas hit-tests them, so they take no events). */
+.edge-endpoint {
+  pointer-events: none;
+  fill: var(--chrome-accent);
+  stroke: var(--chrome-surface-raised);
+  stroke-width: 1.5;
+}
+
+.connector-preview {
+  stroke: var(--chrome-accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+}
+
+/* Gesture overlays: the smart guides of a snapped drag or resize, and the marquee. Neither ever takes a press. */
+.snap-guides,
+.marquee {
+  pointer-events: none;
+}
+
+.snap-guide-line {
+  stroke: var(--chrome-accent);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.snap-guide-grid .snap-guide-line {
+  stroke-dasharray: 2 3;
+}
+
+.marquee {
+  fill: var(--chrome-accent);
+  fill-opacity: 0.08;
+  stroke: var(--chrome-accent);
+  stroke-width: 1;
+}
+
+/* Try page: controls on top (fixed height), canvas filling the rest so DocumentViewer's own 100%-height layout works. */
+.try-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.try-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: var(--chrome-surface-raised);
+  border-bottom: 1px solid var(--chrome-border);
+  flex: none;
+}
+
+.try-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.try-source-toggle {
+  display: flex;
+  gap: 16px;
+  color: var(--chrome-text);
+}
+
+.try-textarea {
+  font-family: var(--chrome-font-mono);
+  font-size: 12px;
+  min-height: 140px;
+  resize: vertical;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 8px;
+}
+
+.try-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.try-actions button {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 4px 12px;
+  min-height: 28px;
+  cursor: pointer;
+}
+
+.try-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.try-saved {
+  color: var(--chrome-text-muted);
+  font-family: var(--chrome-font-mono);
+  font-size: 12px;
+}
+
+.try-banner {
+  margin: 0;
+  padding: 6px 10px;
+  border-radius: var(--chrome-radius);
+  font-size: 12px;
+}
+
+.try-banner-error {
+  color: var(--chrome-danger);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-danger);
+}
+
+.try-banner-warning {
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border);
+}
+
+/* One line under the banners: what the import or the layout engine approximated, never hidden from the user. */
+.try-warnings {
+  margin: 0;
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.try-canvas {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+/* Command palette (editor/CommandPalette.tsx): a search field over every editor action, centred near the top of the
+   page over a light scrim. The highlighted row carries the accent ring, as focus does elsewhere in the chrome. */
+.palette-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 12vh 16px 16px;
+  background: color-mix(in srgb, var(--chrome-text) 16%, transparent);
+}
+
+.palette {
+  display: flex;
+  flex-direction: column;
+  width: min(560px, 100%);
+  max-height: 70vh;
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--chrome-text) 20%, transparent);
+  overflow: hidden;
+}
+
+.palette-search {
+  font: inherit;
+  min-height: 36px;
+  padding: 6px 12px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: none;
+  border-bottom: 1px solid var(--chrome-border);
+}
+
+.palette-search:focus-visible {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: -2px;
+}
+
+.palette-list {
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  overflow-y: auto;
+}
+
+.palette-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+  padding: 2px 8px;
+  border-radius: var(--chrome-radius);
+  cursor: pointer;
+}
+
+.palette-option[aria-selected='true'] {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: -2px;
+}
+
+.palette-option[aria-disabled='true'] {
+  color: var(--chrome-text-muted);
+  cursor: default;
+  opacity: 0.6;
+}
+
+.palette-group {
+  flex: none;
+  width: 64px;
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.palette-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.palette-shortcut {
+  flex: none;
+  font-family: var(--chrome-font-mono);
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.palette-empty {
+  margin: 0;
+  padding: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.dsl-panel { display: flex; flex-direction: column; gap: 8px; padding: 12px; }
+.dsl-view { display: flex; flex-direction: column; gap: 8px; }
+.dsl-view[hidden] { display: none; }
+/* The text with its line numbers. --dsl-line and --dsl-pad are set by DslPanel.tsx, which places the numbers and the marked
+   lines from the same two numbers; 14px matches body's own font-size (line 15): the DSL is meant to be read, not just present
+   (M2 gap audit's text-size note). The text never wraps, so a line number is always a line of text. */
+.dsl-editor { position: relative; display: flex; box-sizing: border-box; height: 50vh; min-height: 12rem; resize: vertical; overflow: hidden; border: 1px solid var(--chrome-border-strong); background: var(--chrome-surface); }
+.dsl-gutter { flex: none; overflow: hidden; border-right: 1px solid var(--chrome-border); }
+.dsl-gutter pre { margin: 0; padding: var(--dsl-pad) 8px; text-align: right; font: 14px/var(--dsl-line) var(--chrome-font-mono); color: var(--chrome-text-muted); user-select: none; }
+.dsl-editor textarea { flex: 1; min-width: 0; box-sizing: border-box; margin: 0; padding: var(--dsl-pad); border: 0; resize: none; overflow: auto; font: 14px/var(--dsl-line) var(--chrome-font-mono); white-space: pre; color: var(--chrome-text); background: var(--chrome-surface); }
+.dsl-bands { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.dsl-band { position: absolute; top: 0; left: 0; right: 0; height: var(--dsl-line); }
+.dsl-band-selected { background: color-mix(in srgb, var(--chrome-text) 14%, transparent); box-shadow: inset 3px 0 0 var(--chrome-text); }
+.dsl-band-problem { background: color-mix(in srgb, var(--chrome-danger) 28%, transparent); box-shadow: inset 3px 0 0 var(--chrome-danger); }
+.dsl-panel textarea.dsl-mermaid { box-sizing: border-box; width: 100%; min-height: 50vh; resize: vertical; padding: var(--dsl-pad, 8px); font: 14px/1.5 var(--chrome-font-mono); white-space: pre; color: var(--chrome-text); background: var(--chrome-surface); border: 1px solid var(--chrome-border-strong); }
+.dsl-controls { display: flex; gap: 8px; flex-wrap: wrap; }
+.dsl-format button[aria-pressed='true'] { color: var(--chrome-brand-text); background: var(--chrome-brand); border-color: var(--chrome-brand); }
+.dsl-panel p, .dsl-panel li { overflow-wrap: anywhere; font-size: 12px; }
+.dsl-panel [role="alert"] { color: var(--chrome-danger); }
+.dsl-notice { display: flex; flex-direction: column; gap: 8px; padding: 8px; border: 1px solid var(--chrome-border-strong); }
+.dsl-notice p, .dsl-notice ul { margin: 0; }
+.dsl-goto { padding: 0; font: inherit; color: var(--chrome-accent); background: none; border: 0; text-decoration: underline; cursor: pointer; }
+.viewer-text-toggle { display: inline-flex; align-items: center; justify-content: center; }
+.viewer-bar .viewer-text-toggle[aria-pressed='true'] { color: var(--chrome-brand-text); background: var(--chrome-brand); border-color: var(--chrome-brand); }
+
+.ai-panel { display: flex; flex-direction: column; gap: 8px; padding: 12px; }
+.ai-panel textarea { box-sizing: border-box; width: 100%; min-height: 20vh; resize: vertical; font: 14px/1.5 var(--chrome-font-ui); color: var(--chrome-text); background: var(--chrome-surface); border: 1px solid var(--chrome-border-strong); }
+.ai-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--chrome-border); }
+.ai-tabs button[aria-selected="true"] { font-weight: 600; border-bottom: 2px solid var(--chrome-accent); }
+.ai-panel select { font: 13px/1.4 var(--chrome-font-ui); color: var(--chrome-text); background: var(--chrome-surface); border: 1px solid var(--chrome-border-strong); padding: 4px; }
+.ai-diagram-type { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; border: 0; padding: 0; margin: 0; min-width: 0; }
+.ai-diagram-type legend { font-size: 12px; color: var(--chrome-text-muted); padding: 0; }
+.ai-diagram-type label { display: flex; align-items: center; gap: 4px; font-size: 13px; }
+.ai-panel p { overflow-wrap: anywhere; font-size: 12px; }
+.ai-panel [role="alert"] { color: var(--chrome-danger); }
+.ai-privacy-note { color: var(--chrome-text-muted); }
+.ai-document { display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--chrome-border); padding-top: 8px; }
+.ai-document-actions { display: flex; gap: 8px; }
+.ai-document-body { overflow-wrap: anywhere; color: var(--chrome-text); }
+.ai-document-body h1 { font-size: 18px; margin: 8px 0 4px; }
+.ai-document-body h2 { font-size: 16px; margin: 8px 0 4px; }
+.ai-document-body h3, .ai-document-body h4, .ai-document-body h5, .ai-document-body h6 { font-size: 14px; margin: 8px 0 4px; }
+.ai-document-item { padding-left: 1.2em; text-indent: -1.2em; }
+.ai-document-body pre { overflow-x: auto; padding: 8px; background: var(--chrome-surface-raised); border: 1px solid var(--chrome-border); }
+.ai-document-body code { font-family: var(--chrome-font-mono); font-size: 12px; }
+.ai-citation { font: inherit; padding: 0 2px; color: var(--chrome-accent); background: none; border: 0; border-bottom: 1px dotted var(--chrome-accent); cursor: pointer; }
+
+/* A region F6 lands on when nothing inside it can act draws its ring inside its own edge. */
+[data-region]:focus-visible {
+  outline-offset: -2px;
+}
+
+/* Home screen (pages/HomePage.tsx, design/atlas/document-list.md): a header with the New diagram menu, then the
+   document list as a table. Each row opens, renames in place, and deletes through a confirmation that names it. */
+.home {
+  padding: 24px;
+  position: relative;
+}
+
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.home-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.home-new {
+  position: relative;
+}
+
+.home-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.home-import-button {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 6px 14px;
+  min-height: 32px;
+  cursor: pointer;
+}
+
+.home-import-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.home-new-button {
+  font: inherit;
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+  border: 1px solid var(--chrome-brand);
+  border-radius: var(--chrome-radius);
+  padding: 6px 14px;
+  min-height: 32px;
+  cursor: pointer;
+}
+
+.home-new-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.home-new-menu,
+.home-kebab-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+  padding: 4px;
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--chrome-text) 20%, transparent);
+}
+
+.home-new-item,
+.home-kebab-menu button {
+  font: inherit;
+  text-align: left;
+  color: var(--chrome-text);
+  background: transparent;
+  border: none;
+  border-radius: var(--chrome-radius);
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.home-new-item:hover,
+.home-kebab-menu button:hover {
+  background: var(--chrome-surface);
+}
+
+.home-delete-item {
+  color: var(--chrome-danger);
+}
+
+.home-banner {
+  margin: 0 0 16px;
+  padding: 8px 12px;
+  color: var(--chrome-danger);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-danger);
+  border-radius: var(--chrome-radius);
+  font-size: 12px;
+}
+
+.home-list {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.home-list th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--chrome-text-muted);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--chrome-border);
+}
+
+.home-list td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--chrome-border);
+  vertical-align: middle;
+}
+
+.home-list tbody tr:hover {
+  background: var(--chrome-surface-raised);
+}
+
+.home-type {
+  width: 40px;
+}
+
+.home-title-cell {
+  width: 40%;
+}
+
+.home-modified {
+  color: var(--chrome-text-muted);
+  font-size: 12px;
+}
+
+.home-open {
+  font: inherit;
+  color: var(--chrome-text);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.home-open:hover {
+  color: var(--chrome-accent);
+}
+
+.home-rename-input {
+  font: inherit;
+  width: 100%;
+  box-sizing: border-box;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-accent);
+  border-radius: var(--chrome-radius);
+  padding: 4px 8px;
+}
+
+.home-actions {
+  width: 40px;
+}
+
+.home-kebab {
+  position: relative;
+}
+
+.home-kebab > button {
+  font: inherit;
+  color: var(--chrome-text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--chrome-radius);
+  padding: 4px;
+  cursor: pointer;
+}
+
+.home-kebab > button:hover {
+  color: var(--chrome-text);
+  background: var(--chrome-surface-raised);
+}
+
+.home-confirm-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--chrome-text) 24%, transparent);
+}
+
+.home-confirm {
+  width: min(360px, calc(100% - 48px));
+  padding: 16px;
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--chrome-text) 20%, transparent);
+}
+
+.home-confirm-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.home-confirm-body {
+  margin: 0 0 16px;
+  color: var(--chrome-text-muted);
+  font-size: 13px;
+}
+
+.home-confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.home-confirm-actions button {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 6px 14px;
+  min-height: 32px;
+  cursor: pointer;
+}
+
+.home-confirm-actions .home-confirm-delete {
+  color: var(--chrome-danger);
+  border-color: var(--chrome-danger);
+}
+
+.home-confirm-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Import SQL dialog (editor/ImportSqlDialog.tsx): a paste box, its settings, and what the importer found. */
+.sql-import-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--chrome-text) 24%, transparent);
+}
+
+.sql-import {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min(720px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
+  overflow: auto;
+  padding: 16px;
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--chrome-text) 20%, transparent);
+}
+
+.sql-import-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.sql-import-help {
+  margin: 0;
+  color: var(--chrome-text-muted);
+  font-size: 13px;
+}
+
+.sql-import-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.sql-import-field label {
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.sql-import-field input,
+.sql-import-field select,
+.sql-import-text {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 6px 8px;
+  min-height: 32px;
+}
+
+.sql-import-text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.4;
+  resize: vertical;
+  white-space: pre;
+  overflow: auto;
+}
+
+.sql-import-hint {
+  color: var(--chrome-text-muted);
+  font-size: 12px;
+}
+
+.sql-import-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sql-import-row .sql-import-field {
+  min-width: 160px;
+}
+
+.sql-import-error {
+  margin: 0;
+  color: var(--chrome-danger);
+  font-size: 13px;
+}
+
+.sql-import-result {
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  padding: 8px 10px;
+  background: var(--chrome-surface);
+}
+
+.sql-import-summary {
+  margin: 0;
+  font-size: 13px;
+}
+
+.sql-import-warnings {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  max-height: 180px;
+  overflow: auto;
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.sql-import-warnings li {
+  padding: 2px 0;
+}
+
+.sql-import-line {
+  display: inline-block;
+  min-width: 56px;
+  margin-right: 8px;
+  color: var(--chrome-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.sql-import-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.sql-import-actions button {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 6px 14px;
+  min-height: 32px;
+  cursor: pointer;
+}
+
+.sql-import-actions .sql-import-create {
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+  border-color: var(--chrome-brand);
+}
+
+.sql-import-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* App shell: a thin bar (brand, nav, signed-in user) above whatever route is current. */
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.shell-bar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 6px 16px;
+  background: var(--chrome-surface-raised);
+  border-bottom: 1px solid var(--chrome-border);
+  flex: none;
+}
+
+.shell-brand {
+  font-weight: 600;
+  color: var(--chrome-text);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shell-brand-logo {
+  height: 28px;
+  width: auto;
+  display: block;
+}
+
+.shell-nav {
+  display: flex;
+  gap: 14px;
+  flex: 1;
+}
+
+.shell-nav a {
+  color: var(--chrome-text-muted);
+  text-decoration: none;
+}
+
+.shell-nav a:hover {
+  color: var(--chrome-text);
+}
+
+.shell-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.shell-user a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.shell-user-name {
+  color: var(--chrome-text-muted);
+}
+
+.shell-user a:hover .shell-user-name {
+  color: var(--chrome-text);
+  text-decoration: underline;
+}
+
+.shell-user button {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+.shell-user button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.shell-content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+/* Skip link (QA S5): the first focusable thing on every page, off-screen until it takes keyboard focus. */
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -64px;
+  z-index: 100;
+  padding: 8px 14px;
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+  border-radius: var(--chrome-radius);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 8px;
+}
+
+.shell-nav a[aria-current='page'],
+.shell-user a[aria-current='page'] .shell-user-name {
+  color: var(--chrome-text);
+  font-weight: 600;
+}
+
+/* The links, the Admin menu and the signed-in user sit in one group so they fold together (QA S3, S3's "Menu" button). */
+.shell-menu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+  min-width: 0;
+}
+
+.shell-nav {
+  align-items: center;
+}
+
+.shell-menu-toggle {
+  margin-left: auto;
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 6px 14px;
+  min-height: 36px;
+  cursor: pointer;
+}
+
+/* Admin menu (wide layout): one button in place of seven links, so the bar carries four things, not ten (QA P18). */
+.shell-admin-menu {
+  position: relative;
+}
+
+.shell-admin-button {
+  font: inherit;
+  color: var(--chrome-text-muted);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.shell-admin-button:hover,
+.shell-admin-button[data-active='true'] {
+  color: var(--chrome-text);
+}
+
+.shell-admin-button[data-active='true'] {
+  font-weight: 600;
+}
+
+.shell-caret {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+}
+
+.shell-admin-links {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: -10px;
+  z-index: 30;
+  min-width: 170px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.shell-admin-links a {
+  display: block;
+  padding: 7px 10px;
+  border-radius: var(--chrome-radius);
+}
+
+.shell-admin-links a:hover {
+  background: var(--chrome-surface);
+}
+
+/* Compact layout (viewport under COMPACT_NAV_MAX_WIDTH, app/useCompactNav.ts): brand and a Menu button; the links, the
+   admin pages, the signed-in user and Sign out open as a list beneath. */
+@media (max-width: 930px) {
+  .shell-bar {
+    flex-wrap: wrap;
+    gap: 6px 12px;
+  }
+
+  .shell-menu-compact {
+    flex: 1 0 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 6px 0 4px;
+    border-top: 1px solid var(--chrome-border);
+  }
+
+  .shell-menu-compact .shell-nav {
+    flex: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .shell-menu-compact .shell-nav a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 4px;
+  }
+
+  .shell-nav-group {
+    padding: 10px 4px 2px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--chrome-text-muted);
+  }
+
+  .shell-menu-compact .shell-user {
+    justify-content: space-between;
+    padding: 6px 4px 2px;
+    border-top: 1px solid var(--chrome-border);
+  }
+
+  .shell-menu-compact .shell-user a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .shell-user button {
+    min-height: 40px;
+  }
+
+  .admin-page,
+  .page,
+  .home {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* Editor on a narrow window (QA S3): the bar wraps instead of clipping, and the right-hand panel is a sheet over the canvas
+   (opened by the bar's Panel button, closed to begin with) rather than a column the canvas has to shrink around. */
+.viewer-bar {
+  flex-wrap: wrap;
+  row-gap: 6px;
+}
+
+.viewer-panel[hidden] {
+  display: none;
+}
+
+@media (max-width: 930px) {
+  .viewer-body {
+    position: relative;
+  }
+
+  .viewer-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    width: min(320px, calc(100% - 52px));
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.35);
+  }
+
+  .viewer-bar {
+    gap: 8px 12px;
+  }
+
+  .viewer-meta {
+    display: none;
+  }
+}
+
+.viewer-panel-toggle {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 4px 12px;
+  cursor: pointer;
+}
+
+/* The home page header: title, view switch and the buttons wrap on a phone so New diagram and the imports stay on screen. */
+.home-header,
+.home-header-actions {
+  flex-wrap: wrap;
+}
+
+/* Admin pages: a field is its label, input and hint together, so a long label wraps inside its own column (QA S8). */
+.admin-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.admin-hint {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.admin-hint-error {
+  color: var(--chrome-danger);
+}
+
+.admin-owner-email {
+  margin-top: 0;
+}
+
+.admin-subtitle-first {
+  margin-top: 0;
+}
+
+.admin-reset {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+
+.admin-reset > label {
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.admin-reset-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.admin-reset-row input {
+  min-width: 0;
+  flex: 1 1 160px;
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 6px 8px;
+}
+
+.admin-reset-row button,
+.admin-row-actions button {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 4px 10px;
+  min-height: 32px;
+  cursor: pointer;
+}
+
+.admin-reset-row button:disabled,
+.admin-row-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+  max-width: 100%;
+  /* The visually-hidden "Actions" header is absolutely positioned; without a positioned ancestor it sits against the page
+     and widens it (QA S3: a scroll bar on the whole page), instead of inside this scrolling box. */
+  position: relative;
+}
+
+.not-allowed p a {
+  color: var(--chrome-accent);
+}
+
+/* The sign-in screen's "why you are here" line (QA S9): an explanation, not an error, so it is not drawn in the danger colour. */
+.auth-notice {
+  margin: 0 0 12px;
+  padding: 8px 12px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+/* Login and first-run: one centred card on the chrome surface (design/atlas/login-admin.md). */
+.auth-page {
+  height: 100%;
+  display: flex;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+/* margin: auto centres the card when it fits and lets the page scroll, top included, when it does not (an open setup-code
+   help is taller than a short window; align-items: center would clip its top and bottom out of reach). */
+.auth-page > .auth-card {
+  margin: auto;
+}
+
+.auth-card {
+  width: min(360px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  padding: 32px;
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--chrome-text) 20%, transparent);
+}
+
+.auth-logo {
+  align-self: center;
+  height: 40px;
+  width: auto;
+  margin-bottom: 8px;
+}
+
+.auth-product {
+  margin: 0;
+  text-align: center;
+  color: var(--chrome-text-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.auth-title {
+  margin: 4px 0 16px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.auth-banner {
+  margin: 0 0 12px;
+  padding: 8px 12px;
+  color: var(--chrome-danger);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-danger);
+  border-radius: var(--chrome-radius);
+  font-size: 12px;
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.auth-card label {
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+  margin-top: 8px;
+}
+
+.auth-card input {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 8px 10px;
+}
+
+.auth-hint {
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: var(--chrome-text-muted);
+}
+
+.auth-card button[type='submit'] {
+  font: inherit;
+  margin-top: 16px;
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+  border: 1px solid var(--chrome-brand);
+  border-radius: var(--chrome-radius);
+  padding: 8px 14px;
+  min-height: 36px;
+  cursor: pointer;
+}
+
+.auth-card button[type='submit']:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Password recovery (design/atlas/password-recovery.md): the sign-in card's "Forgot password?" step and the page a reset link opens. */
+.auth-card .auth-primary {
+  font: inherit;
+  margin-top: 16px;
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+  border: 1px solid var(--chrome-brand);
+  border-radius: var(--chrome-radius);
+  padding: 8px 14px;
+  min-height: 36px;
+  cursor: pointer;
+}
+
+.auth-card .auth-secondary {
+  font: inherit;
+  margin-top: 12px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 8px 14px;
+  min-height: 36px;
+  cursor: pointer;
+}
+
+.auth-card .auth-link-button {
+  font: inherit;
+  align-self: center;
+  margin-top: 12px;
+  padding: 4px 8px;
+  min-height: 28px;
+  color: var(--chrome-text);
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.auth-forgot-hint {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.reset-link-facts {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 13px;
+  color: var(--chrome-text);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reset-link-warning {
+  margin: 0;
+  padding: 8px 12px;
+  color: var(--chrome-danger);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-danger);
+  border-radius: var(--chrome-radius);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.reset-link-row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.reset-link-field {
+  flex: 1;
+  min-width: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+}
+
+/* The admin Email page (pages/EmailPage.tsx): facts as a two-column list that stacks on a phone. */
+.email-summary {
+  display: grid;
+  grid-template-columns: minmax(120px, max-content) 1fr;
+  gap: 6px 16px;
+  margin: 0 0 16px;
+  font-size: 13px;
+}
+
+.email-summary dt {
+  color: var(--chrome-text-muted);
+}
+
+.email-summary dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.email-problems ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+/* The editable half of the Email page: one column of labelled fields, hints under them, the lock reason in the same hint style. */
+.email-status {
+  max-width: 70ch;
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: var(--chrome-text);
+}
+
+.email-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 560px;
+  margin: 0 0 20px;
+  padding: 16px;
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+}
+
+.email-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.email-field label,
+.email-password legend {
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.email-field input,
+.email-field select {
+  box-sizing: border-box;
+  width: 100%;
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 6px 8px;
+}
+
+.email-field input[readonly] {
+  background: var(--chrome-surface-raised);
+}
+
+.email-hint {
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+  overflow-wrap: anywhere;
+}
+
+.email-locked::before {
+  content: "Locked: ";
+  font-weight: 600;
+}
+
+.email-error {
+  font-size: 12px;
+  color: var(--chrome-danger);
+  overflow-wrap: anywhere;
+}
+
+.email-gotcha {
+  margin: 4px 0 0;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+}
+
+.email-password {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.email-password-state {
+  margin: 0;
+  font-size: 13px;
+  color: var(--chrome-text);
+}
+
+.email-radios {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.email-radio {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--chrome-text);
+}
+
+.email-radio input {
+  width: auto;
+}
+
+.email-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 8px;
+}
+
+.email-page button {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 6px 14px;
+  min-height: 32px;
+  cursor: pointer;
+}
+
+.email-page button.email-primary {
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+  border-color: var(--chrome-brand);
+}
+
+.email-page button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@media (max-width: 520px) {
+  .email-summary {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .email-summary dd {
+    margin-bottom: 8px;
+  }
+
+  .reset-link-row {
+    flex-direction: column;
+  }
+}
+
+/* Admin pages (Users, Tokens): a plain page with a title, table and a form below it - proportionate to this task,
+   not the full settings-sidebar shell design/atlas/login-admin.md describes for the rest of the admin area. */
+.admin-page {
+  padding: 24px;
+  max-width: 900px;
+}
+
+.admin-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px;
+}
+
+.admin-subtitle {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 24px 0 12px;
+}
+
+.admin-banner {
+  margin: 0 0 16px;
+  padding: 8px 12px;
+  color: var(--chrome-danger);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-danger);
+  border-radius: var(--chrome-radius);
+  font-size: 12px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.admin-table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--chrome-text-muted);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--chrome-border);
+}
+
+.admin-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--chrome-border);
+  vertical-align: middle;
+}
+
+.admin-row-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.admin-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 8px 16px;
+  padding: 16px;
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+}
+
+.admin-form label {
+  display: block;
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+  margin-bottom: 4px;
+}
+
+.admin-form input,
+.admin-form select {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 6px 8px;
+}
+
+.admin-form button {
+  font: inherit;
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+  border: 1px solid var(--chrome-brand);
+  border-radius: var(--chrome-radius);
+  padding: 6px 14px;
+  min-height: 32px;
+  cursor: pointer;
+}
+
+.admin-form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.tokens-created {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-accent);
+  border-radius: var(--chrome-radius);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tokens-created label {
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+  margin-top: 8px;
+}
+
+.tokens-copy-row {
+  display: flex;
+  gap: 8px;
+}
+
+.tokens-copy-field {
+  flex: 1;
+  font-family: var(--chrome-font-mono);
+  font-size: 12px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 6px 8px;
+}
+
+.tokens-copy-row button {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.tokens-created > button {
+  align-self: flex-start;
+  margin-top: 8px;
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+/* Admin branding (M3): product name, logo/light-logo/favicon uploads. */
+.admin-intro {
+  max-width: 70ch;
+  margin: 0 0 16px;
+  color: var(--chrome-text-muted);
+  font-size: 13px;
+}
+
+.admin-notice {
+  margin: 0 0 16px;
+  padding: 8px 12px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-accent);
+  border-radius: var(--chrome-radius);
+  font-size: 12px;
+}
+
+.branding-name-form {
+  align-items: center;
+}
+
+.branding-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.branding-field input {
+  min-width: 260px;
+}
+
+.branding-badge {
+  margin-left: 8px;
+  padding: 1px 6px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--chrome-text-muted);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border);
+  border-radius: 999px;
+  vertical-align: middle;
+}
+
+.branding-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.branding-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 16px;
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+}
+
+.branding-preview {
+  flex: none;
+  width: 120px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(45deg, var(--chrome-border) 25%, transparent 25%, transparent 75%, var(--chrome-border) 75%) 0 0 / 16px 16px,
+    linear-gradient(45deg, var(--chrome-border) 25%, transparent 25%, transparent 75%, var(--chrome-border) 75%) 8px 8px / 16px 16px,
+    var(--chrome-surface);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  overflow: hidden;
+}
+
+.branding-preview img {
+  max-width: 100%;
+  max-height: 56px;
+}
+
+.branding-preview-empty {
+  font-size: 11px;
+  color: var(--chrome-text-muted);
+}
+
+.branding-row-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.branding-row-label {
+  margin: 0;
+  font-weight: 600;
+}
+
+.branding-row-hint {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.branding-row-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.branding-upload {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  font: inherit;
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+  border: 1px solid var(--chrome-brand);
+  border-radius: var(--chrome-radius);
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.branding-upload input[type='file'] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.branding-row-actions button {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.branding-upload:has(input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.branding-row-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.branding-reset-row {
+  margin-top: 20px;
+}
+
+.branding-reset-row button {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.branding-reset-row button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Admin AI provider (M3): provider/model/endpoint, write-only key, test connection. */
+.ai-status,
+.ai-key-summary {
+  max-width: 70ch;
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: var(--chrome-text);
+}
+
+.ai-key-summary {
+  color: var(--chrome-text-muted);
+}
+
+.ai-keyring {
+  max-width: 70ch;
+}
+
+.ai-keyring .admin-banner,
+.ai-keyring .admin-notice {
+  margin-bottom: 12px;
+}
+
+.ai-keyring code {
+  font-family: var(--chrome-font-mono);
+  overflow-wrap: anywhere;
+}
+
+.ai-form {
+  margin-bottom: 20px;
+}
+
+.ai-form button[type='button'],
+.ai-test-row button {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 6px 14px;
+  min-height: 32px;
+  cursor: pointer;
+}
+
+.ai-form button[type='button']:disabled,
+.ai-test-row button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.ai-test-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.sql-import-field input[type='checkbox'] {
+  min-height: 0;
+  padding: 0;
+}
+
+/* About page: the build facts as a label and value grid (design/atlas/help-about-status.md). */
+.about-fields {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px 20px;
+  margin: 0 0 16px;
+  font-size: 13px;
+}
+
+.about-fields dt {
+  color: var(--chrome-text-muted);
+}
+
+.about-fields dd {
+  margin: 0;
+  color: var(--chrome-text);
+  overflow-wrap: anywhere;
+}
+
+/* Admin Themes: list, editor and the two live previews (design/atlas/themes-admin.md). */
+.admin-page-wide {
+  max-width: 1240px;
+}
+
+.theme-list {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.theme-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+}
+
+.theme-card.is-selected {
+  border-color: var(--chrome-accent);
+}
+
+.theme-card-main {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+
+.theme-card-name {
+  margin: 0;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-card-meta {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.theme-card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.theme-card-actions button,
+.theme-link-button,
+.theme-editor-buttons button,
+.theme-import {
+  font: inherit;
+  font-size: 13px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 4px 10px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.theme-card-actions button:disabled,
+.theme-editor-buttons button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.theme-editor-buttons button.theme-primary {
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+  border-color: var(--chrome-brand);
+}
+
+.theme-link-button {
+  display: inline-block;
+}
+
+.theme-swatch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  font-family: var(--chrome-font-ui);
+}
+
+.theme-swatch-sample {
+  color: var(--chrome-text);
+  font-weight: 600;
+  min-width: 22px;
+}
+
+.theme-swatch-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.theme-swatch-brand {
+  background: var(--chrome-brand);
+}
+
+.theme-swatch-accent {
+  background: var(--chrome-accent);
+}
+
+.theme-swatch-canvas {
+  width: 22px;
+  height: 14px;
+  border: 1px solid var(--chrome-border);
+  border-radius: 3px;
+}
+
+.theme-create-row {
+  display: flex;
+  gap: 16px;
+  align-items: end;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.theme-import {
+  display: inline-block;
+  padding: 7px 14px;
+}
+
+.theme-import input[type='file'] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.theme-import:has(input:focus-visible) {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: 2px;
+}
+
+.theme-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.theme-editor-head {
+  display: flex;
+  gap: 16px;
+  align-items: end;
+  flex-wrap: wrap;
+}
+
+.theme-editor-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.theme-editor-buttons button {
+  min-height: 32px;
+  padding: 6px 14px;
+}
+
+.theme-editor-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .theme-editor-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.theme-editor fieldset {
+  margin: 0 0 16px;
+  padding: 12px 16px 16px;
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+}
+
+.theme-editor legend {
+  padding: 0 6px;
+  font-weight: 600;
+}
+
+.theme-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.theme-field label {
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.theme-field input[type='text'],
+.theme-field input[type='number'],
+.theme-field select {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 6px 8px;
+}
+
+.theme-colour-inputs {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.theme-colour-inputs input[type='color'] {
+  width: 36px;
+  height: 30px;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+}
+
+.theme-hex {
+  width: 96px;
+  font-family: var(--chrome-font-mono);
+}
+
+.theme-warning {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--chrome-text);
+  padding-left: 8px;
+  border-left: 3px solid var(--chrome-danger);
+}
+
+.theme-warning-list {
+  margin: 4px 0 0;
+  padding-left: 20px;
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.theme-field-error {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--chrome-danger);
+}
+
+.theme-hint {
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.theme-dirty {
+  margin: 0;
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.theme-subheading {
+  margin: 16px 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.theme-link-button:focus-visible,
+.theme-card-actions button:focus-visible {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: 2px;
+}
+
+.theme-set-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.theme-set {
+  font-size: 13px;
+  color: var(--chrome-text);
+  padding: 4px 12px;
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  cursor: pointer;
+}
+
+.theme-set.is-active {
+  border-color: var(--chrome-accent);
+}
+
+.theme-set:has(input:focus-visible) {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: 2px;
+}
+
+.theme-set input {
+  margin-right: 6px;
+}
+
+.theme-editor-previews {
+  position: sticky;
+  top: 8px;
+}
+
+/* The chrome preview scopes the draft's custom properties inline and reuses the shell's own classes. */
+.theme-chrome-preview {
+  background: var(--chrome-surface);
+  color: var(--chrome-text);
+  font-family: var(--chrome-font-ui);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  overflow: hidden;
+}
+
+.theme-chrome-preview-body {
+  padding: 12px 16px 16px;
+  font-size: 13px;
+}
+
+.theme-chrome-preview .shell-nav span {
+  color: var(--chrome-text-muted);
+}
+
+.theme-preview-heading {
+  margin: 0 0 6px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.theme-preview-muted {
+  color: var(--chrome-text-muted);
+}
+
+.theme-preview-link {
+  color: var(--chrome-accent);
+  text-decoration: underline;
+}
+
+.theme-preview-danger {
+  color: var(--chrome-danger);
+}
+
+.theme-preview-user,
+.theme-preview-secondary,
+.theme-preview-input {
+  font-size: 12px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  padding: 3px 10px;
+}
+
+.theme-preview-input {
+  color: var(--chrome-text-muted);
+  background: var(--chrome-surface-raised);
+}
+
+.theme-preview-primary {
+  font-size: 12px;
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+  border: 1px solid var(--chrome-brand);
+  border-radius: var(--chrome-radius);
+  padding: 3px 14px;
+}
+
+.theme-preview-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.theme-preview-mono {
+  margin: 0;
+  font-family: var(--chrome-font-mono);
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.theme-diagram-preview {
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  overflow: hidden;
+}
+
+.theme-diagram-preview svg {
+  width: 100%;
+  height: auto;
+}
+
+.theme-contrast-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin: 8px 0 12px;
+}
+
+.theme-contrast-table th {
+  text-align: left;
+  color: var(--chrome-text-muted);
+  font-weight: 600;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--chrome-border);
+}
+
+.theme-contrast-table td {
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--chrome-border);
+}
+
+/* Tour panel (editor/FlythroughPanel.tsx, design/atlas/flythrough.md): the camera path's keyframes as an ordered list. */
+.tour-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+}
+
+.tour-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tour-actions button,
+.tour-recapture {
+  font: inherit;
+  font-size: 12px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 2px 8px;
+  min-height: 28px;
+  cursor: pointer;
+}
+
+.tour-actions button:disabled,
+.tour-row-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.tour-actions .tour-present {
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+  border-color: var(--chrome-brand);
+}
+
+.tour-loop {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.tour-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tour-row {
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+}
+
+.tour-row[data-selected] {
+  border-color: var(--chrome-accent);
+}
+
+.tour-row-head {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px;
+}
+
+.tour-row-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: inherit;
+  font-size: 12px;
+  text-align: left;
+  color: var(--chrome-text);
+  background: none;
+  border: 0;
+  padding: 4px 6px;
+  cursor: pointer;
+}
+
+.tour-row-number {
+  flex: none;
+  min-width: 1.6em;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  color: var(--chrome-text-muted);
+}
+
+.tour-row-caption {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tour-row-actions {
+  flex: none;
+  display: flex;
+  gap: 2px;
+}
+
+.tour-row-actions button {
+  font: inherit;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--chrome-text);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--chrome-radius);
+  min-width: 24px;
+  min-height: 24px;
+  cursor: pointer;
+}
+
+.tour-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  border-top: 1px solid var(--chrome-border);
+}
+
+.tour-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  font-size: 12px;
+}
+
+.tour-field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.tour-field label {
+  color: var(--chrome-text-muted);
+}
+
+.tour-field textarea,
+.tour-field input,
+.tour-field select {
+  box-sizing: border-box;
+  width: 100%;
+  font: inherit;
+  font-size: 12px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 4px 6px;
+}
+
+.tour-field textarea {
+  resize: vertical;
+}
+
+.tour-field input:disabled {
+  opacity: 0.5;
+}
+
+/* Present (editor/PresentationStage.tsx, design/atlas/flythrough.md): a full-window, read-only overlay over the editor. */
+.present {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: var(--chrome-surface);
+  color: var(--chrome-text);
+}
+
+.present-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.present[data-chrome='hidden'] .present-stage {
+  cursor: none;
+}
+
+.present-caption {
+  bottom: 112px;
+}
+
+.present-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 84px;
+  z-index: 1;
+  box-sizing: border-box;
+  max-width: min(720px, calc(100% - 32px));
+  margin: 0;
+  padding: 8px 16px;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.4;
+  color: var(--chrome-text);
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--chrome-text) 16%, transparent);
+  pointer-events: none;
+  overflow-wrap: anywhere;
+}
+
+/* An empty caption stays in the page for screen readers to announce into, but draws nothing. */
+.present-caption[data-empty] {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.present-chrome {
+  transition: opacity 0.2s;
+}
+
+.present[data-chrome='hidden'] .present-chrome {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.present[data-reduced-motion] .present-chrome {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .present-chrome {
+    transition: none;
+  }
+}
+
+.present-bar {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  z-index: 2;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: min(640px, calc(100% - 32px));
+  padding: 8px 12px;
+  transform: translateX(-50%);
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--chrome-text) 16%, transparent);
+}
+
+.present-bar button,
+.present-close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  min-height: 36px;
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  cursor: pointer;
+}
+
+.present-bar button[aria-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.present-bar button[aria-pressed='true'] {
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+  border-color: var(--chrome-brand);
+}
+
+.present-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+}
+
+.present-scrubber {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.present-scrubber input[type='range'] {
+  width: 100%;
+  margin: 0;
+  accent-color: var(--chrome-accent);
+}
+
+/* One dot under the range per keyframe, at its place along the path. */
+.present-ticks {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: -6px;
+  height: 4px;
+  pointer-events: none;
+}
+
+.present-tick {
+  position: absolute;
+  top: 0;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: var(--chrome-text-muted);
+}
+
+.present-tick[data-current] {
+  background: var(--chrome-accent);
+}
+
+.present-counter {
+  flex: none;
+  min-width: 4.5ch;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--chrome-text-muted);
+}
+
+/* Account, tokens and the security log (design/atlas/login-admin.md). */
+.account-form {
+  flex-direction: column;
+  align-items: stretch;
+  max-width: 360px;
+}
+
+.account-form input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tokens-readonly {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+}
+
+.tokens-readonly label {
+  margin: 0;
+}
+
+.tokens-hint {
+  flex-basis: 100%;
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.security-filter {
+  margin-bottom: 16px;
+}
+
+.admin-form .tokens-readonly input {
+  padding: 0;
+  width: auto;
+}
+
+/* First-run setup-code help (PR-02): a disclosure under the setup-code field, listing where each kind of install logs. */
+.auth-help {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.auth-help summary {
+  cursor: pointer;
+  color: var(--chrome-text);
+}
+
+.auth-help ul {
+  margin: 6px 0 0;
+  padding-left: 16px;
+}
+
+.auth-help li {
+  margin-bottom: 6px;
+}
+
+.auth-help li[data-detected='true'] {
+  color: var(--chrome-text);
+}
+
+.auth-help em {
+  font-style: normal;
+  font-weight: 600;
+}
+
+.auth-data-folder {
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+
+/* About and the admin status page (design/atlas/help-about-status.md). */
+.about-logo {
+  display: block;
+  max-height: 40px;
+  max-width: 100%;
+  margin: 0 0 8px;
+}
+
+/* The product's own identity (the lockup) and the organisation's branding are separate blocks, never one image. */
+.about-identity {
+  margin: 0 0 20px;
+  padding: 0 0 16px;
+  border-bottom: 1px solid var(--chrome-border);
+}
+
+.about-identity-title {
+  margin: 0 0 12px;
+  color: var(--chrome-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.about-lockup {
+  display: block;
+  height: 56px;
+  width: auto;
+  max-width: 100%;
+}
+
+.about-organisation-name {
+  margin: 0;
+  color: var(--chrome-text);
+  font-weight: 600;
+}
+
+.status-list {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+}
+
+.status-row {
+  display: grid;
+  grid-template-columns: 9em 8em minmax(0, 1fr);
+  gap: 12px;
+  padding: 10px 12px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--chrome-border);
+}
+
+.status-row:last-child {
+  border-bottom: none;
+}
+
+.status-label {
+  font-weight: 600;
+}
+
+.status-state {
+  font-weight: 600;
+}
+
+.status-row[data-tone='problem'] .status-state {
+  color: var(--chrome-danger);
+}
+
+.status-detail {
+  color: var(--chrome-text-muted);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  .status-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+}
+
+.status-row[data-tone='warn'] .status-state {
+  color: var(--chrome-text);
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-underline-offset: 3px;
+}
+
+/* The Connection check (pages/ConnectionCheckPage.tsx): the status list's rows, with a fix and the facts folded under each finding. */
+.check-group {
+  margin: 0 0 24px;
+}
+
+.check-summary-line {
+  margin: 0 0 16px;
+  font-size: 14px;
+}
+
+.check-row .status-detail {
+  color: var(--chrome-text);
+}
+
+.check-summary {
+  margin: 0 0 8px;
+}
+
+.check-detail {
+  margin: 0 0 8px;
+  padding-left: 20px;
+  color: var(--chrome-text-muted);
+}
+
+.check-more {
+  margin: 8px 0 0;
+}
+
+.check-more > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--chrome-text-muted);
+}
+
+.check-fix-title {
+  margin: 10px 0 4px;
+  font-weight: 600;
+}
+
+.check-fix-prose {
+  margin: 0;
+  color: var(--chrome-text-muted);
+}
+
+.check-pre {
+  margin: 0;
+  padding: 8px 10px;
+  /* Wrapped, not scrolled: a long comment line stays readable on a phone, and a line copied out of it has no break the config did not have. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: 12px/1.5 var(--chrome-font-mono);
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  color: var(--chrome-text);
+}
+
+.check-facts {
+  margin: 6px 0 0;
+}
+
+.check-fact {
+  display: grid;
+  grid-template-columns: minmax(10em, 14em) minmax(0, 1fr);
+  gap: 8px;
+  padding: 3px 0;
+  font-size: 12px;
+}
+
+.check-fact dt {
+  color: var(--chrome-text-muted);
+}
+
+.check-fact dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-family: var(--chrome-font-mono);
+}
+
+@media (max-width: 640px) {
+  .check-fact {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+}
+
+/* The keyboard-shortcut sheet (editor/ShortcutSheet.tsx) rides on the Import SQL dialog's box. */
+.shortcut-sheet {
+  max-height: min(80vh, 640px);
+  display: flex;
+  flex-direction: column;
+}
+
+.shortcut-sheet-scroll {
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.shortcut-sheet-section {
+  margin: 12px 0 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--chrome-text-muted);
+}
+
+.shortcut-sheet-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.shortcut-sheet-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 13px;
+  border-bottom: 1px solid var(--chrome-border);
+}
+
+.shortcut-sheet-keys {
+  display: inline-flex;
+  gap: 4px;
+  flex: none;
+}
+
+.shortcut-sheet-keys kbd {
+  font: 11px/1 var(--chrome-font-mono);
+  padding: 3px 6px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: 4px;
+}
+
+/* The empty-canvas hint (editor/EmptyCanvasHint.tsx): muted, centred, never in the way of a click on the canvas. */
+.canvas-hint {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: calc(100% - 32px);
+  padding: 6px 10px;
+  font-size: 13px;
+  color: var(--chrome-text-muted);
+  pointer-events: none;
+}
+
+.canvas-hint-close {
+  pointer-events: auto;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  font: inherit;
+  line-height: 1;
+  color: var(--chrome-text-muted);
+  background: transparent;
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+  cursor: pointer;
+}
+
+/* Home, no documents (design/atlas/empty-loading-error-states.md): a heading, one line, creation cards, then text buttons. */
+.home-empty {
+  padding: 24px 0;
+  max-width: 720px;
+}
+
+.home-empty-title {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.home-empty-line {
+  margin: 0 0 16px;
+  color: var(--chrome-text-muted);
+  font-size: 13px;
+}
+
+.home-empty-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.home-empty-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px;
+  font: inherit;
+  text-align: left;
+  color: var(--chrome-text);
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  cursor: pointer;
+}
+
+.home-empty-card:hover:not(:disabled) {
+  border-color: var(--chrome-accent);
+}
+
+.home-empty-card-title {
+  font-weight: 600;
+}
+
+.home-empty-card-hint {
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+.home-empty-more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 0 0 8px;
+}
+
+.home-link-button {
+  padding: 0;
+  font: inherit;
+  font-size: 13px;
+  color: var(--chrome-text);
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.home-empty-note {
+  margin: 0;
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+}
+
+/* Home list: views, search, sort, the Undo toast and the bin (pages/HomePage.tsx, pages/BinView.tsx;
+   design/atlas/document-list.md). */
+.home-views {
+  display: inline-flex;
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  overflow: hidden;
+}
+
+.home-views button {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: none;
+  padding: 6px 14px;
+  min-height: 32px;
+  cursor: pointer;
+}
+
+.home-views button[aria-pressed='true'] {
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+}
+
+.home-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.home-search,
+.home-type-filter {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 6px 10px;
+  min-height: 32px;
+}
+
+.home-search {
+  flex: 1 1 240px;
+  max-width: 420px;
+}
+
+.home-sort {
+  font: inherit;
+  font-weight: 600;
+  color: inherit;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.home-sort:hover {
+  color: var(--chrome-text);
+}
+
+/* Fixed, so it appearing and going never moves the rows a person is about to press. */
+.home-toast {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 8px 12px;
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  font-size: 13px;
+}
+
+.home-toast button,
+.bin-actions button {
+  font: inherit;
+  font-size: 13px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 2px 10px;
+  min-height: 28px;
+  cursor: pointer;
+}
+
+.home-toast button:disabled,
+.bin-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.home-toast .home-toast-dismiss {
+  margin-left: auto;
+  border-color: transparent;
+  background: transparent;
+}
+
+.home-no-match,
+.bin-empty,
+.bin-retention {
+  margin: 0 0 16px;
+  color: var(--chrome-text-muted);
+  font-size: 13px;
+}
+
+.bin-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.bin-actions .bin-forever {
+  color: var(--chrome-danger);
+  border-color: var(--chrome-danger);
+}
+
+/* Home grid (pages/DocumentCards.tsx, pages/DocumentThumbnail.tsx; design/atlas/document-list.md): a card per document with the
+   server's thumbnail, the title as the card's one link (its hit area stretched over the whole card), the time and the kebab.
+   Every colour is a chrome token; the thumbnail is drawn on the diagram theme's own paper, as an export is. */
+.home-layouts {
+  margin-left: auto;
+}
+
+.home-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+}
+
+.home-card:hover {
+  border-color: var(--chrome-border-strong);
+}
+
+/* The box is the image's own ratio before the image arrives, so nothing moves when it does. */
+.home-thumb {
+  position: relative;
+  aspect-ratio: 320 / 200;
+  overflow: hidden;
+  background: var(--chrome-surface-raised);
+  border-bottom: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius) var(--chrome-radius) 0 0;
+}
+
+.home-thumb-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.home-thumb[data-state='loading'] .home-thumb-image {
+  opacity: 0;
+}
+
+.home-thumb-skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--chrome-surface-raised) 0%, var(--chrome-border) 50%, var(--chrome-surface-raised) 100%);
+  background-size: 200% 100%;
+  animation: home-thumb-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes home-thumb-shimmer {
+  from {
+    background-position: 100% 0;
+  }
+
+  to {
+    background-position: -100% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-thumb-skeleton {
+    animation: none;
+  }
+}
+
+.home-thumb-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--chrome-text-muted);
+}
+
+.home-thumb-fallback svg {
+  width: 40px;
+  height: 40px;
+}
+
+.home-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: 10px 44px 12px 12px;
+}
+
+.home-card-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.home-card-type {
+  display: inline-flex;
+  flex: none;
+  color: var(--chrome-text-muted);
+}
+
+.home-card-title {
+  min-width: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.home-card-meta {
+  color: var(--chrome-text-muted);
+  font-size: 12px;
+}
+
+/* The title button is the card's one focus stop; its hit area is the whole card, so the picture opens the diagram with the mouse too. */
+.home-card .home-open {
+  font-weight: inherit;
+}
+
+.home-card .home-open::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+/* The ring goes round the card the button stands for (transparent, not none, so forced-colours still draws it). */
+.home-card .home-open:focus-visible {
+  outline-color: transparent;
+}
+
+.home-card .home-open:focus-visible::after {
+  outline: 2px solid var(--chrome-focus-ring);
+  outline-offset: -2px;
+  border-radius: var(--chrome-radius);
+}
+
+.home-card-actions {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  z-index: 1;
+}
+
+/* Opens upwards over the picture: the card is at the bottom of its own cell, and the menu must stay inside the grid. */
+.home-card-actions .home-kebab-menu {
+  top: auto;
+  bottom: calc(100% + 4px);
+}
+
+.home-card .home-rename-input {
+  min-width: 0;
+}
+
+/* History and Review panels (editor/HistoryPanel.tsx, editor/ReviewPanel.tsx; design/atlas/version-history.md,
+   design/atlas/critique-panel.md). */
+.history-panel,
+.review-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+}
+
+.history-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.history-head .panel-heading {
+  margin: 0;
+}
+
+.history-head-actions,
+.history-name-actions,
+.history-row-actions {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.history-panel button,
+.review-panel button:not(.home-link-button):not(.review-finding-main):not(.review-chip) {
+  font: inherit;
+  font-size: 12px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 2px 8px;
+  min-height: 28px;
+  cursor: pointer;
+}
+
+.history-panel button:disabled,
+.review-panel button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.history-panel button[aria-pressed='true'] {
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+  border-color: var(--chrome-brand);
+}
+
+.history-name {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.history-name label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.history-name input {
+  font: inherit;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: var(--chrome-radius);
+  padding: 4px 8px;
+}
+
+.history-error {
+  margin: 0;
+  color: var(--chrome-danger);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.history-list,
+.history-entries,
+.review-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.history-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+}
+
+.history-row[aria-current='true'] {
+  border-color: var(--chrome-accent);
+}
+
+.history-row-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.history-row-title {
+  font-weight: 600;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.history-row-auto .history-row-title {
+  font-weight: 500;
+  color: var(--chrome-text-muted);
+}
+
+.history-row-meta,
+.history-row-reason {
+  font-size: 12px;
+  color: var(--chrome-text-muted);
+  overflow-wrap: anywhere;
+}
+
+.history-more {
+  align-self: flex-start;
+}
+
+.history-compare {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid var(--chrome-accent);
+  border-radius: var(--chrome-radius);
+}
+
+.history-compare-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.history-compare-summary {
+  margin: 0;
+  font-size: 13px;
+}
+
+.history-group-heading {
+  margin: 4px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--chrome-text-muted);
+}
+
+.history-panel .history-entry {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  column-gap: 6px;
+  width: 100%;
+  text-align: left;
+  padding: 4px 6px;
+}
+
+.history-entry-symbol {
+  grid-row: span 2;
+  font-weight: 700;
+  color: var(--chrome-accent);
+}
+
+.history-entry-removed .history-entry-symbol {
+  color: var(--chrome-danger);
+}
+
+.history-entry-title {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.history-entry-detail {
+  font-size: 11px;
+  color: var(--chrome-text-muted);
+}
+
+.history-entry-removed .history-entry-title {
+  text-decoration: line-through;
+}
+
+.review-summary {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.review-finding {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  background: var(--chrome-surface-raised);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--chrome-radius);
+}
+
+.review-error {
+  border-left: 3px solid var(--chrome-danger);
+}
+
+.review-warning {
+  border-left: 3px dashed var(--chrome-accent);
+}
+
+.review-finding-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font: inherit;
+  text-align: left;
+  color: var(--chrome-text);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.review-finding-main:disabled {
+  cursor: default;
+}
+
+.review-severity {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.review-error .review-severity {
+  color: var(--chrome-danger);
+}
+
+.review-rule {
+  font-family: var(--chrome-font-mono);
+  font-size: 11px;
+  color: var(--chrome-text-muted);
+}
+
+.review-message {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.review-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.review-chip {
+  font: inherit;
+  font-size: 11px;
+  color: var(--chrome-text);
+  background: var(--chrome-surface);
+  border: 1px solid var(--chrome-border-strong);
+  border-radius: 999px;
+  padding: 1px 8px;
+  cursor: pointer;
+}
+
+.history-confirm-restore {
+  color: var(--chrome-brand-text);
+  background: var(--chrome-brand);
+  border-color: var(--chrome-brand);
+}
+
+/* Version comparison marks (canvas/CompareOverlay.tsx): added solid, changed dashed, removed dotted, each badged. */
+.compare-mark {
+  fill: none;
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+}
+
+.compare-added {
+  stroke: var(--chrome-accent);
+  fill: var(--chrome-accent);
+  fill-opacity: 0.1;
+}
+
+.compare-changed {
+  stroke: var(--chrome-text);
+  stroke-width: 2;
+  stroke-dasharray: 8 4;
+}
+
+.compare-removed {
+  stroke: var(--chrome-danger);
+  fill: var(--chrome-danger);
+  fill-opacity: 0.06;
+  stroke-width: 2;
+  stroke-dasharray: 2 4;
+}
+
+.compare-line {
+  fill: none;
+  stroke-width: 4;
+  stroke-opacity: 0.8;
+}
+
+.compare-badge rect {
+  fill: var(--chrome-brand);
+}
+
+.compare-badge text {
+  fill: var(--chrome-brand-text);
+  font: 700 12px var(--chrome-font-ui);
+}
+
+/* New diagram menu: the shape-based diagram types (app/diagramTemplates.ts) under their own small heading. */
+.home-new-more {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--chrome-border);
+  margin-top: 4px;
+  padding-top: 4px;
+}
+
+.home-new-more-title {
+  padding: 4px 12px;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--chrome-text-muted);
+}
+
+.tour-field-note {
+  display: block;
+  font-size: 11px;
+  color: var(--chrome-text-muted);
+}
+
+.theme-from-website {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.theme-from-website textarea {
+  width: min(100%, 720px);
+  font-family: var(--chrome-font-mono);
+}
+
+.theme-from-url,
+.theme-draft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+}
+
+.theme-reasons {
+  margin: 0;
+  padding-left: 20px;
+  max-width: 80ch;
+}

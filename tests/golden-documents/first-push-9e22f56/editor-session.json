@@ -1,0 +1,2981 @@
+{
+  "id": "doc_editor_session",
+  "schemaVersion": 1,
+  "title": "Full editing session",
+  "type": "freeform",
+  "nodes": [
+    {
+      "id": "n_shape_103",
+      "kind": "note",
+      "label": "custom:library/name",
+      "shape": "custom:library/name",
+      "geometry": {
+        "x": 20600,
+        "y": 300,
+        "w": 140,
+        "h": 90
+      }
+    },
+    {
+      "id": "n_shape_102",
+      "kind": "note",
+      "label": "parallelogram",
+      "shape": "parallelogram",
+      "geometry": {
+        "x": 20400,
+        "y": 300,
+        "w": 140,
+        "h": 90
+      }
+    },
+    {
+      "id": "n_shape_101",
+      "kind": "note",
+      "label": "hexagon",
+      "shape": "hexagon",
+      "geometry": {
+        "x": 20200,
+        "y": 300,
+        "w": 140,
+        "h": 90
+      }
+    },
+    {
+      "id": "n_bpmn-annotation",
+      "kind": "bpmn-annotation",
+      "label": "bpmn-annotation",
+      "shape": "custom:bpmn/annotation",
+      "geometry": {
+        "x": 20000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-data-store",
+      "kind": "bpmn-data-store",
+      "label": "bpmn-data-store",
+      "shape": "custom:bpmn/data-store",
+      "geometry": {
+        "x": 19800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-data-object",
+      "kind": "bpmn-data-object",
+      "label": "bpmn-data-object",
+      "shape": "custom:bpmn/data-object",
+      "geometry": {
+        "x": 19600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-complex-gateway",
+      "kind": "bpmn-complex-gateway",
+      "label": "bpmn-complex-gateway",
+      "shape": "custom:bpmn/complex-gateway",
+      "geometry": {
+        "x": 19400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-event-gateway",
+      "kind": "bpmn-event-gateway",
+      "label": "bpmn-event-gateway",
+      "shape": "custom:bpmn/event-gateway",
+      "geometry": {
+        "x": 19200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-inclusive-gateway",
+      "kind": "bpmn-inclusive-gateway",
+      "label": "bpmn-inclusive-gateway",
+      "shape": "custom:bpmn/inclusive-gateway",
+      "geometry": {
+        "x": 19000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-parallel-gateway",
+      "kind": "bpmn-parallel-gateway",
+      "label": "bpmn-parallel-gateway",
+      "shape": "custom:bpmn/parallel-gateway",
+      "geometry": {
+        "x": 18800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-exclusive-gateway",
+      "kind": "bpmn-exclusive-gateway",
+      "label": "bpmn-exclusive-gateway",
+      "shape": "custom:bpmn/exclusive-gateway",
+      "geometry": {
+        "x": 18600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-call-activity",
+      "kind": "bpmn-call-activity",
+      "label": "bpmn-call-activity",
+      "shape": "custom:bpmn/call-activity",
+      "geometry": {
+        "x": 18400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-sub-process",
+      "kind": "bpmn-sub-process",
+      "label": "bpmn-sub-process",
+      "shape": "custom:bpmn/sub-process",
+      "geometry": {
+        "x": 18200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-business-rule-task",
+      "kind": "bpmn-business-rule-task",
+      "label": "bpmn-business-rule-task",
+      "shape": "custom:bpmn/business-rule-task",
+      "geometry": {
+        "x": 18000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-receive-task",
+      "kind": "bpmn-receive-task",
+      "label": "bpmn-receive-task",
+      "shape": "custom:bpmn/receive-task",
+      "geometry": {
+        "x": 17800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-send-task",
+      "kind": "bpmn-send-task",
+      "label": "bpmn-send-task",
+      "shape": "custom:bpmn/send-task",
+      "geometry": {
+        "x": 17600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-manual-task",
+      "kind": "bpmn-manual-task",
+      "label": "bpmn-manual-task",
+      "shape": "custom:bpmn/manual-task",
+      "geometry": {
+        "x": 17400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-script-task",
+      "kind": "bpmn-script-task",
+      "label": "bpmn-script-task",
+      "shape": "custom:bpmn/script-task",
+      "geometry": {
+        "x": 17200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-service-task",
+      "kind": "bpmn-service-task",
+      "label": "bpmn-service-task",
+      "shape": "custom:bpmn/service-task",
+      "geometry": {
+        "x": 17000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-user-task",
+      "kind": "bpmn-user-task",
+      "label": "bpmn-user-task",
+      "shape": "custom:bpmn/user-task",
+      "geometry": {
+        "x": 16800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-task",
+      "kind": "bpmn-task",
+      "label": "bpmn-task",
+      "shape": "custom:bpmn/task",
+      "geometry": {
+        "x": 16600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-end-signal",
+      "kind": "bpmn-end-signal",
+      "label": "bpmn-end-signal",
+      "shape": "custom:bpmn/end-signal",
+      "geometry": {
+        "x": 16400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-end-error",
+      "kind": "bpmn-end-error",
+      "label": "bpmn-end-error",
+      "shape": "custom:bpmn/end-error",
+      "geometry": {
+        "x": 16200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-end-message",
+      "kind": "bpmn-end-message",
+      "label": "bpmn-end-message",
+      "shape": "custom:bpmn/end-message",
+      "geometry": {
+        "x": 16000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-end",
+      "kind": "bpmn-end",
+      "label": "bpmn-end",
+      "shape": "custom:bpmn/end",
+      "geometry": {
+        "x": 15800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-intermediate-link-throw",
+      "kind": "bpmn-intermediate-link-throw",
+      "label": "bpmn-intermediate-link-throw",
+      "shape": "custom:bpmn/intermediate-link-throw",
+      "geometry": {
+        "x": 15600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-intermediate-link",
+      "kind": "bpmn-intermediate-link",
+      "label": "bpmn-intermediate-link",
+      "shape": "custom:bpmn/intermediate-link",
+      "geometry": {
+        "x": 15400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-intermediate-signal-throw",
+      "kind": "bpmn-intermediate-signal-throw",
+      "label": "bpmn-intermediate-signal-throw",
+      "shape": "custom:bpmn/intermediate-signal-throw",
+      "geometry": {
+        "x": 15200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-intermediate-signal",
+      "kind": "bpmn-intermediate-signal",
+      "label": "bpmn-intermediate-signal",
+      "shape": "custom:bpmn/intermediate-signal",
+      "geometry": {
+        "x": 15000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-intermediate-error",
+      "kind": "bpmn-intermediate-error",
+      "label": "bpmn-intermediate-error",
+      "shape": "custom:bpmn/intermediate-error",
+      "geometry": {
+        "x": 14800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-intermediate-timer",
+      "kind": "bpmn-intermediate-timer",
+      "label": "bpmn-intermediate-timer",
+      "shape": "custom:bpmn/intermediate-timer",
+      "geometry": {
+        "x": 14600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-intermediate-message-throw",
+      "kind": "bpmn-intermediate-message-throw",
+      "label": "bpmn-intermediate-message-throw",
+      "shape": "custom:bpmn/intermediate-message-throw",
+      "geometry": {
+        "x": 14400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-intermediate-message",
+      "kind": "bpmn-intermediate-message",
+      "label": "bpmn-intermediate-message",
+      "shape": "custom:bpmn/intermediate-message",
+      "geometry": {
+        "x": 14200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-intermediate",
+      "kind": "bpmn-intermediate",
+      "label": "bpmn-intermediate",
+      "shape": "custom:bpmn/intermediate",
+      "geometry": {
+        "x": 14000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-start-signal",
+      "kind": "bpmn-start-signal",
+      "label": "bpmn-start-signal",
+      "shape": "custom:bpmn/start-signal",
+      "geometry": {
+        "x": 13800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-start-timer",
+      "kind": "bpmn-start-timer",
+      "label": "bpmn-start-timer",
+      "shape": "custom:bpmn/start-timer",
+      "geometry": {
+        "x": 13600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-start-message",
+      "kind": "bpmn-start-message",
+      "label": "bpmn-start-message",
+      "shape": "custom:bpmn/start-message",
+      "geometry": {
+        "x": 13400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_bpmn-start",
+      "kind": "bpmn-start",
+      "label": "bpmn-start",
+      "shape": "custom:bpmn/start",
+      "geometry": {
+        "x": 13200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_composite-state",
+      "kind": "composite-state",
+      "label": "composite-state",
+      "shape": "custom:state/composite-state",
+      "geometry": {
+        "x": 13000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_exit-point",
+      "kind": "exit-point",
+      "label": "exit-point",
+      "shape": "custom:state/exit-point",
+      "geometry": {
+        "x": 12800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_entry-point",
+      "kind": "entry-point",
+      "label": "entry-point",
+      "shape": "custom:state/entry-point",
+      "geometry": {
+        "x": 12600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_deep-history",
+      "kind": "deep-history",
+      "label": "deep-history",
+      "shape": "custom:state/deep-history",
+      "geometry": {
+        "x": 12400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_shallow-history",
+      "kind": "shallow-history",
+      "label": "shallow-history",
+      "shape": "custom:state/shallow-history",
+      "geometry": {
+        "x": 12200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_fork-join",
+      "kind": "fork-join",
+      "label": "fork-join",
+      "shape": "custom:state/fork-join",
+      "geometry": {
+        "x": 12000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_choice",
+      "kind": "choice",
+      "label": "choice",
+      "shape": "custom:state/choice",
+      "geometry": {
+        "x": 11800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_final",
+      "kind": "final",
+      "label": "final",
+      "shape": "custom:state/final",
+      "geometry": {
+        "x": 11600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_initial",
+      "kind": "initial",
+      "label": "initial",
+      "shape": "custom:state/initial",
+      "geometry": {
+        "x": 11400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_loop-limit",
+      "kind": "loop-limit",
+      "label": "loop-limit",
+      "shape": "loop-limit",
+      "geometry": {
+        "x": 11200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_extract",
+      "kind": "extract",
+      "label": "extract",
+      "shape": "extract",
+      "geometry": {
+        "x": 11000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_merge",
+      "kind": "merge",
+      "label": "merge",
+      "shape": "merge",
+      "geometry": {
+        "x": 10800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_stored-data",
+      "kind": "stored-data",
+      "label": "stored-data",
+      "shape": "stored-data",
+      "geometry": {
+        "x": 10600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_display",
+      "kind": "display",
+      "label": "display",
+      "shape": "display",
+      "geometry": {
+        "x": 10400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_manual-operation",
+      "kind": "manual-operation",
+      "label": "manual-operation",
+      "shape": "manual-operation",
+      "geometry": {
+        "x": 10200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_delay",
+      "kind": "delay",
+      "label": "delay",
+      "shape": "delay",
+      "geometry": {
+        "x": 10000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_lane",
+      "kind": "lane",
+      "label": "lane",
+      "shape": "custom:swimlane/lane",
+      "geometry": {
+        "x": 9800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_pool",
+      "kind": "pool",
+      "label": "pool",
+      "shape": "custom:swimlane/pool",
+      "geometry": {
+        "x": 9600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_subprocess",
+      "kind": "subprocess",
+      "label": "subprocess",
+      "shape": "rectangle",
+      "geometry": {
+        "x": 9400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_io",
+      "kind": "io",
+      "label": "io",
+      "shape": "parallelogram",
+      "geometry": {
+        "x": 9200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_decision",
+      "kind": "decision",
+      "label": "decision",
+      "shape": "diamond",
+      "geometry": {
+        "x": 9000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_process",
+      "kind": "process",
+      "label": "process",
+      "shape": "rounded",
+      "geometry": {
+        "x": 8800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_terminal",
+      "kind": "terminal",
+      "label": "terminal",
+      "shape": "pill",
+      "geometry": {
+        "x": 8600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_weak-entity",
+      "kind": "weak-entity",
+      "label": "weak-entity",
+      "shape": "custom:er/weak-entity",
+      "geometry": {
+        "x": 8400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_entity",
+      "kind": "entity",
+      "label": "entity",
+      "shape": "custom:er/entity",
+      "geometry": {
+        "x": 8200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_required-interface",
+      "kind": "required-interface",
+      "label": "required-interface",
+      "shape": "custom:uml/socket",
+      "geometry": {
+        "x": 8000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_provided-interface",
+      "kind": "provided-interface",
+      "label": "provided-interface",
+      "shape": "custom:uml/lollipop",
+      "geometry": {
+        "x": 7800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_interface",
+      "kind": "interface",
+      "label": "interface",
+      "shape": "custom:uml/interface",
+      "geometry": {
+        "x": 7600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_class",
+      "kind": "class",
+      "label": "class",
+      "shape": "custom:uml/class",
+      "geometry": {
+        "x": 7400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_vacancy",
+      "kind": "vacancy",
+      "label": "vacancy",
+      "shape": "custom:org/vacancy",
+      "geometry": {
+        "x": 7200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_assistant",
+      "kind": "assistant",
+      "label": "assistant",
+      "shape": "custom:org/assistant",
+      "geometry": {
+        "x": 7000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_executive",
+      "kind": "executive",
+      "label": "executive",
+      "shape": "custom:org/executive",
+      "geometry": {
+        "x": 6800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_role",
+      "kind": "role",
+      "label": "role",
+      "shape": "custom:org/role",
+      "geometry": {
+        "x": 6600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_namespace",
+      "kind": "namespace",
+      "label": "namespace",
+      "shape": "custom:generic/namespace",
+      "geometry": {
+        "x": 6400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_persistent-volume",
+      "kind": "persistent-volume",
+      "label": "persistent-volume",
+      "shape": "custom:generic/persistent-volume",
+      "geometry": {
+        "x": 6200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_configmap",
+      "kind": "configmap",
+      "label": "configmap",
+      "shape": "custom:generic/configmap",
+      "geometry": {
+        "x": 6000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_ingress",
+      "kind": "ingress",
+      "label": "ingress",
+      "shape": "custom:generic/ingress",
+      "geometry": {
+        "x": 5800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_deployment",
+      "kind": "deployment",
+      "label": "deployment",
+      "shape": "custom:generic/deployment",
+      "geometry": {
+        "x": 5600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_dns",
+      "kind": "dns",
+      "label": "dns",
+      "shape": "custom:generic/dns",
+      "geometry": {
+        "x": 5400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_vpn",
+      "kind": "vpn",
+      "label": "vpn",
+      "shape": "custom:generic/vpn",
+      "geometry": {
+        "x": 5200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_ci-cd",
+      "kind": "ci-cd",
+      "label": "ci-cd",
+      "shape": "custom:generic/ci-cd",
+      "geometry": {
+        "x": 5000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_container-image",
+      "kind": "container-image",
+      "label": "container-image",
+      "shape": "custom:generic/container-image",
+      "geometry": {
+        "x": 4800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_auto-scaling-group",
+      "kind": "auto-scaling-group",
+      "label": "auto-scaling-group",
+      "shape": "custom:generic/auto-scaling-group",
+      "geometry": {
+        "x": 4600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_hub",
+      "kind": "hub",
+      "label": "hub",
+      "shape": "custom:generic/hub",
+      "geometry": {
+        "x": 4400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_modem",
+      "kind": "modem",
+      "label": "modem",
+      "shape": "custom:generic/modem",
+      "geometry": {
+        "x": 4200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_workstation",
+      "kind": "workstation",
+      "label": "workstation",
+      "shape": "custom:generic/workstation",
+      "geometry": {
+        "x": 4000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_access-point",
+      "kind": "access-point",
+      "label": "access-point",
+      "shape": "custom:generic/access-point",
+      "geometry": {
+        "x": 3800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_switch",
+      "kind": "switch",
+      "label": "switch",
+      "shape": "custom:generic/switch",
+      "geometry": {
+        "x": 3600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_router",
+      "kind": "router",
+      "label": "router",
+      "shape": "custom:generic/router",
+      "geometry": {
+        "x": 3400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_function",
+      "kind": "function",
+      "label": "function",
+      "shape": "custom:generic/function",
+      "geometry": {
+        "x": 3200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_object-storage",
+      "kind": "object-storage",
+      "label": "object-storage",
+      "shape": "custom:generic/object-storage",
+      "geometry": {
+        "x": 3000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_firewall",
+      "kind": "firewall",
+      "label": "firewall",
+      "shape": "custom:generic/firewall",
+      "geometry": {
+        "x": 2800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_cdn",
+      "kind": "cdn",
+      "label": "cdn",
+      "shape": "custom:generic/cdn",
+      "geometry": {
+        "x": 2600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_cache",
+      "kind": "cache",
+      "label": "cache",
+      "shape": "custom:generic/cache",
+      "geometry": {
+        "x": 2400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_api-gateway",
+      "kind": "api-gateway",
+      "label": "api-gateway",
+      "shape": "custom:generic/api-gateway",
+      "geometry": {
+        "x": 2200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_load-balancer",
+      "kind": "load-balancer",
+      "label": "load-balancer",
+      "shape": "custom:generic/load-balancer",
+      "geometry": {
+        "x": 2000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_sticky",
+      "kind": "sticky",
+      "label": "sticky",
+      "shape": "rectangle",
+      "geometry": {
+        "x": 1800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_image",
+      "kind": "image",
+      "label": "image",
+      "shape": "image",
+      "geometry": {
+        "x": 1600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_text",
+      "kind": "text",
+      "label": "text",
+      "shape": "text",
+      "geometry": {
+        "x": 1400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_note",
+      "kind": "note",
+      "label": "note",
+      "shape": "rectangle",
+      "geometry": {
+        "x": 1200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_container",
+      "kind": "container",
+      "label": "container",
+      "shape": "rectangle",
+      "geometry": {
+        "x": 1000,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_external",
+      "kind": "external",
+      "label": "external",
+      "shape": "rectangle",
+      "geometry": {
+        "x": 800,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_actor",
+      "kind": "actor",
+      "label": "actor",
+      "shape": "rounded",
+      "geometry": {
+        "x": 600,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      }
+    },
+    {
+      "id": "n_queue",
+      "kind": "queue",
+      "label": "queue",
+      "shape": "rectangle",
+      "geometry": {
+        "x": 400,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      },
+      "parent": "c_outer"
+    },
+    {
+      "id": "c_outer",
+      "kind": "container",
+      "label": "Container",
+      "shape": "rectangle",
+      "geometry": {
+        "x": -121.62270651717445,
+        "y": -20,
+        "w": 721.6227065171745,
+        "h": 381.20163146071684
+      }
+    },
+    {
+      "id": "n_database",
+      "kind": "database",
+      "label": "database",
+      "shape": "cylinder",
+      "geometry": {
+        "x": 200,
+        "y": 60,
+        "w": 160,
+        "h": 80
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      },
+      "parent": "c_inner",
+      "ports": [
+        {
+          "id": "top",
+          "x": 0.5,
+          "y": 0
+        },
+        {
+          "id": "right",
+          "x": 1,
+          "y": 0.5
+        },
+        {
+          "id": "bottom",
+          "x": 0.5,
+          "y": 1
+        },
+        {
+          "id": "left",
+          "x": 0,
+          "y": 0.5
+        }
+      ]
+    },
+    {
+      "id": "c_inner",
+      "kind": "container",
+      "label": "Container",
+      "shape": "rectangle",
+      "geometry": {
+        "x": -81.62270651717445,
+        "y": 20,
+        "w": 481.62270651717444,
+        "h": 301.20163146071684
+      },
+      "parent": "c_outer"
+    },
+    {
+      "id": "n_service",
+      "kind": "service",
+      "label": "API \"renamed\"\nUnicode £ →",
+      "shape": "rounded",
+      "geometry": {
+        "x": -37.5,
+        "y": 126.25,
+        "w": 237,
+        "h": 93,
+        "rotation": 37
+      },
+      "style": {
+        "fill": "token:accent",
+        "strokeWidth": 2,
+        "dash": "dashed"
+      },
+      "props": {
+        "nested": {
+          "data": [
+            null,
+            true,
+            3.25,
+            "quoted \"text\""
+          ]
+        }
+      },
+      "parent": "c_inner",
+      "ports": [
+        {
+          "id": "top",
+          "x": 0.5,
+          "y": 0
+        },
+        {
+          "id": "right",
+          "x": 1,
+          "y": 0.5
+        },
+        {
+          "id": "bottom",
+          "x": 0.5,
+          "y": 1
+        },
+        {
+          "id": "left",
+          "x": 0,
+          "y": 0.5
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_dotted-report",
+      "kind": "dotted-report",
+      "label": "dotted-report edge \"label\"",
+      "from": {
+        "node": "n_service",
+        "port": "right"
+      },
+      "to": {
+        "node": "n_database",
+        "port": "left"
+      },
+      "routing": {
+        "mode": "orthogonal",
+        "waypoints": [
+          {
+            "x": 250.5,
+            "y": 160
+          },
+          {
+            "x": 260,
+            "y": 180
+          }
+        ]
+      }
+    },
+    {
+      "id": "e_association",
+      "kind": "association",
+      "label": "association edge \"label\"",
+      "from": {
+        "node": "n_service",
+        "port": "right"
+      },
+      "to": {
+        "node": "n_database",
+        "port": "left"
+      },
+      "routing": {
+        "mode": "orthogonal",
+        "waypoints": [
+          {
+            "x": 250.5,
+            "y": 160
+          },
+          {
+            "x": 260,
+            "y": 180
+          }
+        ]
+      }
+    },
+    {
+      "id": "e_dependency",
+      "kind": "dependency",
+      "label": "dependency edge \"label\"",
+      "from": {
+        "node": "n_service",
+        "port": "right"
+      },
+      "to": {
+        "node": "n_database",
+        "port": "left"
+      },
+      "routing": {
+        "mode": "orthogonal",
+        "waypoints": [
+          {
+            "x": 250.5,
+            "y": 160
+          },
+          {
+            "x": 260,
+            "y": 180
+          }
+        ]
+      }
+    },
+    {
+      "id": "e_data",
+      "kind": "data",
+      "label": "data edge \"label\"",
+      "from": {
+        "node": "n_service",
+        "port": "right"
+      },
+      "to": {
+        "node": "n_database",
+        "port": "left"
+      },
+      "routing": {
+        "mode": "orthogonal",
+        "waypoints": [
+          {
+            "x": 250.5,
+            "y": 160
+          },
+          {
+            "x": 260,
+            "y": 180
+          }
+        ]
+      }
+    },
+    {
+      "id": "e_flow",
+      "kind": "flow",
+      "label": "flow edge \"label\"",
+      "from": {
+        "node": "n_service",
+        "port": "right"
+      },
+      "to": {
+        "node": "n_database",
+        "port": "left"
+      },
+      "routing": {
+        "mode": "orthogonal",
+        "waypoints": [
+          {
+            "x": 250.5,
+            "y": 160
+          },
+          {
+            "x": 260,
+            "y": 180
+          }
+        ]
+      }
+    }
+  ],
+  "meta": {
+    "createdAt": "2026-09-24T12:00:00.000Z",
+    "updatedAt": "2026-09-24T12:00:00.000Z",
+    "createdBy": "editor"
+  }
+}

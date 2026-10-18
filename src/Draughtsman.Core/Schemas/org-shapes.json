@@ -1,0 +1,40 @@
+{
+  "library": "org",
+  "description": "Org-chart boxes, drawn from scratch as box chrome rather than line art. Each is placed as the presentation shape custom:org/<name>; the four variants are role (the everyday name-and-title box), executive (a double border for a leadership or emphasis box), assistant (a box with a left spine, for the assistant who sits on an offset branch beside their manager), and vacancy (a dashed box for a role that is not filled). Coordinates in `elements` are fractions of the node box, so one definition draws at any size; `outline` is solid, double or dashed. Rendering is shared by the web canvas (web/src/model/orgShapes.ts) and the MCP SVG renderer (src/Draughtsman.Mcp/Rendering/SvgRenderer.cs), so the two cannot drift. A role box shows two lines (name and title) by putting a newline in the node's label, which both renderers break into lines.",
+  "shapes": [
+    {
+      "name": "role",
+      "label": "Role",
+      "kind": "role",
+      "defaultLabel": "Name\nTitle",
+      "outline": "solid",
+      "elements": []
+    },
+    {
+      "name": "executive",
+      "label": "Executive",
+      "kind": "executive",
+      "defaultLabel": "Name\nTitle",
+      "outline": "double",
+      "elements": []
+    },
+    {
+      "name": "assistant",
+      "label": "Assistant",
+      "kind": "assistant",
+      "defaultLabel": "Name\nAssistant",
+      "outline": "solid",
+      "elements": [
+        { "tag": "line", "x1": 0.16, "y1": 0, "x2": 0.16, "y2": 1 }
+      ]
+    },
+    {
+      "name": "vacancy",
+      "label": "Vacancy",
+      "kind": "vacancy",
+      "defaultLabel": "Vacant\nTitle",
+      "outline": "dashed",
+      "elements": []
+    }
+  ]
+}

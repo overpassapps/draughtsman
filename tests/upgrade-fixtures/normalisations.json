@@ -1,0 +1,8 @@
+// The explicit, complete list of differences an upgrade is ALLOWED to make to a document, as the API serves it (tests/upgrade-fixtures/README.md).
+// An upgrade test compares every document, canonicalised, with what the build that wrote the fixture served. Any difference that is not
+// matched by an entry here fails the test and names the member that changed. An entry is a JSON pointer in which `*` stands for one
+// segment, with the reason and the release that introduced it. Adding an entry is a decision that old documents change on upgrade;
+// it belongs in the CHANGELOG's breaking-changes section too (docs/upgrade-backup.md, "What a patch may and may not change").
+//
+// Empty: no upgrade from any fixture changes a document's content.
+[]

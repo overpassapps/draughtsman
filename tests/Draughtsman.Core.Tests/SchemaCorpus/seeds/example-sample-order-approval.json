@@ -1,0 +1,411 @@
+{
+  "id": "doc_sample_order_approval",
+  "schemaVersion": 1,
+  "title": "Order approval",
+  "type": "flowchart",
+  "nodes": [
+    {
+      "id": "n_start",
+      "kind": "terminal",
+      "label": "Order received",
+      "shape": "pill",
+      "geometry": {
+        "x": 200,
+        "y": 40,
+        "w": 160,
+        "h": 56
+      },
+      "ports": [
+        {
+          "id": "top",
+          "x": 0.5,
+          "y": 0
+        },
+        {
+          "id": "right",
+          "x": 1,
+          "y": 0.5
+        },
+        {
+          "id": "bottom",
+          "x": 0.5,
+          "y": 1
+        },
+        {
+          "id": "left",
+          "x": 0,
+          "y": 0.5
+        }
+      ]
+    },
+    {
+      "id": "n_check",
+      "kind": "decision",
+      "label": "Valid order?",
+      "shape": "diamond",
+      "geometry": {
+        "x": 200,
+        "y": 140,
+        "w": 160,
+        "h": 100
+      },
+      "ports": [
+        {
+          "id": "top",
+          "x": 0.5,
+          "y": 0
+        },
+        {
+          "id": "right",
+          "x": 1,
+          "y": 0.5
+        },
+        {
+          "id": "bottom",
+          "x": 0.5,
+          "y": 1
+        },
+        {
+          "id": "left",
+          "x": 0,
+          "y": 0.5
+        }
+      ]
+    },
+    {
+      "id": "n_stock",
+      "kind": "decision",
+      "label": "In stock?",
+      "shape": "diamond",
+      "geometry": {
+        "x": 200,
+        "y": 320,
+        "w": 160,
+        "h": 100
+      },
+      "ports": [
+        {
+          "id": "top",
+          "x": 0.5,
+          "y": 0
+        },
+        {
+          "id": "right",
+          "x": 1,
+          "y": 0.5
+        },
+        {
+          "id": "bottom",
+          "x": 0.5,
+          "y": 1
+        },
+        {
+          "id": "left",
+          "x": 0,
+          "y": 0.5
+        }
+      ]
+    },
+    {
+      "id": "n_accept",
+      "kind": "process",
+      "label": "Accept and pack",
+      "shape": "rectangle",
+      "geometry": {
+        "x": 200,
+        "y": 500,
+        "w": 160,
+        "h": 60
+      },
+      "ports": [
+        {
+          "id": "top",
+          "x": 0.5,
+          "y": 0
+        },
+        {
+          "id": "right",
+          "x": 1,
+          "y": 0.5
+        },
+        {
+          "id": "bottom",
+          "x": 0.5,
+          "y": 1
+        },
+        {
+          "id": "left",
+          "x": 0,
+          "y": 0.5
+        }
+      ]
+    },
+    {
+      "id": "n_ship",
+      "kind": "terminal",
+      "label": "Shipped",
+      "shape": "pill",
+      "geometry": {
+        "x": 200,
+        "y": 640,
+        "w": 160,
+        "h": 56
+      },
+      "ports": [
+        {
+          "id": "top",
+          "x": 0.5,
+          "y": 0
+        },
+        {
+          "id": "right",
+          "x": 1,
+          "y": 0.5
+        },
+        {
+          "id": "bottom",
+          "x": 0.5,
+          "y": 1
+        },
+        {
+          "id": "left",
+          "x": 0,
+          "y": 0.5
+        }
+      ]
+    },
+    {
+      "id": "n_reject",
+      "kind": "process",
+      "label": "Reject and notify",
+      "shape": "rectangle",
+      "geometry": {
+        "x": 480,
+        "y": 160,
+        "w": 160,
+        "h": 60
+      },
+      "ports": [
+        {
+          "id": "top",
+          "x": 0.5,
+          "y": 0
+        },
+        {
+          "id": "right",
+          "x": 1,
+          "y": 0.5
+        },
+        {
+          "id": "bottom",
+          "x": 0.5,
+          "y": 1
+        },
+        {
+          "id": "left",
+          "x": 0,
+          "y": 0.5
+        }
+      ]
+    },
+    {
+      "id": "n_closed",
+      "kind": "terminal",
+      "label": "Closed",
+      "shape": "pill",
+      "geometry": {
+        "x": 480,
+        "y": 270,
+        "w": 160,
+        "h": 56
+      },
+      "ports": [
+        {
+          "id": "top",
+          "x": 0.5,
+          "y": 0
+        },
+        {
+          "id": "right",
+          "x": 1,
+          "y": 0.5
+        },
+        {
+          "id": "bottom",
+          "x": 0.5,
+          "y": 1
+        },
+        {
+          "id": "left",
+          "x": 0,
+          "y": 0.5
+        }
+      ]
+    },
+    {
+      "id": "n_back",
+      "kind": "process",
+      "label": "Backorder",
+      "shape": "rectangle",
+      "geometry": {
+        "x": 480,
+        "y": 340,
+        "w": 160,
+        "h": 60
+      },
+      "ports": [
+        {
+          "id": "top",
+          "x": 0.5,
+          "y": 0
+        },
+        {
+          "id": "right",
+          "x": 1,
+          "y": 0.5
+        },
+        {
+          "id": "bottom",
+          "x": 0.5,
+          "y": 1
+        },
+        {
+          "id": "left",
+          "x": 0,
+          "y": 0.5
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_1",
+      "kind": "flow",
+      "from": {
+        "node": "n_start",
+        "port": "bottom"
+      },
+      "to": {
+        "node": "n_check",
+        "port": "top"
+      },
+      "routing": {
+        "mode": "orthogonal"
+      }
+    },
+    {
+      "id": "e_2",
+      "kind": "flow",
+      "label": "yes",
+      "from": {
+        "node": "n_check",
+        "port": "bottom"
+      },
+      "to": {
+        "node": "n_stock",
+        "port": "top"
+      },
+      "routing": {
+        "mode": "orthogonal"
+      }
+    },
+    {
+      "id": "e_3",
+      "kind": "flow",
+      "label": "no",
+      "from": {
+        "node": "n_check",
+        "port": "right"
+      },
+      "to": {
+        "node": "n_reject",
+        "port": "left"
+      },
+      "routing": {
+        "mode": "orthogonal"
+      }
+    },
+    {
+      "id": "e_4",
+      "kind": "flow",
+      "label": "yes",
+      "from": {
+        "node": "n_stock",
+        "port": "bottom"
+      },
+      "to": {
+        "node": "n_accept",
+        "port": "top"
+      },
+      "routing": {
+        "mode": "orthogonal"
+      }
+    },
+    {
+      "id": "e_5",
+      "kind": "flow",
+      "label": "no",
+      "from": {
+        "node": "n_stock",
+        "port": "right"
+      },
+      "to": {
+        "node": "n_back",
+        "port": "left"
+      },
+      "routing": {
+        "mode": "orthogonal"
+      }
+    },
+    {
+      "id": "e_6",
+      "kind": "flow",
+      "from": {
+        "node": "n_accept",
+        "port": "bottom"
+      },
+      "to": {
+        "node": "n_ship",
+        "port": "top"
+      },
+      "routing": {
+        "mode": "orthogonal"
+      }
+    },
+    {
+      "id": "e_7",
+      "kind": "flow",
+      "from": {
+        "node": "n_back",
+        "port": "bottom"
+      },
+      "to": {
+        "node": "n_ship",
+        "port": "right"
+      },
+      "routing": {
+        "mode": "orthogonal"
+      }
+    },
+    {
+      "id": "e_8",
+      "kind": "flow",
+      "from": {
+        "node": "n_reject",
+        "port": "bottom"
+      },
+      "to": {
+        "node": "n_closed",
+        "port": "top"
+      },
+      "routing": {
+        "mode": "orthogonal"
+      }
+    }
+  ],
+  "meta": {
+    "createdAt": "2026-10-01T00:00:00.000Z",
+    "updatedAt": "2026-10-01T00:00:00.000Z",
+    "createdBy": "sample"
+  }
+}

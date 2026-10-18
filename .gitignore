@@ -1,0 +1,44 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+TestResults/
+*.binlog
+artifacts/
+
+# IDE
+.idea/
+*.swp
+.DS_Store
+
+# Node
+node_modules/
+web/dist/
+web/src/generated/
+sidecar/dist/
+# What each bundle contained, written by the build for scripts/generate-notices.mjs.
+web/.build-report/
+sidecar/.build-report/
+npm-debug.log*
+*.tsbuildinfo
+.eslintcache
+coverage/
+
+# Instance data folder (SQLite db, assets, exports, logs). Never commit an instance.
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Local environment
+.env
+.env.local
+
+# Session tooling
+.lavish/
+
+# Private keys of any kind must never be committed.
+*-private.key

@@ -1,0 +1,109 @@
+(* Draughtsman DSL, version 1. EBNF (ISO 14977 flavour: "..." literals, [ ] optional, { } repetition, ( ) grouping).
+   This is the grammar src/Draughtsman.Core/Text/DslParser.cs implements and DslPrinter.cs writes; the prose is
+   docs/spec/dsl.md. The format is line-oriented: one statement per line, no continuation lines.
+
+   Lexical conventions
+   - A statement is one line. Lines are separated by LF; a trailing CR is ignored.
+   - Tokens on a line are separated by one or more spaces or tabs. The printer writes single spaces.
+   - A comment starts at a "#" that begins the line or follows whitespace, outside a quoted string, and runs to the end
+     of the line. A "#" directly after "=" or inside a word is not a comment, so style.fill=#FFF and C#-service are fine.
+   - Blank lines and comment-only lines are ignored.
+   - Comments are not part of the model and are not preserved by a round trip. *)
+
+document        = magic-line , { statement-line } ;
+magic-line      = ws , "draughtsman" , sp , "1" , ws , eol ;          (* must be the first non-blank, non-comment line *)
+statement-line  = ws , [ statement ] , ws , eol ;
+statement       = header | node | container | edge | keyframe ;
+
+(* ---- Header. Each header statement may appear once, anywhere after the magic line. Only type is required. ---- *)
+
+header          = id-line | type-line | title-line | theme-line | meta-line | provenance-line | flythrough-line ;
+id-line         = "id" , sp , id ;                                 (* default: "doc_" + slug of the title *)
+type-line       = "type" , sp , ( "flowchart" | "architecture" | "freeform" | "sequence" ) ;
+title-line      = "title" , sp , string ;                           (* default: "" *)
+theme-line      = "theme" , sp , theme-pair , { sp , theme-pair } ;
+theme-pair      = key , "=" , string ;                              (* value is always a quoted string *)
+meta-line       = "meta" , { sp , meta-pair } ;
+meta-pair       = "created" , "=" , timestamp                        (* default: now, in UTC, to the millisecond *)
+                | "updated" , "=" , timestamp                        (* default: created *)
+                | "by" , "=" , text ;                                (* default: "dsl" *)
+provenance-line = "provenance" , sp , text , sp , ai-action , sp , timestamp , [ sp , "model=" , text ] , sp , id-group ;
+ai-action       = "created" | "updated" | "removed" ;
+flythrough-line = "flythrough" , sp , "loop=" , ( "true" | "false" ) ;   (* the tour's settings; the keyframes below are the tour *)
+
+(* ---- Body. Nodes and containers set the node list in file order; edges likewise. ---- *)
+
+node            = "node" , sp , id , sp , text , sp , string , [ sp , geometry ] , { sp , attribute } ;
+                  (* id, kind, "label" *)
+container       = "container" , sp , id , sp , string , [ sp , geometry ] , { sp , attribute } , [ sp , id-group ] ;
+                  (* a node whose kind is "container"; the ids in braces get parent = this id *)
+edge            = "edge" , sp , id , sp , text , sp , endpoint , sp , "->" , sp , endpoint , [ sp , string ] , { sp , attribute } ;
+                  (* id, kind, from -> to, "label". A quoted string followed by "=" is a quoted key, not the label. *)
+endpoint        = id , [ "." , id ] ;                               (* node or node.port; see dsl.md for how the dot is resolved *)
+                  (* the port may also be a derived column port, "col:" , name with every byte outside [A-Za-z0-9_-] as %XX; see dsl.md *)
+
+(* ---- Flythrough: the camera path Present plays. Keyframes are the stops, in tour order; a file with none has no tour. ---- *)
+
+keyframe        = "keyframe" , sp , id , sp , view , { sp , keyframe-attr } ;
+                  (* id, then the world rectangle the camera frames *)
+view            = "@" , sp , number , "," , number , sp , number , "x" , number ;
+                  (* x,y then w x h in canvas units, both above zero: a view with no area skips the keyframe, with a warning *)
+keyframe-attr   = "caption=" , string                               (* shown over the diagram while the camera is here *)
+                | "duration=" , number                              (* ms to travel here from the previous keyframe (from the last, when looping); 0 to 600000 *)
+                | "hold=" , number                                  (* ms an autoplaying tour stays here; 0 to 600000 *)
+                | "easing=" , ( "cut" | "linear" | "easeIn" | "easeOut" | "easeInOut" ) ;   (* default easeInOut *)
+
+geometry        = "@" , sp , number , "," , number , [ sp , number , "x" , number ] ;
+                  (* x,y then w x h in canvas units; the size defaults to 160x80 when omitted *)
+
+attribute       = key , "=" , value ;
+                  (* Bare keys below are reserved and interpreted; any other key, and any quoted key, is a prop. *)
+node-attribute  = "shape=" , text                                    (* default: the kind's default shape, else rectangle *)
+                | "parent=" , id                                     (* for a parent that is not a container-kind node *)
+                | "rotation=" , number                               (* degrees clockwise; needs geometry *)
+                | "ports=" , "[" , [ port , { sp , port } ] , "]"
+                | "style." , node-style-field , "=" , value ;
+edge-attribute  = "routing=" , ( "orthogonal" | "straight" | "curved" )
+                | "waypoints=" , "[" , [ point , { sp , point } ] , "]"   (* needs routing= *)
+                | "style." , edge-style-field , "=" , value ;
+prop            = ( key | string ) , "=" , json-value ;
+port            = id , "@" , number , "," , number ;                (* fractions of width and height, 0 to 1 *)
+point           = number , "," , number ;
+
+node-style-field = "fill" | "stroke" | "strokeWidth" | "textColor" | "font" | "dash"
+                 | "fontSize" | "bold" ;
+edge-style-field = "stroke" | "strokeWidth" | "dash" | "arrowStart" | "arrowEnd" ;
+                   (* fill, stroke, textColor, font: text. strokeWidth: number. dash: solid | dashed | dotted.
+                      fontSize: a number, 0 or more (a negative value is a warning and the default size is used); the
+                      label size in canvas units. bold: true | false, bare words.
+                      arrowStart, arrowEnd: none | arrow | open | diamond | circle | one | many | zeroOrOne | oneOrMany
+                      | zeroOrMany | oneAndOnlyOne | inheritance | aggregation | composition. *)
+
+json-value      = string                                            (* a JSON string *)
+                | number | "true" | "false" | "null"
+                | json-array | json-object ;                        (* any JSON text, compact, on the one line *)
+                  (* a bare word that is none of these is an error: strings are always quoted *)
+
+id-group        = "{" , ws , { id , ws } , "}" ;
+
+(* ---- Tokens ---- *)
+
+id              = ( letter | "_" ) , { letter | digit | "_" | "." | "-" } ;    (* at most 128 characters *)
+key             = word ;                                            (* bare keys use id characters; printed quoted otherwise *)
+text            = word | string ;                                   (* a string that is written bare when it is a plain word *)
+value           = word | string ;
+word            = word-char , { word-char } ;
+word-char       = ? any character that is not whitespace, a control character, or one of  " { } [ ] =  ? ;
+                  (* a bare positional word may not start with "#" *)
+string          = '"' , { string-char | escape } , '"' ;            (* exactly a JSON string *)
+escape          = "\" , ( '"' | "\" | "/" | "b" | "f" | "n" | "r" | "t" | "u" , hex , hex , hex , hex ) ;
+number          = [ "-" ] , ( "0" | digit-1-9 , { digit } ) , [ "." , digit , { digit } ] , [ ( "e" | "E" ) , [ "+" | "-" ] , digit , { digit } ] ;
+                  (* a JSON number; the printer writes the shortest form that reads back to the same double.
+                     A value outside the range of a double (1e400) matches here: a parse error at its token in
+                     every field stored as a double, and kept as written inside a json-value (see Props in dsl.md) *)
+timestamp       = digit , digit , digit , digit , "-" , digit , digit , "-" , digit , digit , "T" ,
+                  digit , digit , ":" , digit , digit , ":" , digit , digit , "." , digit , digit , digit , "Z" ;
+                  (* UTC to the millisecond, yyyy-MM-ddTHH:mm:ss.fffZ, never quoted; the only form read or written *)
+sp              = ( " " | tab ) , { " " | tab } ;
+ws              = { " " | tab } ;
+eol             = [ cr ] , lf ;

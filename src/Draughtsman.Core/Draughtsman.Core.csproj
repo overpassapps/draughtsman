@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Draughtsman.Core</RootNamespace>
+    <Description>Draughtsman document model, kind vocabularies and storage contract. No I/O beyond reading its own embedded schema files.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Kind vocabularies ship inside the assembly so a single-file publish always has them. -->
+    <EmbeddedResource Include="Schemas\*.json" LogicalName="schemas/%(Filename)%(Extension)" />
+    <!-- The document schema itself, for DocumentSchema and the MCP get_schema tool. -->
+    <EmbeddedResource Include="..\..\docs\schema\document.schema.json" Link="Schemas\document.schema.json" LogicalName="schemas/document.schema.json" />
+    <!-- The DSL grammar, for DslGrammar and the AI generate-from-text system prompt (build-spec-v0.1.md section 9). -->
+    <EmbeddedResource Include="..\..\docs\spec\dsl.grammar" Link="Schemas\dsl.grammar" LogicalName="schemas/dsl.grammar" />
+    <!-- So the tests can hold DslSyntax's restated vocabularies against docs/schema/document.schema.json. -->
+    <InternalsVisibleTo Include="Draughtsman.Core.Tests" />
+  </ItemGroup>
+
+</Project>

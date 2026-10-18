@@ -1,0 +1,17 @@
+# The Node.js runtime every release archive bundles as sidecar/node (PK-02, the default for audit Q12: official
+# Node 22, checksum-pinned, fetched at publish time and never committed). scripts/publish.sh downloads the file named
+# below from https://nodejs.org/dist/v<version>/ and refuses to use it unless its SHA-256 matches this line.
+#
+# To move to a newer Node 22: take the new version's lines from https://nodejs.org/dist/v<version>/SHASUMS256.txt
+# (verify its signature with Node's release keys if you want more than TLS), update every line here, and run the
+# sidecar suite against that Node (engines: >=22.12).
+#
+# version  22.23.3
+# platform        file                                        sha256
+# (RID)           (name under https://nodejs.org/dist/v22.23.3/)
+osx-arm64    node-v22.23.3-darwin-arm64.tar.xz   72d5d8832b41c9d9646197af614ffd751406ea4d215060eb91b98864e1919a3e
+osx-x64      node-v22.23.3-darwin-x64.tar.xz     ac41874c3352937119cfec39e1a98c578fe58ce8a86d7e785b89a4706015f305
+linux-arm64  node-v22.23.3-linux-arm64.tar.xz    a44aeb94849a299b22df10b9e622ec2f605c2183501bc40590705131de7c740f
+linux-x64    node-v22.23.3-linux-x64.tar.xz      df450af89261115ef9f9e3830c3eeb2cc9213b63c720b1af623cb5dcbe2e02de
+win-x64      node-v22.23.3-win-x64.zip           2b0ff57b049cda1bbcea2240eec20467018713c1efe1f7360c2681859b90ed71
+win-arm64    node-v22.23.3-win-arm64.zip         33dad22e4cef5ee8f9fbb1b0d037fdacd0e56d12a4580f0d63f68b894deab535

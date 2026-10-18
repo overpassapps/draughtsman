@@ -1,0 +1,63 @@
+{
+  "provider": "postgres",
+  "files": [
+    {
+      "path": "ai/settings.json",
+      "size": 334,
+      "sha256": "695b9fe9a2ee2c8d6a687f05acdbd509464ab4490ede5a669e3df22da606cc2b"
+    },
+    {
+      "path": "assets/3b/3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e.png",
+      "size": 88,
+      "sha256": "3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e"
+    },
+    {
+      "path": "branding/branding.json",
+      "size": 134,
+      "sha256": "8c9e67cb9db7131d05cd7773df124d81801ad4d2ab552e7b153829ce51273309"
+    },
+    {
+      "path": "branding/favicon.png",
+      "size": 79,
+      "sha256": "6432a7a1adf1f205fbe8831e08b57a72ae05ba5470e7953da5aacdd18788cf2d"
+    },
+    {
+      "path": "branding/logo-light.svg",
+      "size": 174,
+      "sha256": "a0dda6e0c1b0742e7d4f9e38ef5a76e101300538ee3d46baf0193d01b52c2f84"
+    },
+    {
+      "path": "branding/logo.png",
+      "size": 99,
+      "sha256": "b4c18a5be60fe1c811be5c7fc0b83ade087bb22e56ba21204f817c33bf06e143"
+    },
+    {
+      "path": "draughtsman.yaml",
+      "size": 264,
+      "sha256": "7fc4a37c22c4297d4771ecd8855b8836eee8173177834ff49186ba3bb32f34e2"
+    },
+    {
+      "path": "keys/key-202e61e3-49e6-452c-9452-e5cb76003723.xml",
+      "size": 998,
+      "sha256": "d782ba10a772a52b97687150ee906b11e1303152afac06110d8b7ed155a62e4a"
+    }
+  ],
+  "migrations": [
+    "20260921080136_Initial",
+    "20260929083332_Assets",
+    "20260929094225_AddAuth",
+    "20260929101734_AddAuditActorUserId"
+  ],
+  "rowCounts": {
+    "__EFMigrationsHistory": 4,
+    "api_tokens": 5,
+    "assets": 1,
+    "audit": 14,
+    "document_versions": 6,
+    "documents": 7,
+    "sessions": 4,
+    "users": 3
+  },
+  "dumpSha256": "230e2ff739aee64dc026a7395dd9e465dfe9523363afc66f73a0c8b3392b8ddf",
+  "dataFolderSha256": "169cab4436f9effa5a88c34b6e8b5029bf1525ef101f74080428314ae4f66126"
+}

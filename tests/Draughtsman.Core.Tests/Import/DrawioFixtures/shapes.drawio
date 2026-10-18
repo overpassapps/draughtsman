@@ -1,0 +1,67 @@
+<mxfile host="app.diagrams.net" modified="2026-09-30T09:12:44.123Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36" etag="Qx7vC1l0mH2pYbT4nZ3k" version="24.7.17" type="device">
+  <diagram name="Shapes" id="Zr3kU9xW1aE5qLm2Pd0s">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="s1" value="Plain box" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="30" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" value="Rounded &lt;b&gt;bold&lt;/b&gt;&lt;br&gt;two lines &amp;amp; more" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="190" y="30" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" value="Oval" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="30" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s4" value="Is it?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="20" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="s5" value="Orders DB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="30" y="140" width="80" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="s6" value="Customer" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="160" y="140" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s7" value="Just some text" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="230" y="150" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="s8" value="Prepare" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="140" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s9" value="Read input" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="550" y="140" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s10" value="Report" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="270" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="s11" value="Lambda fn" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.lambda_function;" vertex="1" parent="1">
+          <mxGeometry x="190" y="270" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s12" value="Logo" style="shape=image;html=1;verticalAlign=top;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;imageAspect=0;aspect=fixed;image=https://example.test/logo.png;" vertex="1" parent="1">
+          <mxGeometry x="290" y="270" width="64" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="s13" value="Internet" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="260" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="s14" value="Remember to&#xa;review" style="shape=note;whiteSpace=wrap;html=0;backgroundOutline=1;darkOpacity=0.05;" vertex="1" parent="1">
+          <mxGeometry x="560" y="270" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="s15" value="Pointy" style="triangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="390" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="s16" value="Loud" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;strokeColor=#FF0000;strokeWidth=3;fontColor=#0000FF;fontSize=18;fontStyle=1;fontFamily=Courier New;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="130" y="390" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s17" value="Tilted" style="rounded=0;whiteSpace=wrap;html=1;rotation=45;" vertex="1" parent="1">
+          <mxGeometry x="310" y="395" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="s18" value="Themed" style="rounded=0;whiteSpace=wrap;html=1;fillColor=light-dark(#dae8fc,#1a1a1a);strokeColor=lightblue;" vertex="1" parent="1">
+          <mxGeometry x="450" y="395" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="s19" value="&lt;script&gt;alert(1)&lt;/script&gt;&lt;img src=x onerror=alert(2)&gt;Safe &lt;a href=&quot;javascript:alert(3)&quot;&gt;text&lt;/a&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="395" width="120" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

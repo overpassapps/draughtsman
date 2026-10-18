@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Draughtsman.Mcp</RootNamespace>
+    <Description>The Draughtsman MCP tools (list/read/create/patch/render/diff/get_schema) over the document store and the sidecar. Transport-agnostic: Draughtsman.Server hosts these over stdio and streamable HTTP.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Official MCP C# SDK: tool-type discovery and DI hosting extensions, shared by the stdio and HTTP transports. -->
+    <PackageReference Include="ModelContextProtocol" Version="2.2.0" />
+    <!-- Reads the shipped diagram themes (themes/diagram-*.yaml) for the sequence renderer; the version Draughtsman.Server already uses. -->
+    <PackageReference Include="YamlDotNet" Version="18.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The one source of the diagram tokens: the web build compiles these same files into the SPA's generated themes. -->
+    <EmbeddedResource Include="..\..\themes\diagram-*.yaml" LogicalName="Draughtsman.Mcp.Themes.%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Draughtsman.Core\Draughtsman.Core.csproj" />
+    <ProjectReference Include="..\Draughtsman.Sidecar\Draughtsman.Sidecar.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Draughtsman.Mcp.Tests" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,83 @@
+# themes/diagram-neutral.yaml — Lucidchart-like blues and greys
+#
+# Diagram theme. See themes/README.md for what this layer controls.
+# All hex values are PLACEHOLDERS chosen to read as a familiar, neutral
+# corporate palette; they will be tuned once real documents are rendered.
+
+name: neutral
+description: Familiar blues and greys on white, close to the Lucidchart default look.
+
+palette:
+  blue:       "#1F5FBF"
+  blueLight:  "#DCE8F8"
+  blueDeep:   "#123C7A"
+  grey:       "#6B7280"
+  greyLight:  "#F3F4F6"
+  greyLine:   "#858D9B"
+  white:      "#FFFFFF"
+  ink:        "#1F2937"
+  green:      "#2E9E5B"
+  greenLight: "#DDF3E4"
+  yellow:     "#FBE38E"
+
+fonts:
+  label: "Inter, system-ui, sans-serif"
+  mono:  "JetBrains Mono, monospace"
+
+grid:
+  size: 20
+  color: "#E5E7EB"
+  visible: true
+
+exportBackground: "#FFFFFF"   # what export paints behind the drawing
+canvasBackground: "#FFFFFF"   # what the editor paints behind the drawing
+
+nodes:
+  default:    { fill: "#FFFFFF", stroke: "#6B7280", strokeWidth: 1.5, textColor: "#1F2937" }
+  # flowchart
+  process:    { fill: "#DCE8F8", stroke: "#1F5FBF", strokeWidth: 1.5, textColor: "#1F2937" }
+  decision:   { fill: "#FFFFFF", stroke: "#1F5FBF", strokeWidth: 1.5, textColor: "#1F2937" }
+  terminal:   { fill: "#DDF3E4", stroke: "#2E9E5B", strokeWidth: 1.5, textColor: "#1F2937" }
+  io:         { fill: "#F3F4F6", stroke: "#6B7280", strokeWidth: 1.5, textColor: "#1F2937" }
+  subprocess: { fill: "#DCE8F8", stroke: "#123C7A", strokeWidth: 2,   textColor: "#1F2937" }
+  # architecture
+  service:    { fill: "#DCE8F8", stroke: "#1F5FBF", strokeWidth: 1.5, textColor: "#1F2937" }
+  database:   { fill: "#F3F4F6", stroke: "#6B7280", strokeWidth: 1.5, textColor: "#1F2937" }
+  queue:      { fill: "#F3F4F6", stroke: "#6B7280", strokeWidth: 1.5, textColor: "#1F2937" }
+  actor:      { fill: "#FFFFFF", stroke: "#1F2937", strokeWidth: 1.5, textColor: "#1F2937" }
+  external:   { fill: "#FFFFFF", stroke: "#858D9B", strokeWidth: 1.5, textColor: "#6B7280", dash: dashed }
+  # shared
+  note:       { fill: "#FBE38E", stroke: "#A68A1E", strokeWidth: 1,   textColor: "#1F2937" }
+  container:  { fill: "#F9FAFB", stroke: "#858D9B", strokeWidth: 1.5, textColor: "#6B7280", dash: dashed }
+  # swimlane
+  pool:       { fill: "#F9FAFB", stroke: "#1F5FBF", strokeWidth: 1.5, textColor: "#1F2937" }
+  lane:       { fill: "#FFFFFF", stroke: "#858D9B", strokeWidth: 1,   textColor: "#1F2937" }
+  text:       { fill: "transparent", stroke: "transparent", strokeWidth: 0, textColor: "#1F2937" }
+  image:      { fill: "transparent", stroke: "transparent", strokeWidth: 0, textColor: "#1F2937" }
+  sticky:     { fill: "#FBE38E", stroke: "#FBE38E", strokeWidth: 0, textColor: "#1F2937" }
+  # org chart
+  role:       { fill: "#DCE8F8", stroke: "#1F5FBF", strokeWidth: 1.5, textColor: "#1F2937" }
+  executive:  { fill: "#DCE8F8", stroke: "#123C7A", strokeWidth: 2,   textColor: "#1F2937" }
+  assistant:  { fill: "#F3F4F6", stroke: "#6B7280", strokeWidth: 1.5, textColor: "#1F2937" }
+  vacancy:    { fill: "transparent", stroke: "#6B7280", strokeWidth: 1.5, textColor: "#6B7280", dash: dashed }
+  # sequence (actor is shared with architecture)
+  participant: { fill: "#DCE8F8", stroke: "#1F5FBF", strokeWidth: 1.5, textColor: "#1F2937" }
+  fragment:    { fill: "transparent", stroke: "#6B7280", strokeWidth: 1.5, textColor: "#1F2937" }
+
+edges:
+  default:       { stroke: "#6B7280", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: arrow }
+  flow:          { stroke: "#1F2937", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: arrow }
+  data:          { stroke: "#1F5FBF", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: open }
+  dependency:    { stroke: "#6B7280", strokeWidth: 1.5, dash: dashed, arrowStart: none, arrowEnd: open }
+  association:   { stroke: "#6B7280", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: none }
+  dotted-report: { stroke: "#6B7280", strokeWidth: 1.5, dash: dashed, arrowStart: none, arrowEnd: none }
+  message-flow:     { stroke: "#1F2937", strokeWidth: 1.5, dash: dashed, arrowStart: circle, arrowEnd: open }
+  bpmn-association: { stroke: "#6B7280", strokeWidth: 1.5, dash: dotted, arrowStart: none, arrowEnd: none }
+  data-association: { stroke: "#6B7280", strokeWidth: 1.5, dash: dotted, arrowStart: none, arrowEnd: open }
+  sync:             { stroke: "#1F2937", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: arrow }
+  async:            { stroke: "#1F2937", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: open }
+  return:           { stroke: "#1F2937", strokeWidth: 1.5, dash: dashed, arrowStart: none, arrowEnd: open }
+  create:           { stroke: "#1F2937", strokeWidth: 1.5, dash: dashed, arrowStart: none, arrowEnd: open }
+  destroy:          { stroke: "#1F2937", strokeWidth: 1.5, dash: solid,  arrowStart: none, arrowEnd: arrow }
+  note:             { stroke: "#1F2937", strokeWidth: 1,   dash: solid,  arrowStart: none, arrowEnd: none }
+  interaction-use:  { stroke: "#1F2937", strokeWidth: 1,   dash: solid,  arrowStart: none, arrowEnd: none }

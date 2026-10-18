@@ -1,0 +1,128 @@
+{
+  "id": "doc_checkout",
+  "schemaVersion": 1,
+  "title": "Checkout",
+  "type": "sequence",
+  "nodes": [
+    {
+      "id": "p_user",
+      "kind": "actor",
+      "label": "Customer",
+      "shape": "rounded"
+    },
+    {
+      "id": "p_web",
+      "kind": "participant",
+      "label": "Web app",
+      "shape": "rectangle"
+    },
+    {
+      "id": "p_api",
+      "kind": "participant",
+      "label": "Orders API",
+      "shape": "rectangle"
+    },
+    {
+      "id": "p_pay",
+      "kind": "participant",
+      "label": "Payments",
+      "shape": "rectangle"
+    }
+  ],
+  "edges": [
+    {
+      "id": "m_1",
+      "kind": "sync",
+      "label": "Place order",
+      "from": {
+        "node": "p_user"
+      },
+      "to": {
+        "node": "p_web"
+      }
+    },
+    {
+      "id": "m_2",
+      "kind": "sync",
+      "label": "POST /orders",
+      "from": {
+        "node": "p_web"
+      },
+      "to": {
+        "node": "p_api"
+      },
+      "props": {
+        "activate": true
+      }
+    },
+    {
+      "id": "m_3",
+      "kind": "sync",
+      "label": "charge(total)",
+      "from": {
+        "node": "p_api"
+      },
+      "to": {
+        "node": "p_pay"
+      },
+      "props": {
+        "activate": true
+      }
+    },
+    {
+      "id": "m_4",
+      "kind": "return",
+      "label": "receipt",
+      "from": {
+        "node": "p_pay"
+      },
+      "to": {
+        "node": "p_api"
+      },
+      "props": {
+        "deactivate": true
+      }
+    },
+    {
+      "id": "m_5",
+      "kind": "async",
+      "label": "declined",
+      "from": {
+        "node": "p_api"
+      },
+      "to": {
+        "node": "p_web"
+      }
+    },
+    {
+      "id": "m_6",
+      "kind": "return",
+      "label": "201 Created",
+      "from": {
+        "node": "p_api"
+      },
+      "to": {
+        "node": "p_web"
+      },
+      "props": {
+        "deactivate": true
+      }
+    },
+    {
+      "id": "m_7",
+      "kind": "sync",
+      "label": "audit()",
+      "from": {
+        "node": "p_api"
+      },
+      "to": {
+        "node": "p_api"
+      }
+    }
+  ],
+  "meta": {
+    "createdAt": "2026-09-29T00:00:00.000Z",
+    "updatedAt": "2026-09-29T00:00:00.000Z",
+    "createdBy": "eric"
+  }
+}

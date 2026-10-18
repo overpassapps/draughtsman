@@ -1,0 +1,166 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      # Every leg runs to completion so a Windows-only failure is visible alongside a green Linux run.
+      fail-fast: false
+      matrix:
+        # macOS is verified locally (scripts/verify-local.sh) instead of in Actions; see AGENTS.md.
+        os: [ubuntu-latest, windows-latest]
+        # The storage provider suite runs against Postgres on the Ubuntu leg only (ADR 0003); Windows runs SQLite.
+        # A service with an empty image is not started, which is how the Windows leg opts out.
+        include:
+          - os: ubuntu-latest
+            postgres-image: postgres:17-alpine
+            postgres-connection: "Host=localhost;Port=5432;Username=draughtsman;Password=draughtsman;Database=draughtsman"
+    services:
+      postgres:
+        image: ${{ matrix.postgres-image || '' }}
+        env:
+          POSTGRES_USER: draughtsman
+          POSTGRES_PASSWORD: draughtsman
+          POSTGRES_DB: draughtsman
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U draughtsman"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET (from global.json)
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            web/package-lock.json
+            sidecar/package-lock.json
+
+      - name: dotnet restore
+        run: dotnet restore
+
+      # Also runs npm ci and the esbuild bundle in sidecar/ (src/Draughtsman.Sidecar/Draughtsman.Sidecar.csproj).
+      - name: dotnet build
+        run: dotnet build --no-restore --configuration Release
+
+      # Blame mode makes a test host that dies or hangs name its culprit: the console and Sequence_*.xml list every test that had started and not
+      # finished, and a mini crash or hang dump is written where the runtime can make one (a host killed from outside leaves no dump, only the
+      # list). The hang timeout is an inactivity window: 10 minutes with no test starting or finishing ends the run with a hang dump instead
+      # of sitting until the job times out. The longest quiet stretch in the last green Windows run was 5 minutes (one upgrade-fixture
+      # config-check row), so keep it well above that.
+      - name: dotnet test
+        env:
+          DRAUGHTSMAN_TEST_POSTGRES: ${{ matrix.postgres-connection || '' }}
+        run: dotnet test --no-build --configuration Release --logger trx --results-directory TestResults --blame-crash --blame-crash-dump-type mini --blame-hang --blame-hang-dump-type mini --blame-hang-timeout 10m
+
+      - name: dotnet format --verify-no-changes
+        run: dotnet format --verify-no-changes
+
+      - name: npm ci
+        working-directory: web
+        run: npm ci
+
+      - name: npm run lint
+        working-directory: web
+        run: npm run lint
+
+      - name: npm run build
+        working-directory: web
+        run: npm run build
+
+      - name: npm test
+        working-directory: web
+        run: npm test
+
+      # node_modules and dist already exist from the dotnet build step; this runs the Vitest suite against them.
+      - name: npm test (sidecar)
+        working-directory: sidecar
+        run: npm test
+
+      # The air-gap proof's script half (docs/air-gapped.md): the web and sidecar bundles reference no other host, and the SBOM generator and
+      # its checker work. dotnet restore (above) wrote the NuGet assets the SBOM scripts read; the bundles exist from the two builds above.
+      - name: Offline bundle checks and SBOM tests
+        run: |
+          node scripts/check-offline-bundles.mjs all
+          node --test scripts/check-offline-bundles.test.mjs scripts/check-sbom.test.mjs scripts/generate-sbom.test.mjs
+
+      # Only what explains a failure leaves the runner: the trx files, the blame files naming the tests that were running when a test host
+      # died or hung (Sequence_*.xml), and any crash or hang dump, the dumps only while the staged files stay under CEILING_MB (an upload has
+      # no size filter of its own, so this step is the ceiling). The raw TestResults folder is not uploaded.
+      - name: Stage test artifacts
+        if: always()
+        shell: bash
+        env:
+          CEILING_MB: "200"
+        run: |
+          set -u
+          out=test-artifacts
+          ceiling=$((CEILING_MB * 1024 * 1024))
+          total=0
+          mkdir -p "$out"
+          # Files are staged under their own names: a trx name carries a timestamp, a blame file a GUID and a dump a process id and time,
+          # and the trx deployment folder repeats the blame files, so a name seen already is the same file.
+          stage() {
+            cp "$1" "$out/$(basename "$1")"
+            total=$((total + $(wc -c < "$1")))
+          }
+          if [ -d TestResults ]; then
+            while IFS= read -r -d '' file; do
+              [ -e "$out/$(basename "$file")" ] || stage "$file"
+            done < <(find TestResults -type f \( -name '*.trx' -o -name 'Sequence_*.xml' \) -print0)
+            while IFS= read -r -d '' file; do
+              [ -e "$out/$(basename "$file")" ] && continue
+              size=$(wc -c < "$file")
+              if [ $((total + size)) -le "$ceiling" ]; then
+                stage "$file"
+              else
+                echo "::warning::Dump not uploaded, it would take the artifact over ${CEILING_MB} MB: $file ($size bytes)"
+              fi
+            done < <(find TestResults -type f \( -name '*.dmp' -o -name '*crashdump*' -o -name '*hangdump*' \) -print0)
+          fi
+          echo "Staged for upload ($total bytes):"
+          ls -l "$out"
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.os }}
+          path: test-artifacts
+          if-no-files-found: ignore
+          retention-days: 7
+
+  # Single required check for branch protection and releases: green only when every OS leg is green.
+  release-gate:
+    name: Release gate (all platforms green)
+    needs: build
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if any platform leg failed
+        run: |
+          echo "build result: ${{ needs.build.result }}"
+          test "${{ needs.build.result }}" = "success"

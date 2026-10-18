@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <!-- DI + logging hosts the in-memory MCP pipeline in ToolArgumentValidatorTests; test-only. -->
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.5" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Draughtsman.Mcp\Draughtsman.Mcp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The shared contract file lives in docs/ so the renderer tests read the same bytes as the schema tests. -->
+    <Content Include="..\..\docs\schema\document.schema.json" Link="contract\document.schema.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\checkout-sequence.json" Link="contract\checkout-sequence.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\checkout-fragments.json" Link="contract\checkout-fragments.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\checkout-sequence.dsl" Link="contract\checkout-sequence.dsl" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\checkout-fragments.dsl" Link="contract\checkout-fragments.dsl" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\decision-flow.json" Link="contract\decision-flow.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- A flowchart whose labels were broken by hand for the old single-line renderer (NodeLabelLayoutTests, SvgRendererLabelWrapTests). -->
+    <Content Include="Fixtures\decision-flow-hand-broken.dsl" Link="label-wrap\decision-flow-hand-broken.dsl" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Shared\UpgradeFixturePaths.cs" Link="Shared\UpgradeFixturePaths.cs" />
+    <Compile Include="..\Shared\DrawioFixtures.cs" Link="Shared\DrawioFixtures.cs" />
+    <Compile Include="..\Shared\VisioPackageBuilder.cs" Link="Shared\VisioPackageBuilder.cs" />
+    <Compile Include="..\Shared\VisioFixtures.cs" Link="Shared\VisioFixtures.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The hand-written draw.io files the importer tests in Draughtsman.Core.Tests read, so the endpoint and the MCP tool are tested on the same bytes. -->
+    <Content Include="..\Draughtsman.Core.Tests\Import\DrawioFixtures\*" Link="drawio-fixtures\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

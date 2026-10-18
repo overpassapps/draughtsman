@@ -1,0 +1,11 @@
+// Every entry is a migration operation that can lose data, allowed on purpose. The rule (docs/upgrade-backup.md, "What an
+// upgrade may change"): EXPAND, THEN CONTRACT. A release only adds tables, columns and indexes and stops writing what it
+// replaces; a LATER release drops what the release before it no longer reads. Never both in the same release.
+//
+// An entry needs: the migration id, the provider ("sqlite", "postgres" or "*"), the operation and target exactly as the
+// guard prints them, a justification of at least 60 characters saying why no data is lost, and the fixture (a directory of
+// tests/upgrade-fixtures, made by a release BEFORE this migration) whose upgrade test proves the data survives. A stale
+// entry (nothing it covers) fails the guard just as a missing one does.
+//
+// Empty today: every shipped migration only adds.
+[]

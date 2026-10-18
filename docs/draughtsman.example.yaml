@@ -1,0 +1,269 @@
+# draughtsman.example.yaml: every setting Draughtsman reads, at its default.
+#
+# Copy this file into the data folder as draughtsman.yaml and change only what you need; a missing file, an empty
+# file, or a key left out all mean "the default shown here". Unknown keys are ignored, so a file written for a newer
+# version still opens on an older one. The server reads the file at start-up: restart it after an edit.
+#
+# The data folder is DRAUGHTSMAN_DATA (or --DRAUGHTSMAN_DATA=<folder>); with neither set, a release archive uses data/
+# beside the executable. The database, uploads, branding and the key ring (keys/) live there, so
+# copying the folder with the server stopped is a complete backup.
+#
+# Secrets never go in this file. Where a setting needs one (an AI key, a key-encryption key) the file names the
+# environment variable that holds it.
+
+server:
+  # HTTP port for the web app, the API and MCP. ASPNETCORE_URLS, when set, wins over host and port.
+  port: 5180
+  # Address to listen on. 127.0.0.1 is reachable from this machine only. Use 0.0.0.0 to serve other machines, and put
+  # TLS in front of it (a reverse proxy such as Caddy or nginx): the server itself speaks plain HTTP.
+  host: 127.0.0.1
+  # Reverse proxies whose X-Forwarded-For and X-Forwarded-Proto headers are trusted: IP addresses ("10.0.0.1") or
+  # CIDR ranges ("172.18.0.0/16", handy for a Docker network whose proxy address changes on redeploy). Hostnames are
+  # not understood; an entry that is neither is logged at start-up and ignored. A proxy on this same machine is
+  # trusted without being listed. Leave empty unless a proxy sits in front; trusting headers from anyone else lets a
+  # caller forge its address.
+  knownProxies: []
+  # Set to true only when every request reaches the server over HTTPS, directly or through a trusted proxy: it makes
+  # cookies Secure and sends HSTS. On plain HTTP it would make sign-in unusable.
+  forceHttps: false
+  # Host names the server answers to (the Host header; "*.example.com" matches subdomains, "*" anything). Empty picks a
+  # default: localhost names only while the server listens on loopback with no proxy in front, anything otherwise.
+  allowedHosts: []
+  # The address people reach this instance at, for the links in emails: https://draughtsman.example.com (no path,
+  # query or fragment needed). Never taken from a request's Host header, which a stranger controls. Empty means emailed
+  # password-reset links are off; an administrator's reset link works without it. See "Forgotten passwords" in the admin guide.
+  # An administrator can also set it at Admin, Email; a value here wins and shows read-only there.
+  publicUrl: ""
+
+storage:
+  # sqlite (a data.db file in the data folder) or postgres.
+  provider: sqlite
+  # Empty uses the provider's default. For postgres, an Npgsql connection string.
+  connectionString: ""
+  # SQLite only. An upgrade first copies data.db to data.db.pre-migration-<time>, checks the copy opens and passes
+  # integrity_check, and puts it back if a migration fails or the result has fewer rows than the copy. If the copy cannot
+  # be made (disk full, no permission) the upgrade is REFUSED (exit code 5). true upgrades anyway, with no automatic way
+  # back: take a backup yourself first (docs/upgrade-backup.md, "What an upgrade does and undoes"). Leave it false.
+  allowMigrationWithoutBackup: false
+
+auth:
+  # Not read by this version: accepted so a file that names it still loads. Local accounts (a password in the
+  # database) are the only sign-in; OIDC is not built.
+  mode: local
+  # API token lifetimes. Every new token expires; a request for longer than maxLifetimeDays is refused, and the default
+  # is capped at it. Tokens created before expiry existed keep working with no expiry until revoked.
+  tokens:
+    defaultLifetimeDays: 90
+    maxLifetimeDays: 365
+  # Password recovery. An administrator can always create a reset link for a person (Admin, Users). "Forgot password?" on
+  # the sign-in page is offered too when selfService is on, email is configured (the email section below) and
+  # server.publicUrl is set. Lifetimes outside the stated ranges are pulled back to them.
+  passwordReset:
+    selfService: true
+    # How long a link emailed to a person works, in minutes (5 to 1440).
+    emailedLinkMinutes: 60
+    # How long a link an administrator creates works, in hours (1 to 168).
+    adminLinkHours: 24
+
+email:
+  # Outgoing email, used for password-reset emails and the test message on Admin, Email. smtp sends through a mail server;
+  # file writes each message to email.file.folder and sends nothing (development, demos; a file holds its link in the
+  # clear). Empty means no email, and everything that needs it is hidden.
+  #
+  # An administrator can set all of this in the app instead (Admin, Email: mail server, port, encryption, user name,
+  # password, From, Reply-to and the public address), and it applies at once with no restart. The rule when both are used:
+  # a value set in this file wins, and the field shows read-only on that page with the reason; every key left at its
+  # default (empty text, port 587, starttls) counts as not set and stays editable there. So set a key here only when you
+  # want to fix it for everyone. Changes made in this file take effect at the next start.
+  provider: ""
+  # Who messages come from: name@example.com or Draughtsman <name@example.com>. Required for either provider.
+  from: ""
+  # Optional: where a person's reply to an email goes, when it should not go to the From address.
+  replyTo: ""
+  smtp:
+    host: ""
+    port: 587
+    # starttls upgrades the connection before any password is sent and refuses to go on if the server will not. none sends
+    # in the clear and is accepted only without a user name, or to a server on this machine. Implicit TLS (port 465) is
+    # not supported; use 587.
+    tls: starttls
+    # The account to sign in to the mail server with. Empty means no sign-in.
+    user: ""
+    # Name of the environment variable holding the SMTP password. The password itself is never in this file. When this
+    # variable (or passwordFile) holds a value it wins over a password saved at Admin, Email, which then shows as read-only.
+    passwordEnvironmentVariable: DRAUGHTSMAN_SMTP_PASSWORD
+    # Or a file holding it (a Docker or Kubernetes secret, a root-only file), relative to the data folder or absolute. When
+    # set it is used instead of the variable.
+    passwordFile: ""
+    # Seconds to wait for the mail server before giving up and saying so.
+    timeoutSeconds: 20
+  file:
+    # Where the file provider writes messages, relative to the data folder.
+    folder: outbox
+
+ai:
+  # anthropic, openai, azure-openai or ollama. Empty hides the AI features altogether. An administrator can also set
+  # these in the app (Admin, AI), which overrides this section.
+  provider: ""
+  # The model name; for azure-openai, the deployment name.
+  model: ""
+  # Base URL of the endpoint, for openai-compatible servers, azure-openai and ollama. Empty uses the provider's own.
+  # Must be http or https, with no user name or password and no #fragment, or AI stays off and the log says why.
+  endpoint: ""
+  # Name of the environment variable that holds the API key.
+  apiKeyEnvironmentVariable: DRAUGHTSMAN_AI_KEY
+  # Azure OpenAI REST api-version. Empty uses the built-in default.
+  apiVersion: ""
+  # Ask the model for a hidden reasoning trace where it supports one. Off is faster.
+  think: false
+  # Request timeout in seconds. null means the provider's default.
+  timeoutSeconds: null
+  # Where the AI endpoint may point (docs/ai-endpoint-policy.md). openai, anthropic and azure-openai may use only their own
+  # host (api.openai.com, api.anthropic.com, *.openai.azure.com); ollama may use this machine and private addresses. List any
+  # other host here: a name, an IP address, or "*.example.com" for every subdomain (not the bare domain). A corporate gateway,
+  # an OpenAI-compatible server or an Azure resource on its own domain needs one line, e.g. [llm.example.com]. Only this
+  # file can add to the list, never the admin page, so a stolen admin session cannot widen it. Link-local and cloud-metadata
+  # addresses (169.254.169.254 and the rest) are refused even when listed, a key is never sent over plain http except to
+  # localhost, and redirects are not followed. An endpoint that fails these leaves AI off and the log says why.
+  allowedEndpointHosts: []
+
+keyRing:
+  # How the key ring in <data>/keys/ (which encrypts the stored AI key) is protected at rest: auto, dpapi, keychain,
+  # key, certificate or none. auto picks a certificate, then a key-encryption key, then the operating system store
+  # (Windows DPAPI, macOS Keychain); on Linux with none of those the ring is left unprotected and the server says so.
+  protection: auto
+  # Environment variable holding the key-encryption key: base64 of at least 32 random bytes (openssl rand -base64 32).
+  keyEnvironmentVariable: DRAUGHTSMAN_KEY_ENCRYPTION_KEY
+  # Or a file holding that key (a Docker or Kubernetes secret, a root-only file). Must be outside the data folder.
+  keyFile: ""
+  certificate:
+    # A PKCS#12 (.pfx) file with an RSA certificate and its private key, to protect the ring with instead.
+    path: ""
+    # Environment variable holding the .pfx password. Leave the variable unset for an unprotected .pfx.
+    passwordEnvironmentVariable: DRAUGHTSMAN_KEY_CERTIFICATE_PASSWORD
+  # Only for a data folder an EARLIER version wrote: old install folders to try when its stored AI key or saved SMTP password was tied to the
+  # folder that version ran from (this version ties them to the key ring alone, so a program at any path reads them). Name the folder the old
+  # program ran from only when the program was moved at the same time as it was upgraded and nothing else can find it; once the secrets are
+  # read they are re-protected and this does nothing more. The environment variable DRAUGHTSMAN_LEGACY_INSTALL_PATHS does the same (paths
+  # separated like PATH: ":" or ";" on Windows). `draughtsman config check` says whether anything is needed.
+  legacyInstallPaths: []
+
+theme:
+  # The chrome (app shell) theme file: looked up in the data folder's themes/, then the data folder, then the themes
+  # shipped with the server. An unreadable or invalid file falls back to the shipped default with a warning.
+  chrome: chrome.yaml
+  # Not read by this version: accepted so a file that names it still loads. The default diagram theme is the
+  # organisation's default theme (Admin, Themes); without one it is the shipped Overpass theme.
+  diagram: overpass
+
+themes:
+  fetchFromUrl:
+    # Off by default. When true, an administrator can type a web address into Admin, Themes, From a website, and the server fetches
+    # that page and up to 8 of its stylesheets (https only, 2 MiB in total, 15 seconds) to read its colours into a draft theme. Nothing
+    # is stored from the fetch, and it happens only when an administrator presses the button. Pasting CSS works whatever this says.
+    enabled: false
+    # Host names the fetch may reach even if they resolve to an internal address (loopback, private ranges, link-local). Exact host
+    # names, no wildcards or ports. Empty means every internal address is refused.
+    allowedHosts: []
+
+export:
+  chromium:
+    # Server-side PDF (the REST endpoint, the MCP render_document tool and the dialog's Export PDF button) needs a headless
+    # Chromium, which is an optional extra and is off by default. File > Export PDF… prints from the user's own browser,
+    # and PNG and SVG export work in the browser too, all without it.
+    enabled: false
+    # Path to a Chromium executable. Empty uses the copy Playwright installed.
+    path: ""
+    # Chromium's own process sandbox: auto tries it and falls back to none, with a warning, where the platform refuses
+    # (a container without user namespaces); on never runs without it; off never tries. Whatever this says, the page
+    # being printed has no JavaScript and no network, and Chromium gets none of the server's environment variables.
+    sandbox: auto
+    # The longest one PDF render may take, in seconds (the health check behind export.pdf uses at most 30). A browser that has not
+    # printed by then is stopped, by process id, and the request fails with a 504 instead of hanging. Zero or less means 60.
+    timeoutSeconds: 60
+
+assets:
+  # The largest image upload accepted, in bytes (10 MiB). A larger body is refused before it is stored.
+  maxSizeBytes: 10485760
+  # The most all uploaded images may add up to, in bytes (5 GiB). An upload that would pass it is refused with 507;
+  # the same image uploaded twice is stored once and counts once. Zero or less means no limit.
+  quotaBytes: 5368709120
+
+retention:
+  # What the server keeps of the things it makes automatically. Zero or less keeps everything. Nothing here touches a
+  # document someone saved or a version someone named.
+  # How many data.db.pre-migration-<stamp> copies of a SQLite database are kept after an upgrade takes a new one.
+  preMigrationCopies: 3
+  # How many automatic checkpoints (the snapshot an agent edit takes first) are kept per document, newest first.
+  # Older ones are deleted by the daily maintenance pass.
+  checkpointsPerDocument: 50
+  # A sign-in session that expired (or, if revoked, was created) more than this many days ago is deleted by the daily pass.
+  expiredSessionDays: 7
+  # How many days a deleted document stays in the bin before the daily pass removes it for good. Until then an
+  # administrator (or the person who created or deleted it) can restore it with all of its versions. Zero or less keeps
+  # binned documents until someone deletes them permanently. This is the one item here that holds a person's own work.
+  binDays: 30
+
+mcp:
+  # Serve the MCP tools over HTTP at /mcp (bearer token required). Turn off to disable the route. The stdio form,
+  # `draughtsman mcp --stdio`, is a separate command and is not affected.
+  enabled: true
+
+sidecar:
+  # The Node runtime for layout and snapshots: a full path, or a name on PATH. Empty uses the copy in sidecar/ beside
+  # the executable, then PATH. A release archive ships its own, so leave this empty.
+  nodePath: ""
+  # Path to sidecar.js. Empty uses sidecar/sidecar.js beside the executable.
+  scriptPath: ""
+  # Seconds a layout may take before the sidecar is restarted (must be above zero).
+  layoutTimeoutSeconds: 30
+  # Seconds a document snapshot or merge may take before the sidecar is restarted (must be above zero).
+  yjsTimeoutSeconds: 10
+
+about:
+  # Who the About screen tells every signed-in user to write to: an email address (shown as a link) or any text.
+  supportContact: draughtsman@overpass.co.uk
+  # The documentation the Help menu opens in a new tab: an absolute http(s) URL (anything else is ignored; "" hides the
+  # entry). Left unset (the default) it opens this server's own copy of the guides at /docs/, behind sign-in, when the
+  # release archive carries one (it does), and the vendor's site (https://overpass.co.uk/draughtsman) when it does not.
+  docsUrl:
+
+limits:
+  # Largest request body, in bytes, for any route not named below (1 MiB). Sign-in routes are held to 16 KiB, AI routes
+  # to 256 KiB, text imports to 3 MB (the importers' 1,000,000-character cap), uploads to assets.maxSizeBytes plus the
+  # multipart framing; a larger body is refused with 413 before the server reads it.
+  maxRequestBodyBytes: 1048576
+  # Largest body for a document, a layout, an export or an MCP call (10 MiB).
+  maxDocumentBytes: 10485760
+  # PDF renders running at once across the instance (each is a Chromium of 150 to 300 MB), and per user per minute.
+  # A request over a limit is refused with 429 and a Retry-After. For every "PerMinute" figure, 0 turns the limit off.
+  pdfConcurrency: 2
+  pdfPerUserPerMinute: 10
+  # Layouts running at once (one Node sidecar serves them all), and per user per minute.
+  layoutConcurrency: 4
+  layoutPerUserPerMinute: 30
+  importPerUserPerMinute: 60
+  # AI calls in flight at once, and per user per minute.
+  aiConcurrency: 4
+  aiPerUserPerMinute: 20
+  # Calls to /mcp per user per minute; an agent makes many small ones, so this is the loosest limit.
+  mcpPerUserPerMinute: 300
+  # Document thumbnails on the Documents page: drawn at most this many at once (a request over it waits its turn, it is not
+  # refused: a page of fifty cards asks for all of them together), and requests per user per minute (loose: a repeat visit
+  # revalidates every card and nearly all of those answer 304). 0 turns the per-minute limit off.
+  thumbnailConcurrency: 2
+  thumbnailPerUserPerMinute: 600
+
+logging:
+  # Level for the server's own messages: Trace, Debug, Information, Warning, Error or None.
+  level: Information
+  # Level for ASP.NET Core (a line for every request), Entity Framework (a line for every SQL command) and the HTTP
+  # client. Warning keeps a busy session from writing thousands of lines a minute; set Information to see them.
+  frameworkLevel: Warning
+  file:
+    # Also write the log to daily files in <data>/logs/. The console log is unaffected.
+    enabled: false
+    # Days of files to keep; older ones are deleted when a new day starts.
+    retainDays: 14
+    # A day's file stops growing at this size in bytes (10 MiB); the rest of the day goes to a numbered successor.
+    maxFileBytes: 10485760

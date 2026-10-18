@@ -1,0 +1,53 @@
+{
+  "library": "uml",
+  "description": "UML class-diagram shapes, drawn from scratch in standard notation. Each is placed as the presentation shape custom:uml/<name> (an architecture node gets it from its kind - class, interface, provided-interface, required-interface - but a freeform document has no kind vocabulary, so write shape=custom:uml/class explicitly there): class (a box in three stacked compartments: name, attributes, operations), interface (the same box with an <<interface>> stereotype line), lollipop (a provided interface: a ball on a stem) and socket (a required interface: a half-circle on a stem). A class or interface is ONE node; its members live in the node's props as line lists - props.attributes and props.operations are arrays of strings, one member per string - and its name is the node label. A member's leading + - # ~ is the visibility glyph (public, private, protected, package), so a plain-text member such as \"+ save(): void\" round-trips as typed. props.stereotype (optional string) replaces the stereotype line; an interface defaults to \"interface\", a class to none. Compartment heights come from the content (name rows, one row per member, an empty compartment keeps one row) using the metrics below, which the web canvas (web/src/model/umlShapes.ts), the MCP SVG renderer (src/Draughtsman.Mcp/Rendering/SvgRenderer.cs) and the layout sidecar (sidecar/src/layout/elk.ts) all read, so they cannot drift; a box taller than its content gives the extra to the operations compartment. Lollipop and socket are small fixed symbols: the symbol fills the top half of the box, its stem starts at the left edge (the port to connect a realisation or dependency line to) and its label sits in the bottom half. Relationship line-ends (inheritance, aggregation, composition, dependency) are edge styles, not shapes.",
+  "metrics": {
+    "fontSize": 13,
+    "rowHeight": 18,
+    "padX": 8,
+    "padY": 5,
+    "charWidth": 7.5,
+    "glyphColumn": 12,
+    "minWidth": 120,
+    "symbolBand": 0.5,
+    "symbolRadius": 0.4
+  },
+  "shapes": [
+    {
+      "name": "class",
+      "label": "Class",
+      "kind": "class",
+      "form": "compartments",
+      "defaultLabel": "ClassName",
+      "stereotype": "",
+      "defaultProps": { "attributes": ["- attribute: Type"], "operations": ["+ operation(): void"] }
+    },
+    {
+      "name": "interface",
+      "label": "Interface",
+      "kind": "interface",
+      "form": "compartments",
+      "defaultLabel": "InterfaceName",
+      "stereotype": "interface",
+      "defaultProps": { "operations": ["+ operation(): void"] }
+    },
+    {
+      "name": "lollipop",
+      "label": "Provided interface",
+      "kind": "provided-interface",
+      "form": "symbol",
+      "defaultLabel": "IName",
+      "stereotype": "",
+      "defaultSize": { "w": 72, "h": 48 }
+    },
+    {
+      "name": "socket",
+      "label": "Required interface",
+      "kind": "required-interface",
+      "form": "symbol",
+      "defaultLabel": "IName",
+      "stereotype": "",
+      "defaultSize": { "w": 72, "h": 48 }
+    }
+  ]
+}

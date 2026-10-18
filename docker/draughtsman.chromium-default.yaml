@@ -1,0 +1,6 @@
+# Copied into a fresh data folder by docker/entrypoint.sh only when the image was built with
+# --build-arg INSTALL_CHROMIUM=true and the data folder has no draughtsman.yaml yet. Every other key keeps its
+# DraughtsmanConfig default (see src/Draughtsman.Server/Configuration/DraughtsmanConfig.cs).
+export:
+  chromium:
+    enabled: true

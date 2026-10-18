@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Draughtsman.Core\Draughtsman.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The shared contract files live in docs/ so the web tests read the same bytes. -->
+    <Content Include="..\..\docs\examples\editor-session.json" Link="contract\editor-session.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\order-service.json" Link="contract\order-service.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\schema\document.schema.json" Link="contract\document.schema.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\perf-2000n-2500e.json" Link="contract\perf-2000n-2500e.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\order-service.dsl" Link="contract\order-service.dsl" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\checkout-sequence.json" Link="contract\checkout-sequence.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\checkout-fragments.json" Link="contract\checkout-fragments.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\checkout-sequence.dsl" Link="contract\checkout-sequence.dsl" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\checkout-fragments.dsl" Link="contract\checkout-fragments.dsl" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The differential corpus for the schema validator: frozen seed documents, harvested test documents and the outcomes recorded for it (SchemaCorpus/README.md). -->
+    <Content Include="SchemaCorpus\**\*.json;SchemaCorpus\**\*.jsonl" Link="schema-corpus\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The official JSON-Schema-Test-Suite cases (MIT) for the keywords SchemaValidator implements, unmodified (JsonSchemaTestSuite/README.md). -->
+    <Content Include="JsonSchemaTestSuite\**\*" Link="json-schema-test-suite\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Compile Include="..\Shared\LoadScale.cs" Link="Shared\LoadScale.cs" />
+    <Compile Include="..\Shared\DrawioFixtures.cs" Link="Shared\DrawioFixtures.cs" />
+    <Compile Include="..\Shared\VisioPackageBuilder.cs" Link="Shared\VisioPackageBuilder.cs" />
+    <Compile Include="..\Shared\VisioFixtures.cs" Link="Shared\VisioFixtures.cs" />
+    <Compile Include="..\Shared\ZipTamper.cs" Link="Shared\ZipTamper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Hand-written draw.io files (plain, compressed, multi-page, a bare model) for the importer, MCP and endpoint tests. -->
+    <Content Include="Import\DrawioFixtures\*" Link="drawio-fixtures\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,41 @@
+# themes/chrome-example-client.yaml — fictional example client theme
+#
+# Proof that a second chrome theme loads (spec section 8, milestone M3): a different
+# product name, palette, logo, favicon and mode, in the same shape as themes/chrome.yaml.
+# "Northwind" and the compass mark are deliberately fictional; see themes/README.md for
+# how to select this theme from draughtsman.yaml. web/scripts/build-tokens.ts only
+# compiles themes/chrome.yaml, so this file is intentionally not the build-time default.
+
+name: Example Client
+productName: Northwind
+logo: assets/example-client-logo.svg
+favicon: assets/example-client-favicon.svg
+mode: light                    # dark | light | system
+colors:
+  brand:        "#0b6b3a"     # deep forest green — backs white brandText
+  brandText:    "#FFFFFF"
+  surface:      "#ffffff"
+  surfaceRaised: "#eef5f0"
+  border:       "#c8dcd0"
+  text:         "#10241a"
+  textMuted:    "#4d6357"
+  accent:       "#0b6b3a"     # 5.37:1 on white
+  danger:       "#b3261e"
+radius: 10
+font:
+  ui: "Georgia, 'Times New Roman', serif"
+  mono: "'Courier New', monospace"
+
+# Companion values for dark mode, used when `mode` is dark or when `system` resolves to
+# dark.
+dark:
+  colors:
+    brand:        "#1f9d55"
+    brandText:    "#06210f"
+    surface:      "#0c1b13"
+    surfaceRaised: "#12291c"
+    border:       "#25503a"
+    text:         "#eaf5ee"
+    textMuted:    "#9db9a8"
+    accent:       "#3fbf74"
+    danger:       "#ff6b6b"

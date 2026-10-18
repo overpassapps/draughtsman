@@ -1,0 +1,30 @@
+# Build outputs and dependency caches: the Dockerfile builds these fresh in its own stages.
+**/bin/
+**/obj/
+**/node_modules/
+web/dist/
+web/src/generated/
+sidecar/dist/
+TestResults/
+artifacts/
+*.binlog
+
+# Instance data: never bake an instance into the image.
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# VCS and editor noise.
+.git/
+.gitignore
+.idea/
+.vs/
+*.swp
+.DS_Store
+
+# Local environment and session tooling.
+.env
+.env.local
+.lavish/

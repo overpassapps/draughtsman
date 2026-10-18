@@ -1,0 +1,47 @@
+name: Feature request
+description: Suggest an improvement or a new capability
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Questions and half-formed ideas are welcome in [Discussions](https://github.com/overpassapps/draughtsman/discussions).
+        Check the "Not built yet" list in the README first: some gaps are known.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: The problem or workflow, not the solution.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like to see?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you have tried or considered
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Editor (canvas, shapes, connectors)
+        - DSL / document model
+        - MCP / agent tools
+        - Import / export
+        - Administration / sign-in
+        - Installation / operations
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I would be willing to work on this (after agreeing the approach in this issue)

@@ -1,0 +1,177 @@
+{
+  "id": "doc_decision_flow",
+  "schemaVersion": 1,
+  "title": "Decision flow",
+  "type": "flowchart",
+  "nodes": [
+    {
+      "id": "n_check",
+      "kind": "decision",
+      "label": "Valid order?",
+      "shape": "diamond",
+      "geometry": {
+        "x": 200,
+        "y": 40,
+        "w": 160,
+        "h": 100
+      },
+      "ports": [
+        {
+          "id": "top",
+          "x": 0.5,
+          "y": 0
+        },
+        {
+          "id": "right",
+          "x": 1,
+          "y": 0.5
+        },
+        {
+          "id": "bottom",
+          "x": 0.5,
+          "y": 1
+        },
+        {
+          "id": "left",
+          "x": 0,
+          "y": 0.5
+        }
+      ]
+    },
+    {
+      "id": "n_accept",
+      "kind": "process",
+      "label": "Accept",
+      "shape": "rectangle",
+      "geometry": {
+        "x": 40,
+        "y": 240,
+        "w": 160,
+        "h": 60
+      }
+    },
+    {
+      "id": "n_reject",
+      "kind": "process",
+      "label": "Reject",
+      "shape": "rectangle",
+      "geometry": {
+        "x": 220,
+        "y": 240,
+        "w": 160,
+        "h": 60
+      }
+    },
+    {
+      "id": "n_review",
+      "kind": "process",
+      "label": "Review",
+      "shape": "rectangle",
+      "geometry": {
+        "x": 400,
+        "y": 240,
+        "w": 160,
+        "h": 60
+      }
+    },
+    {
+      "id": "n_audit",
+      "kind": "process",
+      "label": "Audit",
+      "shape": "rectangle",
+      "geometry": {
+        "x": 440,
+        "y": 40,
+        "w": 120,
+        "h": 60
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_yes",
+      "kind": "flow",
+      "label": "yes",
+      "from": {
+        "node": "n_check",
+        "port": "bottom"
+      },
+      "to": {
+        "node": "n_accept"
+      },
+      "routing": {
+        "mode": "straight"
+      }
+    },
+    {
+      "id": "e_no",
+      "kind": "flow",
+      "label": "no",
+      "from": {
+        "node": "n_check",
+        "port": "bottom"
+      },
+      "to": {
+        "node": "n_reject"
+      },
+      "routing": {
+        "mode": "straight"
+      }
+    },
+    {
+      "id": "e_maybe",
+      "kind": "flow",
+      "from": {
+        "node": "n_check",
+        "port": "bottom"
+      },
+      "to": {
+        "node": "n_review"
+      },
+      "routing": {
+        "mode": "straight"
+      }
+    },
+    {
+      "id": "e_bent",
+      "kind": "flow",
+      "from": {
+        "node": "n_check"
+      },
+      "to": {
+        "node": "n_review"
+      },
+      "routing": {
+        "mode": "orthogonal",
+        "waypoints": [
+          {
+            "x": 300,
+            "y": 180
+          },
+          {
+            "x": 500,
+            "y": 180
+          }
+        ]
+      }
+    },
+    {
+      "id": "e_audit",
+      "kind": "flow",
+      "from": {
+        "node": "n_check"
+      },
+      "to": {
+        "node": "n_audit"
+      },
+      "routing": {
+        "mode": "straight"
+      }
+    }
+  ],
+  "meta": {
+    "createdAt": "2026-09-30T09:00:00.000Z",
+    "updatedAt": "2026-09-30T09:00:00.000Z",
+    "createdBy": "eric"
+  }
+}

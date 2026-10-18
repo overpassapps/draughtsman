@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Draughtsman.Storage</RootNamespace>
+    <Description>EF Core implementation of IStore with SQLite and Postgres providers and their migrations (ADR 0003).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Latest 10.0.x patch: earlier patches pull transitive packages the NuGet audit rejects (warnings are errors). -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.12" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
+    <!-- Design-time only: dotnet ef migrations add. Not shipped. -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.12">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Draughtsman.Core\Draughtsman.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Draughtsman.Storage.Tests" />
+  </ItemGroup>
+
+</Project>

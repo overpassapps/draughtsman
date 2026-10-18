@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Draughtsman.Ai</RootNamespace>
+    <Description>IModelProvider (build-spec-v0.1.md section 7/9) and the Ollama, OpenAI, Anthropic and Azure OpenAI implementations.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Draughtsman.Core\Draughtsman.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Draughtsman.Ai.Tests" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,213 @@
+{
+  "formatVersion": 1,
+  "label": "security-events-fe5b237",
+  "note": "Throwaway test data only. Every password, token, key and licence in this fixture was generated for it and signs or protects nothing real.",
+  "createdAt": "2026-10-01T13:02:25.682Z",
+  "build": {
+    "commit": "fe5b237e97912a15e4743bafcc9daa246117529b",
+    "subject": "Add security event log, token expiry and read scope, self-service password change and reset-admin service",
+    "committedAt": "2026-09-30T23:16:10+01:00",
+    "version": "0.1.0",
+    "migrations": [
+      "20260921080129_Initial",
+      "20260929083325_Assets",
+      "20260929094216_AddAuth",
+      "20260929101728_AddAuditActorUserId",
+      "20260930214345_AddSecurityEventsAndTokenExpiry"
+    ]
+  },
+  "madeWith": {
+    "dotnet": "10.0.100",
+    "node": "v22.19.0",
+    "os": "darwin arm64"
+  },
+  "contentRoot": "/opt/draughtsman-upgrade-fixture/security-events-fe5b237/",
+  "keyRing": {
+    "protection": "none"
+  },
+  "licence": {
+    "file": "licence.key",
+    "verificationKeyFile": "licence-public-key.txt",
+    "note": "signed with a throwaway Ed25519 key; the public half is recorded here",
+    "publicKey": "ed25519:mlNUM+LylbeFEiyZQhsJqMBsQFE9cZgw7veM6WdU660="
+  },
+  "providers": {
+    "sqlite": {
+      "provider": "sqlite",
+      "files": [
+        {
+          "path": "ai/settings.json",
+          "size": 334,
+          "sha256": "00c9cec8d469beaea5036359cdbdbc8c00bee2e4927ae273fe9b7d2b897676b0"
+        },
+        {
+          "path": "assets/3b/3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e.png",
+          "size": 88,
+          "sha256": "3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e"
+        },
+        {
+          "path": "branding/branding.json",
+          "size": 134,
+          "sha256": "8c9e67cb9db7131d05cd7773df124d81801ad4d2ab552e7b153829ce51273309"
+        },
+        {
+          "path": "branding/favicon.png",
+          "size": 79,
+          "sha256": "6432a7a1adf1f205fbe8831e08b57a72ae05ba5470e7953da5aacdd18788cf2d"
+        },
+        {
+          "path": "branding/logo-light.svg",
+          "size": 174,
+          "sha256": "a0dda6e0c1b0742e7d4f9e38ef5a76e101300538ee3d46baf0193d01b52c2f84"
+        },
+        {
+          "path": "branding/logo.png",
+          "size": 99,
+          "sha256": "b4c18a5be60fe1c811be5c7fc0b83ade087bb22e56ba21204f817c33bf06e143"
+        },
+        {
+          "path": "data.db",
+          "size": 1523712,
+          "sha256": "4625a36f62c9dcdde7519d3a79d6a31b4381f60ff63d2ce01c85653b3732a0d0"
+        },
+        {
+          "path": "draughtsman.yaml",
+          "size": 227,
+          "sha256": "e5195597e06c12e784addce89295c6f7672b7dd99a043e20bc7acfd44966f62e"
+        },
+        {
+          "path": "keys/key-c3ff4c13-0064-4489-a27e-3e44a8e40da4.xml",
+          "size": 998,
+          "sha256": "108886ad1fd509c35de3f9f35ef50a79bd1dcee8fc11d8eff3bbf86c6558033b"
+        },
+        {
+          "path": "licence.key",
+          "size": 375,
+          "sha256": "f292b9717e1d2594092a1526b617f3e15fa83c90bc70789b12ab0c8ee1072917"
+        },
+        {
+          "path": "themes/org/_settings.json",
+          "size": 39,
+          "sha256": "e98de673ece3d143015df690b6809cb7b6bebddfe8406ae5d8fe0e8904fdee59"
+        },
+        {
+          "path": "themes/org/fixture-second-theme-throwaway.yaml",
+          "size": 611,
+          "sha256": "a4817cdbc3b7679d231c6082771deb1af8168ed116698f6a3adc5decf682866c"
+        },
+        {
+          "path": "themes/org/fixture-theme-throwaway.yaml",
+          "size": 664,
+          "sha256": "fb4c20120c2e4ec57fbaa7ab6f52d127343539e943472b68b6a417f871bc4bd1"
+        }
+      ],
+      "migrations": [
+        "20260921080129_Initial",
+        "20260929083325_Assets",
+        "20260929094216_AddAuth",
+        "20260929101728_AddAuditActorUserId",
+        "20260930214345_AddSecurityEventsAndTokenExpiry"
+      ],
+      "rowCounts": {
+        "__EFMigrationsHistory": 5,
+        "__EFMigrationsLock": 0,
+        "api_tokens": 5,
+        "assets": 1,
+        "audit": 17,
+        "document_updates": 0,
+        "document_versions": 6,
+        "documents": 10,
+        "security_events": 15,
+        "sessions": 4,
+        "users": 3
+      },
+      "integrityCheck": "ok",
+      "dataFolderSha256": "7c88925270584e0d00b1c99e5c83727493be32fdaf9d114f86883d48ffe10e56"
+    },
+    "postgres": {
+      "provider": "postgres",
+      "files": [
+        {
+          "path": "ai/settings.json",
+          "size": 334,
+          "sha256": "5861a90a70838f194c47b21df25b816f8ef001b22f8ee41f602aa45d4f3070e6"
+        },
+        {
+          "path": "assets/3b/3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e.png",
+          "size": 88,
+          "sha256": "3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e"
+        },
+        {
+          "path": "branding/branding.json",
+          "size": 134,
+          "sha256": "8c9e67cb9db7131d05cd7773df124d81801ad4d2ab552e7b153829ce51273309"
+        },
+        {
+          "path": "branding/favicon.png",
+          "size": 79,
+          "sha256": "6432a7a1adf1f205fbe8831e08b57a72ae05ba5470e7953da5aacdd18788cf2d"
+        },
+        {
+          "path": "branding/logo-light.svg",
+          "size": 174,
+          "sha256": "a0dda6e0c1b0742e7d4f9e38ef5a76e101300538ee3d46baf0193d01b52c2f84"
+        },
+        {
+          "path": "branding/logo.png",
+          "size": 99,
+          "sha256": "b4c18a5be60fe1c811be5c7fc0b83ade087bb22e56ba21204f817c33bf06e143"
+        },
+        {
+          "path": "draughtsman.yaml",
+          "size": 269,
+          "sha256": "873e9881f5315cfc916552376d1b37a4eb1b36f2da1ee679e498921e340a43d2"
+        },
+        {
+          "path": "keys/key-b65eda00-0d20-4617-9827-edbf73b8c9e3.xml",
+          "size": 998,
+          "sha256": "5e55b3fd30c789de87b8e815d81ac243f82d860608f51f17b7dd714986838f17"
+        },
+        {
+          "path": "licence.key",
+          "size": 375,
+          "sha256": "d2d518b22fc9eec57c86a1a70cf5dbb1b47f8e939177b7ada500ec529a88a61d"
+        },
+        {
+          "path": "themes/org/_settings.json",
+          "size": 39,
+          "sha256": "e98de673ece3d143015df690b6809cb7b6bebddfe8406ae5d8fe0e8904fdee59"
+        },
+        {
+          "path": "themes/org/fixture-second-theme-throwaway.yaml",
+          "size": 611,
+          "sha256": "a4817cdbc3b7679d231c6082771deb1af8168ed116698f6a3adc5decf682866c"
+        },
+        {
+          "path": "themes/org/fixture-theme-throwaway.yaml",
+          "size": 664,
+          "sha256": "fb4c20120c2e4ec57fbaa7ab6f52d127343539e943472b68b6a417f871bc4bd1"
+        }
+      ],
+      "migrations": [
+        "20260921080136_Initial",
+        "20260929083332_Assets",
+        "20260929094225_AddAuth",
+        "20260929101734_AddAuditActorUserId",
+        "20260930214350_AddSecurityEventsAndTokenExpiry"
+      ],
+      "rowCounts": {
+        "__EFMigrationsHistory": 5,
+        "api_tokens": 5,
+        "assets": 1,
+        "audit": 17,
+        "document_versions": 6,
+        "documents": 10,
+        "security_events": 15,
+        "sessions": 4,
+        "users": 3
+      },
+      "dumpSha256": "76b5b4cad1a4e8d32c6df04d4dd60042e47d357070e56307f8ca122503d42562",
+      "dataFolderSha256": "338c02440e08f8a5b4bc383fa2f70df53d6ad89bea5b7d77532a6594898a26ad"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "mode": "light",
+  "chrome": {
+    "dark": {
+      "brand": "#3b82f6",
+      "brandText": "#0f172a",
+      "surface": "#020817",
+      "surfaceRaised": "#1e293b",
+      "border": "#1e293b",
+      "text": "#f8fafc",
+      "textMuted": "#94a3b8",
+      "accent": "#3c74ed",
+      "danger": "#ff4d4f"
+    },
+    "light": {
+      "brand": "#2563eb",
+      "brandText": "#f8fafc",
+      "surface": "#ffffff",
+      "surfaceRaised": "#f1f5f9",
+      "border": "#e2e8f0",
+      "text": "#020817",
+      "textMuted": "#606f85",
+      "accent": "#2563eb",
+      "danger": "#ef4444"
+    }
+  },
+  "diagram": {
+    "base": "neutral",
+    "palette": {
+      "blue": "#2563eb",
+      "blueDeep": "#134cca",
+      "blueLight": "#d8e2f8"
+    }
+  }
+}

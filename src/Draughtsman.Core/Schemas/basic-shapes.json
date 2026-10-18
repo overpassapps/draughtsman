@@ -1,0 +1,156 @@
+{
+  "library": "basic",
+  "description": "General-purpose outline shapes and annotation marks, the set draw.io, Lucidchart and Visio put in their basic palettes: ellipse, triangle, trapezoid, chevron, cross, arrow, double-arrow, note, callout, brace, cube, folder and component. Each is placed as the presentation shape custom:basic/<name>, a branch the document schema already admits, so a shape needs no kind of its own: put it on any kind (process in a flowchart, service in an architecture diagram, note for an annotation) and the shape only changes how the box is drawn. The UML marks are here too: a use case is an ellipse, a package is a folder, a deployment node is a cube, and a component is a component. A shape is data, not code: every outline is path data in the node's box, so the web canvas (web/src/model/basicShapes.ts) and the MCP SVG renderer (src/Draughtsman.Core/Schemas/BasicShapeLibrary.cs, drawn by src/Draughtsman.Mcp/Rendering/SvgRenderer.cs) read the same numbers and cannot drift. Path syntax: the absolute commands M, L, C, H, V and Z only. Each coordinate is a fraction of the box (x of the width, y of the height) written as a decimal, or a fraction plus or minus a fixed length in pixels such as \"1-16\" (16 px in from the far edge) or \"0+8\" (8 px in from the near edge); a fixed length is never more than half the box, so a small box keeps its shape. The first part is the outline, painted with the node's fill and stroke; every later part is a detail painted with the node's stroke, and with its fill too when it says fill true. A part with fill false (the brace) draws a line only. labelBox is the label's rectangle as [left, top, right, bottom] in the same coordinates. ports are where a connector lands, as plain fractions of the box (the four side midpoints unless the outline does not pass through them); a shape lists only the ports it has. size is the box the palette places the shape at. keywords are the other names people search the palette by. annotation true marks a shape that comments on the diagram rather than takes part in it (the palette places it on the note kind).",
+  "shapes": [
+    {
+      "name": "ellipse",
+      "keywords": ["circle", "oval", "use case"],
+      "label": "Ellipse",
+      "size": { "w": 140, "h": 80 },
+      "parts": [
+        { "d": "M0.5,0 C0.77614,0 1,0.22386 1,0.5 C1,0.77614 0.77614,1 0.5,1 C0.22386,1 0,0.77614 0,0.5 C0,0.22386 0.22386,0 0.5,0 Z", "fill": true }
+      ],
+      "labelBox": ["0.15", "0.15", "0.85", "0.85"],
+      "ports": { "top": [0.5, 0], "right": [1, 0.5], "bottom": [0.5, 1], "left": [0, 0.5] }
+    },
+    {
+      "name": "triangle",
+      "label": "Triangle",
+      "size": { "w": 120, "h": 100 },
+      "parts": [
+        { "d": "M0.5,0 L1,1 L0,1 Z", "fill": true }
+      ],
+      "labelBox": ["0.25", "0.45", "0.75", "0.95"],
+      "ports": { "top": [0.5, 0], "right": [0.75, 0.5], "bottom": [0.5, 1], "left": [0.25, 0.5] }
+    },
+    {
+      "name": "trapezoid",
+      "label": "Trapezoid",
+      "size": { "w": 140, "h": 80 },
+      "parts": [
+        { "d": "M0.2,0 L0.8,0 L1,1 L0,1 Z", "fill": true }
+      ],
+      "labelBox": ["0.15", "0.05", "0.85", "0.95"],
+      "ports": { "top": [0.5, 0], "right": [0.9, 0.5], "bottom": [0.5, 1], "left": [0.1, 0.5] }
+    },
+    {
+      "name": "chevron",
+      "keywords": ["step", "process arrow"],
+      "label": "Chevron",
+      "size": { "w": 140, "h": 70 },
+      "parts": [
+        { "d": "M0,0 L0.75,0 L1,0.5 L0.75,1 L0,1 L0.25,0.5 Z", "fill": true }
+      ],
+      "labelBox": ["0.25", "0.1", "0.75", "0.9"],
+      "ports": { "top": [0.375, 0], "right": [1, 0.5], "bottom": [0.375, 1], "left": [0.25, 0.5] }
+    },
+    {
+      "name": "cross",
+      "keywords": ["plus"],
+      "label": "Cross",
+      "size": { "w": 80, "h": 80 },
+      "parts": [
+        { "d": "M0.3333,0 L0.6667,0 L0.6667,0.3333 L1,0.3333 L1,0.6667 L0.6667,0.6667 L0.6667,1 L0.3333,1 L0.3333,0.6667 L0,0.6667 L0,0.3333 L0.3333,0.3333 Z", "fill": true }
+      ],
+      "labelBox": ["0.25", "0.25", "0.75", "0.75"],
+      "ports": { "top": [0.5, 0], "right": [1, 0.5], "bottom": [0.5, 1], "left": [0, 0.5] }
+    },
+    {
+      "name": "arrow",
+      "keywords": ["right arrow", "block arrow"],
+      "label": "Arrow",
+      "size": { "w": 140, "h": 60 },
+      "parts": [
+        { "d": "M0,0.25 L0.6,0.25 L0.6,0 L1,0.5 L0.6,1 L0.6,0.75 L0,0.75 Z", "fill": true }
+      ],
+      "labelBox": ["0+4", "0.25", "0.6", "0.75"],
+      "ports": { "top": [0.3, 0.25], "right": [1, 0.5], "bottom": [0.3, 0.75], "left": [0, 0.5] }
+    },
+    {
+      "name": "double-arrow",
+      "keywords": ["two-way arrow", "block arrow"],
+      "label": "Double arrow",
+      "size": { "w": 140, "h": 60 },
+      "parts": [
+        { "d": "M0,0.5 L0.25,0 L0.25,0.25 L0.75,0.25 L0.75,0 L1,0.5 L0.75,1 L0.75,0.75 L0.25,0.75 L0.25,1 Z", "fill": true }
+      ],
+      "labelBox": ["0.25", "0.25", "0.75", "0.75"],
+      "ports": { "top": [0.5, 0.25], "right": [1, 0.5], "bottom": [0.5, 0.75], "left": [0, 0.5] }
+    },
+    {
+      "name": "note",
+      "keywords": ["folded corner", "uml note"],
+      "label": "Folded note",
+      "annotation": true,
+      "size": { "w": 140, "h": 90 },
+      "parts": [
+        { "d": "M0,0 L1-16,0 L1,0+16 L1,1 L0,1 Z", "fill": true },
+        { "d": "M1-16,0 L1-16,0+16 L1,0+16" }
+      ],
+      "labelBox": ["0+8", "0+8", "1-8", "1-8"],
+      "ports": { "top": [0.5, 0], "right": [1, 0.5], "bottom": [0.5, 1], "left": [0, 0.5] }
+    },
+    {
+      "name": "callout",
+      "keywords": ["speech bubble", "comment"],
+      "label": "Callout",
+      "annotation": true,
+      "size": { "w": 160, "h": 90 },
+      "parts": [
+        { "d": "M0,0 L1,0 L1,0.75 L0.45,0.75 L0.15,1 L0.25,0.75 L0,0.75 Z", "fill": true }
+      ],
+      "labelBox": ["0+6", "0+4", "1-6", "0.75-4"],
+      "ports": { "top": [0.5, 0], "right": [1, 0.375], "bottom": [0.15, 1], "left": [0, 0.375] }
+    },
+    {
+      "name": "brace",
+      "keywords": ["curly bracket", "bracket", "group"],
+      "label": "Brace",
+      "annotation": true,
+      "size": { "w": 140, "h": 120 },
+      "parts": [
+        { "d": "M0+24,0 C0+14,0 0+12,0+4 0+12,0+14 L0+12,0.5-14 C0+12,0.5-4 0+6,0.5 0,0.5 C0+6,0.5 0+12,0.5+4 0+12,0.5+14 L0+12,1-14 C0+12,1-4 0+14,1 0+24,1", "fill": false }
+      ],
+      "labelBox": ["0+32", "0", "1", "1"],
+      "ports": { "left": [0, 0.5] }
+    },
+    {
+      "name": "cube",
+      "keywords": ["3d box", "node", "deployment node"],
+      "label": "Cube",
+      "size": { "w": 120, "h": 100 },
+      "parts": [
+        { "d": "M0,0+16 L0+16,0 L1,0 L1,1-16 L1-16,1 L0,1 Z", "fill": true },
+        { "d": "M0,0+16 L1-16,0+16 L1-16,1 M1-16,0+16 L1,0" }
+      ],
+      "labelBox": ["0+4", "0+20", "1-20", "1-4"],
+      "ports": { "top": [0.5, 0], "right": [1, 0.5], "bottom": [0.5, 1], "left": [0, 0.5] }
+    },
+    {
+      "name": "folder",
+      "keywords": ["package", "uml package", "tab"],
+      "label": "Folder",
+      "size": { "w": 160, "h": 100 },
+      "parts": [
+        { "d": "M0,0 L0.4,0 L0.4,0+18 L1,0+18 L1,1 L0,1 Z", "fill": true },
+        { "d": "M0,0+18 L0.4,0+18" }
+      ],
+      "labelBox": ["0+6", "0+22", "1-6", "1-6"],
+      "ports": { "top": [0.2, 0], "right": [1, 0.5], "bottom": [0.5, 1], "left": [0, 0.5] }
+    },
+    {
+      "name": "component",
+      "keywords": ["uml component"],
+      "label": "Component",
+      "size": { "w": 160, "h": 90 },
+      "parts": [
+        { "d": "M0,0 L1,0 L1,1 L0,1 Z", "fill": true },
+        { "d": "M1-28,0+8 L1-8,0+8 L1-8,0+24 L1-28,0+24 Z", "fill": true },
+        { "d": "M1-32,0+12 L1-24,0+12 L1-24,0+16 L1-32,0+16 Z", "fill": true },
+        { "d": "M1-32,0+18 L1-24,0+18 L1-24,0+22 L1-32,0+22 Z", "fill": true }
+      ],
+      "labelBox": ["0+8", "0+28", "1-8", "1-8"],
+      "ports": { "top": [0.5, 0], "right": [1, 0.5], "bottom": [0.5, 1], "left": [0, 0.5] }
+    }
+  ]
+}

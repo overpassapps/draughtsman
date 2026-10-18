@@ -1,0 +1,236 @@
+{
+  "formatVersion": 1,
+  "label": "email-settings-2fe39d9",
+  "note": "Throwaway test data only. Every password, token, key and licence in this fixture was generated for it and signs or protects nothing real.",
+  "createdAt": "2026-10-01T13:41:30.124Z",
+  "build": {
+    "commit": "2fe39d90d91731a14654d6ef7a93ff2adf7f6b36",
+    "subject": "Note email settings in AGENTS.md",
+    "committedAt": "2026-10-01T14:04:41+01:00",
+    "version": "0.1.0",
+    "migrations": [
+      "20260921080129_Initial",
+      "20260929083325_Assets",
+      "20260929094216_AddAuth",
+      "20260929101728_AddAuditActorUserId",
+      "20260930214345_AddSecurityEventsAndTokenExpiry",
+      "20260930222757_AddDocumentEtag",
+      "20260930233553_AddDocumentBin",
+      "20261001092923_AddPasswordResetTokens"
+    ]
+  },
+  "madeWith": {
+    "dotnet": "10.0.100",
+    "node": "v22.19.0",
+    "os": "darwin arm64"
+  },
+  "contentRoot": "/opt/draughtsman-upgrade-fixture/email-settings-2fe39d9/",
+  "keyRing": {
+    "protection": "key",
+    "keyEnvironmentVariable": "DRAUGHTSMAN_KEY_ENCRYPTION_KEY",
+    "keyBase64": "6Yvt/C5eyX7U0mMbzROclWcJ4nl3F8NZ1SN3XAcWBS8=",
+    "note": "throwaway key-encryption key"
+  },
+  "licence": {
+    "file": "licence.key",
+    "verificationKeyFile": "licence-public-key.txt",
+    "note": "signed with a throwaway Ed25519 key; the public half is recorded here",
+    "publicKey": "ed25519:97qrW5lBcgTBxP1dgzXVXCd6I4Xgwzjlh4tdo0Zw4k0="
+  },
+  "providers": {
+    "sqlite": {
+      "provider": "sqlite",
+      "files": [
+        {
+          "path": "ai/settings.json",
+          "size": 334,
+          "sha256": "74688890200fb093995a77244bbeefe0a285d9123f74608f4a856f1aea565c4f"
+        },
+        {
+          "path": "assets/3b/3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e.png",
+          "size": 88,
+          "sha256": "3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e"
+        },
+        {
+          "path": "branding/branding.json",
+          "size": 134,
+          "sha256": "8c9e67cb9db7131d05cd7773df124d81801ad4d2ab552e7b153829ce51273309"
+        },
+        {
+          "path": "branding/favicon.png",
+          "size": 79,
+          "sha256": "6432a7a1adf1f205fbe8831e08b57a72ae05ba5470e7953da5aacdd18788cf2d"
+        },
+        {
+          "path": "branding/logo-light.svg",
+          "size": 174,
+          "sha256": "a0dda6e0c1b0742e7d4f9e38ef5a76e101300538ee3d46baf0193d01b52c2f84"
+        },
+        {
+          "path": "branding/logo.png",
+          "size": 99,
+          "sha256": "b4c18a5be60fe1c811be5c7fc0b83ade087bb22e56ba21204f817c33bf06e143"
+        },
+        {
+          "path": "data.db",
+          "size": 1990656,
+          "sha256": "15a26c612911b9ca0f03664818f018f3040cddb9b115646ad18280c4c63e8569"
+        },
+        {
+          "path": "draughtsman.yaml",
+          "size": 226,
+          "sha256": "e656f856919648d21b2570b63d08d844888c2593751ea23965187dc96a11367c"
+        },
+        {
+          "path": "email/settings.json",
+          "size": 412,
+          "sha256": "79a4da25cf0b8cc5cebad1d2a94caf7ab0f91c64b7672642b9e65515baa1be9d"
+        },
+        {
+          "path": "keys/key-7d0e6ff2-cbb4-4530-b596-d03d1d8728be.xml",
+          "size": 1418,
+          "sha256": "1f1a3b0df4fd33d32b36010f48bfc0bb1d446d03ed3cd300f5fde5ce73d58f4a"
+        },
+        {
+          "path": "licence.key",
+          "size": 375,
+          "sha256": "697fd5f3d091fcf0b092306b9eaf3cdc88adf8f5c4db13ef96d8a889014e8be6"
+        },
+        {
+          "path": "themes/org/_settings.json",
+          "size": 39,
+          "sha256": "e98de673ece3d143015df690b6809cb7b6bebddfe8406ae5d8fe0e8904fdee59"
+        },
+        {
+          "path": "themes/org/fixture-second-theme-throwaway.yaml",
+          "size": 611,
+          "sha256": "a4817cdbc3b7679d231c6082771deb1af8168ed116698f6a3adc5decf682866c"
+        },
+        {
+          "path": "themes/org/fixture-theme-throwaway.yaml",
+          "size": 664,
+          "sha256": "fb4c20120c2e4ec57fbaa7ab6f52d127343539e943472b68b6a417f871bc4bd1"
+        }
+      ],
+      "migrations": [
+        "20260921080129_Initial",
+        "20260929083325_Assets",
+        "20260929094216_AddAuth",
+        "20260929101728_AddAuditActorUserId",
+        "20260930214345_AddSecurityEventsAndTokenExpiry",
+        "20260930222757_AddDocumentEtag",
+        "20260930233553_AddDocumentBin",
+        "20261001092923_AddPasswordResetTokens"
+      ],
+      "rowCounts": {
+        "__EFMigrationsHistory": 8,
+        "__EFMigrationsLock": 0,
+        "api_tokens": 5,
+        "assets": 1,
+        "audit": 25,
+        "document_updates": 0,
+        "document_versions": 9,
+        "documents": 13,
+        "password_reset_tokens": 0,
+        "security_events": 18,
+        "sessions": 4,
+        "users": 3
+      },
+      "integrityCheck": "ok",
+      "dataFolderSha256": "12ad46ebc0224ae86b7264207423cbf02fd3b2b40c97f81f7877ab31aa3e61ad"
+    },
+    "postgres": {
+      "provider": "postgres",
+      "files": [
+        {
+          "path": "ai/settings.json",
+          "size": 334,
+          "sha256": "7314dc2f3185ea9ae39e3e6dcd05cdceb77a73fe7331fa86a670ea5e3df25536"
+        },
+        {
+          "path": "assets/3b/3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e.png",
+          "size": 88,
+          "sha256": "3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e"
+        },
+        {
+          "path": "branding/branding.json",
+          "size": 134,
+          "sha256": "8c9e67cb9db7131d05cd7773df124d81801ad4d2ab552e7b153829ce51273309"
+        },
+        {
+          "path": "branding/favicon.png",
+          "size": 79,
+          "sha256": "6432a7a1adf1f205fbe8831e08b57a72ae05ba5470e7953da5aacdd18788cf2d"
+        },
+        {
+          "path": "branding/logo-light.svg",
+          "size": 174,
+          "sha256": "a0dda6e0c1b0742e7d4f9e38ef5a76e101300538ee3d46baf0193d01b52c2f84"
+        },
+        {
+          "path": "branding/logo.png",
+          "size": 99,
+          "sha256": "b4c18a5be60fe1c811be5c7fc0b83ade087bb22e56ba21204f817c33bf06e143"
+        },
+        {
+          "path": "draughtsman.yaml",
+          "size": 268,
+          "sha256": "4de5d46d5d1bfcf4cac4608d0f4a35783d14b736af8c63544bad1284976c8f04"
+        },
+        {
+          "path": "email/settings.json",
+          "size": 412,
+          "sha256": "d9f554124dc555b0b758d0b874510db7ed97098c8fa6efdc22a922e16a116973"
+        },
+        {
+          "path": "keys/key-a7d4f454-7687-44b4-9654-7bbe336e05b8.xml",
+          "size": 1418,
+          "sha256": "fac3dabdce7647f3941141e32bc004e416b0b7dde11cc2a1dccd117ab483c81f"
+        },
+        {
+          "path": "licence.key",
+          "size": 375,
+          "sha256": "4ead885a09545ea3e81d44bd53449cc2cd8564fdb8b1841c9b0954392cb9d388"
+        },
+        {
+          "path": "themes/org/_settings.json",
+          "size": 39,
+          "sha256": "e98de673ece3d143015df690b6809cb7b6bebddfe8406ae5d8fe0e8904fdee59"
+        },
+        {
+          "path": "themes/org/fixture-second-theme-throwaway.yaml",
+          "size": 611,
+          "sha256": "a4817cdbc3b7679d231c6082771deb1af8168ed116698f6a3adc5decf682866c"
+        },
+        {
+          "path": "themes/org/fixture-theme-throwaway.yaml",
+          "size": 664,
+          "sha256": "fb4c20120c2e4ec57fbaa7ab6f52d127343539e943472b68b6a417f871bc4bd1"
+        }
+      ],
+      "migrations": [
+        "20260921080136_Initial",
+        "20260929083332_Assets",
+        "20260929094225_AddAuth",
+        "20260929101734_AddAuditActorUserId",
+        "20260930214350_AddSecurityEventsAndTokenExpiry",
+        "20260930222759_AddDocumentEtag",
+        "20260930233555_AddDocumentBin",
+        "20261001092928_AddPasswordResetTokens"
+      ],
+      "rowCounts": {
+        "__EFMigrationsHistory": 8,
+        "api_tokens": 5,
+        "assets": 1,
+        "audit": 25,
+        "document_versions": 9,
+        "documents": 13,
+        "security_events": 18,
+        "sessions": 4,
+        "users": 3
+      },
+      "dumpSha256": "653a156d7e335712a2b213287631f61dedbc4c3aea3da61e62134c0befb3ec12",
+      "dataFolderSha256": "9a0063b94b4d490705c8ba5fb837883333b70f4592f687b849c5a17a550fad78"
+    }
+  }
+}

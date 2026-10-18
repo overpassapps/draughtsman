@@ -1,0 +1,257 @@
+{
+  "_comment": "The install matrix, declaratively. matrix.sh reads this through cells.mjs; docs/testing-installs.md says how to add a cell. Container images other than the product's own are named ONLY here (they are pulled at run time; nothing is added to npm or NuGet).",
+  "prefix": "dmx-",
+  "images": {
+    "draughtsman": "draughtsman:matrix",
+    "nginx": "nginx:alpine",
+    "caddy": "caddy:2",
+    "ubuntu": "ubuntu:24.04"
+  },
+  "cells": [
+    {
+      "name": "docker-direct",
+      "description": "The release image on a fresh named volume, port bound to 127.0.0.1, plain http, forceHttps OFF: the baseline every other cell is read against.",
+      "kind": "docker",
+      "proxy": {
+        "type": "none"
+      },
+      "yaml": "",
+      "journey": {
+        "expect": [],
+        "expectSelfcheck": []
+      },
+      "breaks": {
+        "data-root": {
+          "description": "data.db is owned by root inside the image user's folder (what a restore run as root leaves behind)",
+          "override": {
+            "preStartBreak": "data-root"
+          }
+        }
+      }
+    },
+    {
+      "name": "docker-forcehttps-http",
+      "description": "server.forceHttps is ON but the instance is reached over plain http. The session cookie is Secure, so a browser drops it: sign-in answers 200 and no session is kept (the sign-in button stays on \"Signing in...\"). The journey must report it as session not kept, and the Connection check must say why.",
+      "kind": "docker",
+      "proxy": {
+        "type": "none"
+      },
+      "yaml": "server:\n  forceHttps: true\n",
+      "journey": {
+        "expect": [
+          "c=session not kept: forceHttps is on and the page is plain http, so the Secure session cookie is dropped by a browser"
+        ],
+        "expectSelfcheck": [
+          "secure=fail"
+        ]
+      }
+    },
+    {
+      "name": "docker-nginx-good",
+      "description": "nginx:alpine in front on a Docker network: gzip on for JSON, Host / X-Forwarded-For / X-Forwarded-Proto set, TLS with a self-signed certificate made at run time, forceHttps ON, server.knownProxies set to the Docker network's own range. The documented setup, end to end; nginx weakens the ETag when it gzips (issue 63).",
+      "kind": "docker",
+      "proxy": {
+        "type": "nginx",
+        "forwardProto": true
+      },
+      "yaml": "server:\n  forceHttps: true\n  knownProxies: [\"@SUBNET@\"]\n",
+      "journey": {
+        "expect": [],
+        "expectSelfcheck": [
+          "proxy=pass",
+          "secure=pass"
+        ]
+      },
+      "logAbsent": [
+        {
+          "pattern": "Forwarding headers .* not listed in server\\.knownProxies",
+          "why": "a trusted proxy must not draw the untrusted-proxy warning"
+        }
+      ],
+      "breaks": {
+        "nginx-no-proto": {
+          "description": "nginx stops sending X-Forwarded-Proto while server.forceHttps is off (the common nginx setup that relies on that header to tell the server the visit was https)",
+          "override": {
+            "proxy": {
+              "forwardProto": false
+            },
+            "yaml": "server:\n  knownProxies: [\"@SUBNET@\"]\n"
+          }
+        },
+        "nginx-untrusted-proxy": {
+          "description": "server.knownProxies is not set, so the server ignores the proxy's forwarded headers and every visitor shares one address for the sign-in throttle",
+          "override": {
+            "yaml": "server:\n  forceHttps: true\n"
+          }
+        }
+      }
+    },
+    {
+      "name": "docker-nginx-noproto",
+      "description": "The same nginx, but WITHOUT X-Forwarded-Proto and with server.knownProxies unset: the server does not trust the proxy, so every visitor shares one address for the sign-in throttle. With forceHttps on, the Secure cookie still works over https, so the journey passes; what must be caught is the lockout hazard: the Connection check warns about the proxy and the log carries the untrusted-proxy line.",
+      "kind": "docker",
+      "proxy": {
+        "type": "nginx",
+        "forwardProto": false
+      },
+      "yaml": "server:\n  forceHttps: true\n",
+      "journey": {
+        "expect": [],
+        "expectSelfcheck": [
+          "proxy=warn"
+        ]
+      },
+      "logExpect": [
+        {
+          "pattern": "Forwarding headers .* not listed in server\\.knownProxies",
+          "why": "the lockout warning: forwarded headers arrived from a peer the server does not trust"
+        }
+      ]
+    },
+    {
+      "name": "docker-caddy",
+      "description": "caddy:2 in front with encode gzip and automatic internal TLS (Caddy's own local CA), forceHttps ON, knownProxies set to the Docker network range. (Observed: Caddy's encode honours the server's Cache-Control: no-transform, so it leaves the responses and the ETag alone.)",
+      "kind": "docker",
+      "proxy": {
+        "type": "caddy"
+      },
+      "yaml": "server:\n  forceHttps: true\n  knownProxies: [\"@SUBNET@\"]\n",
+      "journey": {
+        "expect": [],
+        "expectSelfcheck": [
+          "proxy=pass",
+          "secure=pass"
+        ]
+      },
+      "logAbsent": [
+        {
+          "pattern": "Forwarding headers .* not listed in server\\.knownProxies",
+          "why": "a trusted proxy must not draw the untrusted-proxy warning"
+        }
+      ]
+    },
+    {
+      "name": "docker-cloudflare-like",
+      "description": "A small Node proxy (cfproxy.mjs) standing in for Cloudflare: TLS, gzips JSON, REWRITES the strong ETag to W/\"...\" (issue 63), adds CF-Connecting-IP and X-Forwarded-Proto: https, strips nothing else. The journey must pass and report the ETag as weakened.",
+      "kind": "docker",
+      "proxy": {
+        "type": "cfproxy",
+        "mode": "weak"
+      },
+      "yaml": "server:\n  forceHttps: true\n  knownProxies: [\"@SUBNET@\"]\n",
+      "journey": {
+        "expect": [],
+        "expectSelfcheck": [
+          "etag=warn"
+        ]
+      },
+      "expectNote": {
+        "step": "e",
+        "pattern": "weakened",
+        "why": "the ETag must arrive weakened in this cell, or the cell is not reproducing issue 63"
+      },
+      "breaks": {
+        "proxy-strip-versions": {
+          "description": "the proxy removes the ETag AND X-Document-Version, so a save has nothing to quote in If-Match",
+          "override": {
+            "proxy": {
+              "mode": "strip-both"
+            },
+            "journey": {
+              "expectSelfcheck": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "docker-cloudflare-noetag",
+      "description": "Variant of docker-cloudflare-like where the proxy removes the ETag entirely. The journey must still pass, saving with X-Document-Version, and report the ETag as missing.",
+      "kind": "docker",
+      "proxy": {
+        "type": "cfproxy",
+        "mode": "noetag"
+      },
+      "yaml": "server:\n  forceHttps: true\n  knownProxies: [\"@SUBNET@\"]\n",
+      "journey": {
+        "expect": [],
+        "expectSelfcheck": [
+          "etag=warn"
+        ]
+      },
+      "expectNote": {
+        "step": "e",
+        "pattern": "ETag header did not arrive",
+        "why": "the ETag must be missing in this cell"
+      }
+    },
+    {
+      "name": "archive-macos",
+      "description": "The real osx-arm64 release archive, unpacked on this Mac and run with a bare PATH (env -i) on a fresh data folder, direct on 127.0.0.1. Nothing but the archive is installed.",
+      "kind": "archive-host",
+      "rid": "osx-arm64",
+      "journey": {
+        "expect": [],
+        "expectSelfcheck": []
+      }
+    },
+    {
+      "name": "archive-linux-clean",
+      "description": "The Linux release archive for Docker's architecture, run inside a bare ubuntu:24.04 container (no .NET, no Node installed) as a non-root user, data folder on a bind mount owned by that user, direct.",
+      "kind": "archive-container",
+      "rid": "auto-linux",
+      "journey": {
+        "expect": [],
+        "expectSelfcheck": []
+      }
+    },
+    {
+      "name": "upgrade-newest",
+      "description": "The newest fixture under tests/upgrade-fixtures (a data folder an earlier build wrote through its own API) opened by the CURRENT image: every document, user, token, version and setting must come through (scripts/upgrade-fixture/verify.mjs), and then the whole journey runs as the fixture's administrator.",
+      "kind": "upgrade",
+      "fixture": "newest",
+      "journey": {
+        "expect": [],
+        "expectSelfcheck": []
+      }
+    },
+    {
+      "name": "upgrade-oldest",
+      "description": "The same, from the OLDEST fixture, so the migrations actually run (4 of 8 applied when it was made). The pre-migration copy is made and the data survives.",
+      "kind": "upgrade",
+      "fixture": "oldest",
+      "journey": {
+        "expect": [],
+        "expectSelfcheck": []
+      }
+    }
+  ],
+  "manual": [
+    {
+      "name": "windows-archive",
+      "description": "The win-x64 or win-arm64 release archive on Windows (a Windows VM). Not run by matrix.sh: the VM uses about 13 GB, so a person starts it. The journey itself runs from this Mac against the VM's address (--vm), so the same steps are judged.",
+      "why": "needs the Windows VM (13 GB); start it deliberately, then run the commands below",
+      "commands": [
+        "# 1. Start the VM (UTM). On the VM, unpack draughtsman-<version>-win-arm64.zip (or win-x64) and run, in PowerShell:",
+        "#      $env:DRAUGHTSMAN_DATA = 'C:\\dmx-data'; .\\draughtsman.exe serve --urls=http://0.0.0.0:5180",
+        "#    (the setup code is printed to the console; as a service it is in C:\\dmx-data\\setup-code.txt and `draughtsman first-run-code`)",
+        "# 2. From this Mac, copy the code in a file and run the journey against the VM's address (no --container: the verbs run on the VM):",
+        "scripts/install-matrix.sh --vm windows-vm --vm-port 5180 --setup-code-file ./setup-code.txt",
+        "# which is, underneath:",
+        "node scripts/install-matrix/journey.mjs --base-url http://$(ssh windows-vm 'hostname -I' | awk '{print $1}'):5180 --setup-code-from file:./setup-code.txt"
+      ]
+    },
+    {
+      "name": "dogfood-cloudflare",
+      "description": "A real server behind nginx and Cloudflare. The journey run against its https address is the acceptance test for the connection-layer fixes (weak ETag, session, proxy trust).",
+      "why": "needs the real server and a person's judgement of its result; it creates a throw-away administrator only on a fresh instance, so on a live one use --sign-in-as",
+      "commands": [
+        "# On a FRESH instance (no users yet): the setup code comes from the server's log.",
+        "node scripts/install-matrix/journey.mjs --base-url https://draughtsman-app.overpass.co.uk --setup-code-from docker-logs:draughtsman-app --container draughtsman-app",
+        "# (if the log is on another host: ssh root@<host> 'docker logs draughtsman-app 2>&1 | grep \"setup code\"' and put the code in a file, then --setup-code-from file:./code.txt)",
+        "# On an instance that already has an administrator: sign in as that person (the password is read from the environment, never from argv):",
+        "DMX_PASSWORD='<the administrator password>' node scripts/install-matrix/journey.mjs --base-url https://draughtsman-app.overpass.co.uk --sign-in-as you@example.com --password-env DMX_PASSWORD"
+      ]
+    }
+  ]
+}

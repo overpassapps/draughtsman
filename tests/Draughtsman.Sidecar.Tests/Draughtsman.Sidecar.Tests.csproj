@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Referencing the client library also builds the bundle and copies it here as sidecar/sidecar.js. -->
+    <ProjectReference Include="..\..\src\Draughtsman.Sidecar\Draughtsman.Sidecar.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\docs\examples\order-service.json" Link="contract\order-service.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\checkout-sequence.json" Link="contract\checkout-sequence.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\docs\examples\checkout-fragments.json" Link="contract\checkout-fragments.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Compile Include="..\Shared\LoadScale.cs" Link="Shared\LoadScale.cs" />
+  </ItemGroup>
+
+</Project>

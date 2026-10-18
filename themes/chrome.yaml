@@ -1,0 +1,54 @@
+# themes/chrome.yaml — shipped Overpass default
+#
+# Chrome theme: the app shell (toolbars, panels, buttons, logo, login page,
+# favicon, product name). Owned by the instance admin. See themes/README.md.
+#
+# Shape follows spec section 8: one hex per token, and `mode` selects
+# dark | light | system. `colors` is the set for that mode (dark when mode is
+# system); `light:` and `dark:` blocks carry the companion mode's values, and a
+# missing block falls back to `colors`. web/scripts/build-tokens.ts compiles
+# this file into CSS custom properties.
+#
+# Overpass brand palette, confirmed 2026-09-21 from the live overpass.co.uk
+# stylesheet (spec section 13). Brand black #151e33 is a very dark navy, and
+# every grey is pulled toward navy-900 rather than left neutral. A red that
+# carries or backs text has to clear AA on the surface it sits on, and which
+# brand red does depends on that surface: brand red #e04832 is 4.72:1 on the
+# dark surface but only 4.08:1 on white, the deeper hover red #c0392b is 5.44:1
+# on white but 3.54:1 on the dark surface. So `accent`, which colours link text,
+# is per mode, while `brand` always backs white `brandText` and stays #c0392b.
+
+name: Overpass
+productName: Draughtsman
+# No `logo`, `logoCompact`, `logoCompactLight` or `favicon` here, on purpose: this is the product's own default, and the
+# Draughtsman mark and favicon the web app ships (web/public) stand in until an organisation names its own, in a theme
+# file of its own or on the Branding page. The Overpass artwork stays in assets/ for a theme that wants it.
+mode: dark                    # dark | light | system
+colors:
+  brand:        "#c0392b"     # deeper hover red — backs white brandText
+  brandText:    "#FFFFFF"
+  surface:      "#0a0e1a"
+  surfaceRaised: "#151e33"
+  border:       "#202a42"
+  text:         "#F2F2F2"
+  textMuted:    "#9aa4b8"
+  accent:       "#e04832"     # brand red — 4.72:1 on the dark surface
+  danger:       "#FF4D4F"
+radius: 6
+font:
+  ui: "Inter, system-ui, sans-serif"
+  mono: "JetBrains Mono, monospace"
+
+# Companion values for light mode, used when `mode` is light or when `system`
+# resolves to light.
+light:
+  colors:
+    brand:        "#c0392b"
+    brandText:    "#FFFFFF"
+    surface:      "#FFFFFF"
+    surfaceRaised: "#f4f6fa"
+    border:       "#d6dae4"
+    text:         "#151e33"
+    textMuted:    "#616b7b"
+    accent:       "#c0392b"     # deeper hover red — 5.44:1 on white
+    danger:       "#D4380D"
