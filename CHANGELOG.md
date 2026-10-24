@@ -4,7 +4,14 @@ All notable changes to Draughtsman are recorded here. The format follows [Keep a
 
 **How to read a release's notes before upgrading** (the policy is in [`docs/upgrade-backup.md`](docs/upgrade-backup.md#versioning-and-release-notes)): every release has a **Breaking changes** section, or says "None". A **patch** release (0.1.x) never needs more than the usual steps: it fixes bugs, may add settings and purely additive database migrations, and never removes, renames or narrows anything an earlier release wrote. A **minor** release adds features and may deprecate. A **major** release may remove what a deprecated feature left behind, and names the oldest version it can upgrade from. Run `draughtsman config check` with the new binary before you start it.
 
-## [Unreleased]
+## [0.1.0] - Unreleased
+
+0.1.0 is the first release. It has not been cut yet: at tag time this heading takes the release date. Everything in this section ships in 0.1.0. The changes made since the release summary was first written come first, and the summary follows under "What 0.1.0 contains".
+
+### Added (licensing and quick start)
+
+- **Dual licence.** Draughtsman is AGPL-3.0-only, and [`COMMERCIAL-LICENSE.md`](COMMERCIAL-LICENSE.md) (version 1.0, 24 October 2026) is the paid alternative from OVERPASS LIMITED. It costs £1,500 one-off for a team of up to 50 people, or £3,000 one-off with no limit, with 12 months of updates and email support; renewing updates costs 25% of list a year. It lets an organisation modify Draughtsman for internal use and keep those changes private. It has not been reviewed by a solicitor: [`COMMERCIAL-LICENSE-REVIEW-NOTES.md`](COMMERCIAL-LICENSE-REVIEW-NOTES.md) lists the clauses to show one.
+- **[`docker-compose.yml`](docker-compose.yml)**: `docker compose up -d --build` from a clone, with the port on loopback and a named volume. No sign-up and no account with us.
 
 ### Breaking changes
 
@@ -205,9 +212,9 @@ All notable changes to Draughtsman are recorded here. The format follows [Keep a
 - **Your unapplied text is never overwritten, and can now be applied after the diagram has changed.** When someone else, an agent or the canvas changes the diagram under text you have not applied, the pane says "Diagram changed" and offers Reload text or Keep mine. Keep mine then applies by merging your changes into the diagram as it is now, as one undo step: what you changed lands, what they changed stays, and anything you both changed keeps the diagram's version and is listed, with a button to take yours instead. Before, such text could only be copied out and reset. Closing or reloading the tab with unapplied text asks first.
 - No new dependency, no server change, no change to the DSL grammar or `docs/api.md`.
 
-## [0.1.0] - unreleased
+## What 0.1.0 contains
 
-0.1.0 is the first release. It has not been cut yet; this section lists what the codebase contains today.
+The release summary, written before the changes above; all of it is part of 0.1.0.
 
 ### Diagram types and shape libraries
 
