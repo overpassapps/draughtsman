@@ -14,6 +14,9 @@ public sealed class UpgradeConfigStoredSecretsTests
 {
     public static TheoryData<string> Labels => UpgradeFixture.Labels(UpgradeFixture.Sqlite);
 
+    /// <summary>The fixtures whose build bound its secrets to its install path, the case a secret can be unreadable after a move.</summary>
+    public static TheoryData<string> PathBoundLabels => UpgradeFixture.PathBoundLabels(UpgradeFixture.Sqlite);
+
     private static Dictionary<string, string> Files(string folder)
     {
         return Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories).ToDictionary(f => Path.GetRelativePath(folder, f), f => Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(f))));
@@ -44,7 +47,7 @@ public sealed class UpgradeConfigStoredSecretsTests
     }
 
     [Theory]
-    [MemberData(nameof(Labels))]
+    [MemberData(nameof(PathBoundLabels))]
     public async Task The_check_names_a_secret_it_cannot_read_why_and_what_to_do_and_writes_nothing(string label)
     {
         UpgradeFixture fixture = UpgradeFixture.Get(label);
@@ -74,7 +77,7 @@ public sealed class UpgradeConfigStoredSecretsTests
     }
 
     [Theory]
-    [MemberData(nameof(Labels))]
+    [MemberData(nameof(PathBoundLabels))]
     public async Task With_the_old_folder_named_the_check_says_the_secret_is_readable_and_will_be_re_protected_at_start(string label)
     {
         UpgradeFixture fixture = UpgradeFixture.Get(label);

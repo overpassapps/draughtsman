@@ -11,8 +11,8 @@ namespace Draughtsman.Server.Tests.Upgrade;
 
 /// <summary>
 /// The Data Protection key ring and the AI key stored under it (docs/api.md, "Key ring protection"), across an upgrade. The ring a build
-/// wrote, protected or plain, must open in the current code and decrypt the stored AI key under the install path it was written under
-/// (Data Protection binds a payload to the content root, which is why the manifest records it); a plain ring is migrated in place
+/// wrote, protected or plain, must open in the current code and decrypt the stored AI key under the application name it was written under
+/// (the install path for a build before the pinned name, which is why the manifest records it; the pinned name after); a plain ring is migrated in place
 /// by the current startup without losing the key; and with the protection missing nothing is rewritten, so putting it back brings the
 /// key back. Each is paired with its negative.
 /// </summary>
@@ -59,12 +59,12 @@ public sealed class UpgradeKeyRingTests
         {
             string data = fixture.ExtractDataFolder(UpgradeFixture.Sqlite, temp);
 
-            string? key = KeyRingTestSupport.ReadAiKey(data, fixture.ContentRoot, ProtectionOf(fixture));
+            string? key = KeyRingTestSupport.ReadAiKey(data, fixture.Discriminator, ProtectionOf(fixture));
 
             Assert.Equal(ExpectedAiKey, key);
             if (File.Exists(Path.Combine(data, "email", "settings.json")))
             {
-                Assert.Equal(ExpectedSmtpPassword, ReadSmtpPassword(data, fixture.ContentRoot, ProtectionOf(fixture)));
+                Assert.Equal(ExpectedSmtpPassword, ReadSmtpPassword(data, fixture.Discriminator, ProtectionOf(fixture)));
                 Assert.Null(ReadSmtpPassword(data, "/somewhere/else/draughtsman/", ProtectionOf(fixture)));
             }
             // The ring is protected exactly as the build said it was: encrypted files for a key-encryption key, plain text for none.
@@ -94,7 +94,7 @@ public sealed class UpgradeKeyRingTests
             Assert.Null(KeyRingTestSupport.ReadAiKey(data, "/somewhere/else/draughtsman/", ProtectionOf(fixture)));
             if (fixture.KeyRingProtection == "key")
             {
-                Assert.Null(KeyRingTestSupport.ReadAiKey(data, fixture.ContentRoot, ProtectionOf(fixture, KeyEncryptionKey.Generate())));
+                Assert.Null(KeyRingTestSupport.ReadAiKey(data, fixture.Discriminator, ProtectionOf(fixture, KeyEncryptionKey.Generate())));
             }
         }
         finally
@@ -145,10 +145,10 @@ public sealed class UpgradeKeyRingTests
             }
 
             // Through the ring the host would use, the stored key is the one the earlier build stored.
-            Assert.Equal(ExpectedAiKey, KeyRingTestSupport.ReadAiKey(data, fixture.ContentRoot, KeyRingTestSupport.Kek(kek)));
+            Assert.Equal(ExpectedAiKey, KeyRingTestSupport.ReadAiKey(data, fixture.Discriminator, KeyRingTestSupport.Kek(kek)));
             if (File.Exists(Path.Combine(data, "email", "settings.json")))
             {
-                Assert.Equal(ExpectedSmtpPassword, ReadSmtpPassword(data, fixture.ContentRoot, KeyRingTestSupport.Kek(kek)));
+                Assert.Equal(ExpectedSmtpPassword, ReadSmtpPassword(data, fixture.Discriminator, KeyRingTestSupport.Kek(kek)));
             }
         }
         finally
@@ -183,8 +183,8 @@ public sealed class UpgradeKeyRingTests
             // The only thing the start added is the note of where it ran from, in the ring folder.
             Assert.True(File.Exists(Path.Combine(data, "keys", LegacyDiscriminators.RecordFileName)));
             // The stored key is reported as unreadable, never lost: restoring the key-encryption key reads it again.
-            Assert.Null(KeyRingTestSupport.ReadAiKey(data, fixture.ContentRoot, null));
-            Assert.Equal(ExpectedAiKey, KeyRingTestSupport.ReadAiKey(data, fixture.ContentRoot, KeyRingTestSupport.Kek(fixture.KeyEncryptionKey)));
+            Assert.Null(KeyRingTestSupport.ReadAiKey(data, fixture.Discriminator, null));
+            Assert.Equal(ExpectedAiKey, KeyRingTestSupport.ReadAiKey(data, fixture.Discriminator, KeyRingTestSupport.Kek(fixture.KeyEncryptionKey)));
         }
         finally
         {

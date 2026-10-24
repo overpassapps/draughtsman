@@ -1,0 +1,241 @@
+{
+  "formatVersion": 1,
+  "label": "v0.1.0",
+  "note": "Throwaway test data only. Every password, token and key in this fixture was generated for it and signs or protects nothing real.",
+  "createdAt": "2026-10-24T11:50:28.226Z",
+  "build": {
+    "commit": "b399fa578eba6aab7fbc8eafd29eeeb2b784c233",
+    "subject": "Commercial licence terms, compose quick-start, 0.1.0 readiness (#1)",
+    "committedAt": "2026-10-24T12:40:48+01:00",
+    "version": "0.1.0",
+    "migrations": [
+      "20260921080129_Initial",
+      "20260929083325_Assets",
+      "20260929094216_AddAuth",
+      "20260929101728_AddAuditActorUserId",
+      "20260930214345_AddSecurityEventsAndTokenExpiry",
+      "20260930222757_AddDocumentEtag",
+      "20260930233553_AddDocumentBin",
+      "20261001092923_AddPasswordResetTokens"
+    ]
+  },
+  "madeWith": {
+    "dotnet": "10.0.100",
+    "node": "v22.19.0",
+    "os": "darwin arm64"
+  },
+  "contentRoot": "/opt/draughtsman-upgrade-fixture/v0.1.0/",
+  "dataProtectionApplicationName": "Draughtsman",
+  "keyRing": {
+    "protection": "key",
+    "keyEnvironmentVariable": "DRAUGHTSMAN_KEY_ENCRYPTION_KEY",
+    "keyBase64": "yVjROdevmWgtmdHCNg1gxYoLAhAsxChEQIe0dEfQUvs=",
+    "note": "throwaway key-encryption key"
+  },
+  "providers": {
+    "sqlite": {
+      "provider": "sqlite",
+      "files": [
+        {
+          "path": "ai/settings.json",
+          "size": 225,
+          "sha256": "e5ca5feb57f3284f8a1c6d4f63fbacc7aa16636c99acf82a57db280b6b2bb461"
+        },
+        {
+          "path": "assets/3b/3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e.png",
+          "size": 88,
+          "sha256": "3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e"
+        },
+        {
+          "path": "branding/branding.json",
+          "size": 134,
+          "sha256": "8c9e67cb9db7131d05cd7773df124d81801ad4d2ab552e7b153829ce51273309"
+        },
+        {
+          "path": "branding/favicon.png",
+          "size": 79,
+          "sha256": "6432a7a1adf1f205fbe8831e08b57a72ae05ba5470e7953da5aacdd18788cf2d"
+        },
+        {
+          "path": "branding/logo-light.svg",
+          "size": 174,
+          "sha256": "a0dda6e0c1b0742e7d4f9e38ef5a76e101300538ee3d46baf0193d01b52c2f84"
+        },
+        {
+          "path": "branding/logo.png",
+          "size": 99,
+          "sha256": "b4c18a5be60fe1c811be5c7fc0b83ade087bb22e56ba21204f817c33bf06e143"
+        },
+        {
+          "path": "data.db",
+          "size": 1560576,
+          "sha256": "56fbb3e9de5781f85f95c1cea4da88a872c2f70958ee406402804e2883dd33ac"
+        },
+        {
+          "path": "diagnostics/forwarded-observations.json",
+          "size": 479,
+          "sha256": "fe78b6e4aefaeaf53a9ed2a8ca72bb5bb9cdc32041e5e81e21f545de0b656846"
+        },
+        {
+          "path": "draughtsman.yaml",
+          "size": 210,
+          "sha256": "2333ee37daf3e15a6bdfb8004a2a507e6f5a19446ba596533947a96295dac599"
+        },
+        {
+          "path": "email/settings.json",
+          "size": 412,
+          "sha256": "e1fbee379239afba20f05cce258f50976e1c0d0a101dc5af847ac3d980359148"
+        },
+        {
+          "path": "keys/install-paths.json",
+          "size": 172,
+          "sha256": "11491c93467d0df0e55db6512bbecfe6f31ab37445326e8fdb4a330fae3631c4"
+        },
+        {
+          "path": "keys/key-43865fb4-9ea2-40c8-aa17-a7208e7496c6.xml",
+          "size": 1418,
+          "sha256": "eab1c8a4cc3ddcb6695b2c58144faf7e59c31859f4b65fbc89778b7464dbfd08"
+        },
+        {
+          "path": "themes/org/_settings.json",
+          "size": 39,
+          "sha256": "e98de673ece3d143015df690b6809cb7b6bebddfe8406ae5d8fe0e8904fdee59"
+        },
+        {
+          "path": "themes/org/fixture-second-theme-throwaway.yaml",
+          "size": 611,
+          "sha256": "a4817cdbc3b7679d231c6082771deb1af8168ed116698f6a3adc5decf682866c"
+        },
+        {
+          "path": "themes/org/fixture-theme-throwaway.yaml",
+          "size": 664,
+          "sha256": "fb4c20120c2e4ec57fbaa7ab6f52d127343539e943472b68b6a417f871bc4bd1"
+        }
+      ],
+      "migrations": [
+        "20260921080129_Initial",
+        "20260929083325_Assets",
+        "20260929094216_AddAuth",
+        "20260929101728_AddAuditActorUserId",
+        "20260930214345_AddSecurityEventsAndTokenExpiry",
+        "20260930222757_AddDocumentEtag",
+        "20260930233553_AddDocumentBin",
+        "20261001092923_AddPasswordResetTokens"
+      ],
+      "rowCounts": {
+        "__EFMigrationsHistory": 8,
+        "__EFMigrationsLock": 0,
+        "api_tokens": 5,
+        "assets": 1,
+        "audit": 25,
+        "document_updates": 0,
+        "document_versions": 9,
+        "documents": 13,
+        "password_reset_tokens": 0,
+        "security_events": 19,
+        "sessions": 4,
+        "users": 3
+      },
+      "integrityCheck": "ok",
+      "dataFolderSha256": "d9a4fc4d4457dab1b28b30d4bcdb69ca949337cddf55c453f847c9530052353a"
+    },
+    "postgres": {
+      "provider": "postgres",
+      "files": [
+        {
+          "path": "ai/settings.json",
+          "size": 225,
+          "sha256": "f473a0bfffad99e0eb9bd71f52e34cb253f36df59d8ed00bbcb0e5bbc00fb150"
+        },
+        {
+          "path": "assets/3b/3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e.png",
+          "size": 88,
+          "sha256": "3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e"
+        },
+        {
+          "path": "branding/branding.json",
+          "size": 134,
+          "sha256": "8c9e67cb9db7131d05cd7773df124d81801ad4d2ab552e7b153829ce51273309"
+        },
+        {
+          "path": "branding/favicon.png",
+          "size": 79,
+          "sha256": "6432a7a1adf1f205fbe8831e08b57a72ae05ba5470e7953da5aacdd18788cf2d"
+        },
+        {
+          "path": "branding/logo-light.svg",
+          "size": 174,
+          "sha256": "a0dda6e0c1b0742e7d4f9e38ef5a76e101300538ee3d46baf0193d01b52c2f84"
+        },
+        {
+          "path": "branding/logo.png",
+          "size": 99,
+          "sha256": "b4c18a5be60fe1c811be5c7fc0b83ade087bb22e56ba21204f817c33bf06e143"
+        },
+        {
+          "path": "diagnostics/forwarded-observations.json",
+          "size": 479,
+          "sha256": "02feacc7a48fa3005ac275a3899b66f02a037bd03a7ca2e39218e54a370f5827"
+        },
+        {
+          "path": "draughtsman.yaml",
+          "size": 252,
+          "sha256": "b33a96b3c00fd1e2e1bc2f57f0e844851a7cba6344fdf41b01d5c3035ada1105"
+        },
+        {
+          "path": "email/settings.json",
+          "size": 412,
+          "sha256": "3f31ce32156f39a3ee67fa6a03ba6afc2993c8600b006bffee07f1775e3b0985"
+        },
+        {
+          "path": "keys/install-paths.json",
+          "size": 172,
+          "sha256": "6e4587800ec3bdc21a6026f2d37e8273d899f77ceec6d9da1d2c8e69a29387f2"
+        },
+        {
+          "path": "keys/key-94f48eb1-68c2-46e5-8787-72b54227708d.xml",
+          "size": 1418,
+          "sha256": "1ddc4b92bcb87b0680060cb45ae10005cf21ff2bc9c84892ed18d249e5a3b3a0"
+        },
+        {
+          "path": "themes/org/_settings.json",
+          "size": 39,
+          "sha256": "e98de673ece3d143015df690b6809cb7b6bebddfe8406ae5d8fe0e8904fdee59"
+        },
+        {
+          "path": "themes/org/fixture-second-theme-throwaway.yaml",
+          "size": 611,
+          "sha256": "a4817cdbc3b7679d231c6082771deb1af8168ed116698f6a3adc5decf682866c"
+        },
+        {
+          "path": "themes/org/fixture-theme-throwaway.yaml",
+          "size": 664,
+          "sha256": "fb4c20120c2e4ec57fbaa7ab6f52d127343539e943472b68b6a417f871bc4bd1"
+        }
+      ],
+      "migrations": [
+        "20260921080136_Initial",
+        "20260929083332_Assets",
+        "20260929094225_AddAuth",
+        "20260929101734_AddAuditActorUserId",
+        "20260930214350_AddSecurityEventsAndTokenExpiry",
+        "20260930222759_AddDocumentEtag",
+        "20260930233555_AddDocumentBin",
+        "20261001092928_AddPasswordResetTokens"
+      ],
+      "rowCounts": {
+        "__EFMigrationsHistory": 8,
+        "api_tokens": 5,
+        "assets": 1,
+        "audit": 25,
+        "document_versions": 9,
+        "documents": 13,
+        "security_events": 19,
+        "sessions": 4,
+        "users": 3
+      },
+      "dumpSha256": "d0b3bda9937261f792b023b6251511b5a52db39af3b1d4461baed7ef31c1975e",
+      "dataFolderSha256": "f2138ffd5b085bcadcd80d0e3e2451f4b814235be22131045e7ea7280cb17a83"
+    }
+  }
+}

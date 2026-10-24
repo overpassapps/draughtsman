@@ -50,6 +50,8 @@ if (command === 'provider') {
   const safe = (cmd, args) => { try { return execFileSync(cmd, args, { encoding: 'utf8' }).trim(); } catch { return null; } };
   const version = safe('git', ['-C', o.source, 'show', `${o.commit}:Directory.Build.props`])?.match(/<Version>([^<]+)<\/Version>/)?.[1]
     ?? (existsSync(join(o.source, 'Directory.Build.props')) ? readFileSync(join(o.source, 'Directory.Build.props'), 'utf8').match(/<Version>([^<]+)<\/Version>/)?.[1] : null);
+  const identity = safe('git', ['-C', o.source, 'show', `${o.commit}:src/Draughtsman.Server/KeyRing/DataProtectionIdentity.cs`]);
+  const dataProtectionApplicationName = identity?.match(/ApplicationName\s*=\s*"([^"]+)"/)?.[1] ?? null;
   const manifest = {
     formatVersion: 1,
     label: o.label,
@@ -63,8 +65,11 @@ if (command === 'provider') {
       migrations: Object.values(providers)[0]?.migrations ?? [],
     },
     madeWith: { dotnet: safe('dotnet', ['--version']), node: process.version, os: `${process.platform} ${process.arch}` },
-    // The Data Protection payloads (the stored AI key) are bound to the content root of the build that wrote them.
+    // A build without a pinned Data Protection application name binds its payloads (the stored AI key, the SMTP password) to the
+    // content root it ran under. A build that pins one (src/Draughtsman.Server/KeyRing/DataProtectionIdentity.cs) binds them to that
+    // name instead, and records it here; the content root is then only where the program ran from.
     contentRoot: o['content-root'],
+    ...(dataProtectionApplicationName ? { dataProtectionApplicationName } : {}),
     keyRing: o['key-ring'] === 'key'
       ? { protection: 'key', keyEnvironmentVariable: 'DRAUGHTSMAN_KEY_ENCRYPTION_KEY', keyBase64: o.kek, note: 'throwaway key-encryption key' }
       : { protection: 'none' },

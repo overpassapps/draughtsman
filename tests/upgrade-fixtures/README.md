@@ -5,7 +5,7 @@ realistic throwaway data, snapshotted, and committed. The upgrade tests start th
 everything back, so "an upgrade never wipes a customer's data" is something the build proves on every run, not something it
 promises (`docs/upgrade-backup.md`, "The guarantee").
 
-There is no formal release yet, so history stands in for releases: each fixture is a commit that changed the schema or the data folder.
+Before 0.1.0 there was no formal release, so history stood in for releases: each of those fixtures is a commit that changed the schema or the data folder. From 0.1.0 on, every release has a fixture labelled with its tag (`scripts/release.sh` refuses to cut one without it).
 
 | Label | Commit | What it is the first of | Migrations applied | Key ring |
 | --- | --- | --- | --- | --- |
@@ -16,6 +16,7 @@ There is no formal release yet, so history stands in for releases: each fixture 
 | `bin-5a99dbf` | `5a99dbf` "Add the document bin: soft delete, restore, purge with retention, version history..." | The bin (soft delete), named snapshots. | 7 of 8 | plain text (`none`) |
 | `password-reset-b84733a` | `b84733a` "Password recovery: reset links, outgoing email and admin email page" | The newest schema: password reset tokens. | 8 of 8 (nothing pending) | protected |
 | `email-settings-2fe39d9` | `2fe39d9` "Note email settings in AGENTS.md" (the tip of `main` when this was written; the feature is `4d617c1`) | Outgoing email set in the browser: `email/settings.json` with a Data Protection-encrypted SMTP password, a new secret folder. The same schema as above, a new element of the data folder. | 8 of 8 (nothing pending) | protected |
+| `v0.1.0` | `b399fa5` "Commercial licence terms, compose quick-start, 0.1.0 readiness (#1)" | The first release, and the first fixture written under the pinned Data Protection application name: its stored AI key and SMTP password open from any folder, so the manifest records `dataProtectionApplicationName` and the tests that exercise the path-bound fallback skip it. | 8 of 8 (nothing pending) | protected |
 
 Every fixture has a `sqlite/` and a `postgres/` side. The SQLite side is the data folder as a tarball (`data-folder.tar.gz`, including
 `data.db`); the Postgres side is the same folder without the database plus a plain-SQL dump (`dump.sql.gz`, one `INSERT` per row so a driver can
@@ -26,7 +27,9 @@ build ran under (see below), the key-ring protection, and the **throwaway** secr
 The content root is a neutral path, `/opt/draughtsman-upgrade-fixture/<label>/`, not the folder the build really ran from: a stored secret is
 bound to that string, so each fixture's stored AI key and SMTP password were decrypted with the ring and protected again under the neutral path
 before publication (the sizes and checksums in `manifest.json` are the re-protected files). Fixtures made from now on record the real path of the
-build, and a fixture meant for publication should be re-bound the same way.
+build, and a fixture meant for publication should be re-bound the same way. A fixture from a pinned build (`dataProtectionApplicationName` in its
+manifest, `v0.1.0` onwards) binds nothing to the path, so only the recorded strings are changed: `contentRoot` and `keys/install-paths.json`, with
+that file's size and checksum updated in `manifest.json` and `provider.json`.
 
 ## What is in each one
 
