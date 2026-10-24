@@ -353,7 +353,7 @@ The install promise: one artefact, one folder, one config file, running in under
 
 | Target | Artefact | Notes |
 | --- | --- | --- |
-| Linux / any Docker host | `docker.io/wroolie/draughtsman:<ver>` image (x64 and arm64; not yet published, build from the Dockerfile) | Volume-mount the data folder; optional Chromium component for PDF |
+| Linux / any Docker host | `docker.io/wroolie/draughtsman:<ver>` image (x64 and arm64; published on Docker Hub, or build from the Dockerfile) | Volume-mount the data folder; optional Chromium component for PDF |
 | Linux bare metal | Self-contained `draughtsman` binary + `draughtsman service install` (systemd) | For hosts that won't run Docker |
 | macOS | Self-contained `draughtsman` binary (Apple silicon and Intel) + launchd install; Homebrew tap later | Development machine and small-office server |
 | Windows Server | Self-contained `draughtsman.exe` + `draughtsman service install` | MVP: exe run as a service via built-in command; MSI in phase 2 |

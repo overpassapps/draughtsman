@@ -12,7 +12,7 @@ All notable changes to Draughtsman are recorded here. The format follows [Keep a
 
 - **Dual licence.** Draughtsman is AGPL-3.0-only, and [`COMMERCIAL-LICENSE.md`](COMMERCIAL-LICENSE.md) (version 1.0, 24 October 2026) is the paid alternative from OVERPASS LIMITED. It costs £1,500 one-off for a team of up to 50 people, or £3,000 one-off with no limit, with 12 months of updates and email support; renewing updates costs 25% of list a year. It lets an organisation modify Draughtsman for internal use and keep those changes private. It has not been reviewed by a solicitor: [`COMMERCIAL-LICENSE-REVIEW-NOTES.md`](COMMERCIAL-LICENSE-REVIEW-NOTES.md) lists the clauses to show one.
 - **[`docker-compose.yml`](docker-compose.yml)**: `docker compose up -d --build` from a clone, with the port on loopback and a named volume. No sign-up and no account with us.
-- **MCP Registry metadata.** [`server.json`](server.json) describes Draughtsman for the official MCP Registry, and the image carries the `io.modelcontextprotocol.server.name` label the registry checks. The package it names, `docker.io/wroolie/draughtsman:0.1.0`, is not published yet.
+- **MCP Registry metadata.** [`server.json`](server.json) describes Draughtsman for the official MCP Registry, and the image carries the `io.modelcontextprotocol.server.name` label the registry checks. The package it names, `docker.io/wroolie/draughtsman:0.1.0`, is published on Docker Hub for linux/amd64 and linux/arm64.
 - **Upgrade fixture** `tests/upgrade-fixtures/v0.1.0/` (SQLite and Postgres), so every later build is proven to open the data 0.1.0 writes.
 
 ### Breaking changes
