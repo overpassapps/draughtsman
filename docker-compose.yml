@@ -1,0 +1,18 @@
+# Quick start: `docker compose up -d --build`, then read the one-time setup code with
+# `docker compose logs draughtsman | grep "setup code"` and open http://localhost:5180 to create the first administrator.
+#
+# No sign-up and no account with us. The image is built from this checkout (no image is published to a registry yet).
+# The port is published to loopback only: put a reverse proxy in front for anyone else (docs/deployment.md).
+services:
+  draughtsman:
+    image: draughtsman:0.1.0
+    build: .
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5180:5180"
+    volumes:
+      # A named volume needs no chown: the image creates /data owned by uid 10001 with mode 700.
+      - draughtsman-data:/data
+
+volumes:
+  draughtsman-data:
