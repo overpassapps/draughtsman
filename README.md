@@ -17,10 +17,18 @@ You need a machine that can run Docker, or one of the release archives. About fi
 
 ### Docker
 
-No image is published to a registry yet, so build it from this repository:
+No sign-up, no account with us, nothing to request. No image is published to a registry yet, so build it from this repository.
+The quickest way is [`docker-compose.yml`](docker-compose.yml):
 
 ```sh
 git clone https://github.com/overpassapps/draughtsman.git && cd draughtsman
+docker compose up -d --build
+docker compose logs draughtsman | grep "setup code"
+```
+
+Or by hand, with a folder on the host for the data:
+
+```sh
 docker build -t draughtsman:local .
 
 mkdir -p draughtsman-data && sudo chown -R 10001:10001 draughtsman-data && sudo chmod 700 draughtsman-data   # Linux; Docker Desktop needs no chown
@@ -106,7 +114,7 @@ Full documentation: **<https://draughtsman.overpass.co.uk/docs/>**. The same pag
 
 Draughtsman is free software, released under the **GNU Affero General Public Licence v3.0 only** ([`LICENSE`](LICENSE)). Copyright © Overpass Limited. You can use it, change it and fork it; if you run a modified version as a network service you must offer its source to the people using it.
 
-If the AGPL does not suit how you want to use or embed Draughtsman, a commercial licence is available. Write to **draughtsman@overpass.co.uk**.
+If the AGPL does not suit you, Overpass also offers Draughtsman under a **commercial licence** ([`COMMERCIAL-LICENSE.md`](COMMERCIAL-LICENSE.md)). It lets your organisation change Draughtsman and connect it to your own systems for internal use, and keep those changes private, without the AGPL's duty to offer source to network users. It costs **£1,500** one-off for a team of up to 50 people, or **£3,000** one-off with no limit on people. Each includes 12 months of updates and email support, and renewing updates costs 25% of list a year. It covers running Draughtsman inside your own organisation; to embed it in a product or service for others, ask about a separate agreement. To buy or ask, write to **draughtsman@overpass.co.uk**.
 
 Third-party components keep their own licences: see [`THIRD-PARTY-NOTICES.txt`](THIRD-PARTY-NOTICES.txt).
 
