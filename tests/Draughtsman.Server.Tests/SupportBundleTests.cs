@@ -87,6 +87,9 @@ public class SupportBundleTests
             logging:
               file:
                 enabled: true
+                # Keep every file: the planted log is dated 2026-10-05, and the default 14 days would delete it at start-up
+                # on any run more than two weeks after that date.
+                retainDays: 0
             """;
     }
 
@@ -244,6 +247,10 @@ public class SupportBundleTests
         }
 
         Assert.Contains(plant.Secrets.Values, v => v == "key ring material");
+
+        // The bundle tails the most recently written log, and the running instance (logging.file.enabled) writes its own, named
+        // for today, after the planted one. A minute ahead keeps the planted log the newest while the instance goes on logging.
+        File.SetLastWriteTimeUtc(Path.Combine(factory.DataFolder, "logs", "draughtsman-20261005.log"), DateTime.UtcNow.AddMinutes(1));
 
         IReadOnlyList<BundleEntry> entries = await SupportBundle.BuildAsync(factory.DataFolder, new SupportBundleOptions { Probes = OfflineProbes.Make(now: s_now), Environment = environment, Now = s_now });
         byte[] zip = Zip(entries);
