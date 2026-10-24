@@ -4,14 +4,16 @@ All notable changes to Draughtsman are recorded here. The format follows [Keep a
 
 **How to read a release's notes before upgrading** (the policy is in [`docs/upgrade-backup.md`](docs/upgrade-backup.md#versioning-and-release-notes)): every release has a **Breaking changes** section, or says "None". A **patch** release (0.1.x) never needs more than the usual steps: it fixes bugs, may add settings and purely additive database migrations, and never removes, renames or narrows anything an earlier release wrote. A **minor** release adds features and may deprecate. A **major** release may remove what a deprecated feature left behind, and names the oldest version it can upgrade from. Run `draughtsman config check` with the new binary before you start it.
 
-## [0.1.0] - Unreleased
+## [0.1.0] - 2026-10-24
 
-0.1.0 is the first release. It has not been cut yet: at tag time this heading takes the release date. Everything in this section ships in 0.1.0. The changes made since the release summary was first written come first, and the summary follows under "What 0.1.0 contains".
+0.1.0 is the first release. Everything in this section ships in 0.1.0. The changes made since the release summary was first written come first, and the summary follows under "What 0.1.0 contains".
 
 ### Added (licensing and quick start)
 
 - **Dual licence.** Draughtsman is AGPL-3.0-only, and [`COMMERCIAL-LICENSE.md`](COMMERCIAL-LICENSE.md) (version 1.0, 24 October 2026) is the paid alternative from OVERPASS LIMITED. It costs £1,500 one-off for a team of up to 50 people, or £3,000 one-off with no limit, with 12 months of updates and email support; renewing updates costs 25% of list a year. It lets an organisation modify Draughtsman for internal use and keep those changes private. It has not been reviewed by a solicitor: [`COMMERCIAL-LICENSE-REVIEW-NOTES.md`](COMMERCIAL-LICENSE-REVIEW-NOTES.md) lists the clauses to show one.
 - **[`docker-compose.yml`](docker-compose.yml)**: `docker compose up -d --build` from a clone, with the port on loopback and a named volume. No sign-up and no account with us.
+- **MCP Registry metadata.** [`server.json`](server.json) describes Draughtsman for the official MCP Registry, and the image carries the `io.modelcontextprotocol.server.name` label the registry checks. The package it names, `docker.io/overpassapps/draughtsman:0.1.0`, is not published yet.
+- **Upgrade fixture** `tests/upgrade-fixtures/v0.1.0/` (SQLite and Postgres), so every later build is proven to open the data 0.1.0 writes.
 
 ### Breaking changes
 
@@ -19,7 +21,7 @@ All notable changes to Draughtsman are recorded here. The format follows [Keep a
 
 ### Open source
 
-- **Draughtsman is now open source**, released under the GNU Affero General Public Licence v3.0 only ([`LICENSE`](LICENSE)), copyright Overpass Limited. The open build is the whole product. A commercial licence is available on request from draughtsman@overpass.co.uk for anyone the AGPL does not suit. Outside contributions need the [Contributor Licence Agreement](CLA.md).
+- **Draughtsman is now open source**, released under the GNU Affero General Public Licence v3.0 only ([`LICENSE`](LICENSE)), copyright Overpass Limited. The open build is the whole product. For internal use without the AGPL's obligations, a commercial licence is bought by email from draughtsman@overpass.co.uk ([`COMMERCIAL-LICENSE.md`](COMMERCIAL-LICENSE.md)). Outside contributions need the [Contributor Licence Agreement](CLA.md).
 - **The evaluation notice is gone.** Pictures exported from the editor (SVG, PNG, PDF and the fly-through HTML), the PDF and SVG from `render_document`, the thumbnails and the PDF endpoint no longer carry an evaluation line; nothing a server produces is marked.
 - **The licence surfaces are gone.** There is no Licence page in the admin bar, no licence state in About, the Status page, `GET /api/about` or `GET /api/admin/status`, and no licence line in `draughtsman config check`, `doctor` or the support bundle. `GET /api/admin/licence` no longer exists, and MCP over stdio no longer prints an evaluation notice.
 - **Upgrading needs nothing.** A `licence:` setting in `draughtsman.yaml` and a licence file in the data folder are ignored; an existing config or data folder starts cleanly, `draughtsman config check` lists the setting as removed, and neither is deleted.

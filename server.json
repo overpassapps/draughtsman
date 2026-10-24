@@ -1,0 +1,30 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.overpassapps/draughtsman",
+  "title": "Draughtsman",
+  "description": "Self-hosted diagramming server with a built-in MCP server for AI agents.",
+  "websiteUrl": "https://draughtsman.overpass.co.uk/",
+  "repository": {
+    "url": "https://github.com/overpassapps/draughtsman",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "oci",
+      "identifier": "docker.io/overpassapps/draughtsman:0.1.0",
+      "transport": {
+        "type": "streamable-http",
+        "url": "http://localhost:5180/mcp",
+        "headers": [
+          {
+            "name": "Authorization",
+            "description": "Bearer token created under Tokens in the Draughtsman web app, in the form: Bearer dst_...",
+            "isRequired": true,
+            "isSecret": true
+          }
+        ]
+      }
+    }
+  ]
+}

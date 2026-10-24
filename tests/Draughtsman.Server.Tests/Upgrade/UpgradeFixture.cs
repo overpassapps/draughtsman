@@ -32,8 +32,17 @@ internal sealed class UpgradeFixture
 
     public string Commit => Manifest.GetProperty("build").GetProperty("commit").GetString()!;
 
-    /// <summary>The content root of the build that wrote the data: the string its Data Protection payloads are bound to.</summary>
+    /// <summary>The content root of the build that wrote the data. For a build before the pinned application name it is also the string its Data Protection payloads are bound to.</summary>
     public string ContentRoot => Manifest.GetProperty("contentRoot").GetString()!;
+
+    /// <summary>The Data Protection application name the build pinned (<c>DataProtectionIdentity.ApplicationName</c>), or null for a build that predates it.</summary>
+    public string? DataProtectionApplicationName => Manifest.TryGetProperty("dataProtectionApplicationName", out JsonElement name) ? name.GetString() : null;
+
+    /// <summary>True when the build's stored secrets are bound to <see cref="ContentRoot"/>, the case the legacy fallback and the re-protection exist for.</summary>
+    public bool SecretsBoundToPath => DataProtectionApplicationName is null;
+
+    /// <summary>The application name the build's Data Protection payloads were written under: the pinned name, or the content root before it.</summary>
+    public string Discriminator => DataProtectionApplicationName ?? ContentRoot;
 
     public string KeyRingProtection => Manifest.GetProperty("keyRing").GetProperty("protection").GetString()!;
 
@@ -73,8 +82,25 @@ internal sealed class UpgradeFixture
     /// <summary>The labels that have a fixture for <paramref name="provider"/>, as xunit theory data.</summary>
     public static TheoryData<string> Labels(string provider)
     {
+        return Labels(provider, _ => true);
+    }
+
+    /// <summary>The labels whose build bound its stored secrets to its install path (<see cref="SecretsBoundToPath"/>), as xunit theory data.</summary>
+    public static TheoryData<string> PathBoundLabels(string provider)
+    {
+        return Labels(provider, f => f.SecretsBoundToPath);
+    }
+
+    /// <summary>The labels whose build pinned the Data Protection application name, so its stored secrets travel with the data folder.</summary>
+    public static TheoryData<string> PinnedLabels(string provider)
+    {
+        return Labels(provider, f => !f.SecretsBoundToPath);
+    }
+
+    private static TheoryData<string> Labels(string provider, Func<UpgradeFixture, bool> include)
+    {
         var data = new TheoryData<string>();
-        foreach (UpgradeFixture fixture in All.Where(f => f.Has(provider)))
+        foreach (UpgradeFixture fixture in All.Where(f => f.Has(provider) && include(f)))
         {
             data.Add(fixture.Label);
         }

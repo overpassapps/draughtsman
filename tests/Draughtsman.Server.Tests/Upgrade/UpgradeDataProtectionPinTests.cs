@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 namespace Draughtsman.Server.Tests.Upgrade;
 
 /// <summary>
-/// The stored AI key and the saved SMTP password no longer depend on where the program is installed. Every fixture is the data folder
+/// The stored AI key and the saved SMTP password no longer depend on where the program is installed. Every path-bound fixture is the data folder
 /// a REAL earlier build wrote, with its secrets bound to the folder that build ran from (a different one from every host here); the
 /// current server is started on a copy from another folder, must still read them, re-protects them under the pinned application name,
 /// and then a SECOND move to yet another folder must need no fallback at all. Each test pairs the positive with the negative that
@@ -25,7 +25,11 @@ public sealed class UpgradeDataProtectionPinTests
 
     private const string ExpectedSmtpPassword = "THROWAWAY-smtp-password-not-real-0123456789";
 
-    public static TheoryData<string> Labels => UpgradeFixture.Labels(UpgradeFixture.Sqlite);
+    /// <summary>The fixtures whose build bound its secrets to its install path: the only ones the legacy fallback and the re-protection apply to.</summary>
+    public static TheoryData<string> Labels => UpgradeFixture.PathBoundLabels(UpgradeFixture.Sqlite);
+
+    /// <summary>The fixtures whose build already pinned the application name.</summary>
+    public static TheoryData<string> PinnedLabels => UpgradeFixture.PinnedLabels(UpgradeFixture.Sqlite);
 
     private static KeyRingProtection? ProtectionOf(UpgradeFixture fixture)
     {
@@ -378,5 +382,54 @@ public sealed class UpgradeDataProtectionPinTests
         {
             UpgradeData.Delete(temp);
         }
+    }
+
+    [Theory]
+    [MemberData(nameof(PinnedLabels))]
+    public void A_pinned_build_s_secrets_open_from_any_folder_with_nothing_named_and_nothing_re_protected(string label)
+    {
+        UpgradeFixture fixture = UpgradeFixture.Get(label);
+        string temp = UpgradeData.NewTempFolder();
+        try
+        {
+            string data = fixture.ExtractDataFolder(UpgradeFixture.Sqlite, temp);
+            bool hasEmail = File.Exists(Path.Combine(data, "email", "settings.json"));
+            byte[] aiBefore = File.ReadAllBytes(Path.Combine(data, "ai", "settings.json"));
+            KeyRingProtection? protection = ProtectionOf(fixture);
+
+            // Through the framework alone, under the pinned name, the secrets open: they were never bound to a folder.
+            Assert.Equal(DataProtectionIdentity.ApplicationName, fixture.DataProtectionApplicationName);
+            (string? aiDirect, string? smtpDirect) = ReadWithoutFallback(data, protection);
+            Assert.Equal(ExpectedAiKey, aiDirect);
+            Assert.Equal(hasEmail ? ExpectedSmtpPassword : null, smtpDirect);
+
+            // The negative: under another name they do not, so the read above proves the pin, not a lax reader.
+            Assert.Null(KeyRingTestSupport.ReadAiKey(data, "/somewhere/else/draughtsman/", protection));
+
+            // Started from a folder the build never ran from, with no old folder named: every secret is current and nothing is rewritten.
+            string install = NewInstall(temp, "install-elsewhere");
+            using (var factory = Host(fixture, data, install))
+            {
+                (string? ai, string? smtp) = ReadThroughHost(factory);
+                Assert.Equal(ExpectedAiKey, ai);
+                Assert.Equal(hasEmail ? ExpectedSmtpPassword : null, smtp);
+
+                IReadOnlyList<StoredSecretState> states = factory.Services.GetRequiredService<KeyRingStatus>().Describe().StoredSecrets!;
+                Assert.All(states, s => Assert.Equal("current", s.State));
+            }
+
+            Assert.Equal(aiBefore, File.ReadAllBytes(Path.Combine(data, "ai", "settings.json")));
+        }
+        finally
+        {
+            UpgradeData.Delete(temp);
+        }
+    }
+
+    [Fact]
+    public void There_are_fixtures_from_before_and_after_the_pin_so_both_paths_above_run()
+    {
+        Assert.Contains(UpgradeFixture.All, f => f.SecretsBoundToPath);
+        Assert.Contains(UpgradeFixture.All, f => !f.SecretsBoundToPath);
     }
 }

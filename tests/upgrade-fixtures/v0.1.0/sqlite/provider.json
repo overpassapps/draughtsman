@@ -1,0 +1,106 @@
+{
+  "provider": "sqlite",
+  "files": [
+    {
+      "path": "ai/settings.json",
+      "size": 225,
+      "sha256": "e5ca5feb57f3284f8a1c6d4f63fbacc7aa16636c99acf82a57db280b6b2bb461"
+    },
+    {
+      "path": "assets/3b/3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e.png",
+      "size": 88,
+      "sha256": "3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e"
+    },
+    {
+      "path": "branding/branding.json",
+      "size": 134,
+      "sha256": "8c9e67cb9db7131d05cd7773df124d81801ad4d2ab552e7b153829ce51273309"
+    },
+    {
+      "path": "branding/favicon.png",
+      "size": 79,
+      "sha256": "6432a7a1adf1f205fbe8831e08b57a72ae05ba5470e7953da5aacdd18788cf2d"
+    },
+    {
+      "path": "branding/logo-light.svg",
+      "size": 174,
+      "sha256": "a0dda6e0c1b0742e7d4f9e38ef5a76e101300538ee3d46baf0193d01b52c2f84"
+    },
+    {
+      "path": "branding/logo.png",
+      "size": 99,
+      "sha256": "b4c18a5be60fe1c811be5c7fc0b83ade087bb22e56ba21204f817c33bf06e143"
+    },
+    {
+      "path": "data.db",
+      "size": 1560576,
+      "sha256": "56fbb3e9de5781f85f95c1cea4da88a872c2f70958ee406402804e2883dd33ac"
+    },
+    {
+      "path": "diagnostics/forwarded-observations.json",
+      "size": 479,
+      "sha256": "fe78b6e4aefaeaf53a9ed2a8ca72bb5bb9cdc32041e5e81e21f545de0b656846"
+    },
+    {
+      "path": "draughtsman.yaml",
+      "size": 210,
+      "sha256": "2333ee37daf3e15a6bdfb8004a2a507e6f5a19446ba596533947a96295dac599"
+    },
+    {
+      "path": "email/settings.json",
+      "size": 412,
+      "sha256": "e1fbee379239afba20f05cce258f50976e1c0d0a101dc5af847ac3d980359148"
+    },
+    {
+      "path": "keys/install-paths.json",
+      "size": 172,
+      "sha256": "11491c93467d0df0e55db6512bbecfe6f31ab37445326e8fdb4a330fae3631c4"
+    },
+    {
+      "path": "keys/key-43865fb4-9ea2-40c8-aa17-a7208e7496c6.xml",
+      "size": 1418,
+      "sha256": "eab1c8a4cc3ddcb6695b2c58144faf7e59c31859f4b65fbc89778b7464dbfd08"
+    },
+    {
+      "path": "themes/org/_settings.json",
+      "size": 39,
+      "sha256": "e98de673ece3d143015df690b6809cb7b6bebddfe8406ae5d8fe0e8904fdee59"
+    },
+    {
+      "path": "themes/org/fixture-second-theme-throwaway.yaml",
+      "size": 611,
+      "sha256": "a4817cdbc3b7679d231c6082771deb1af8168ed116698f6a3adc5decf682866c"
+    },
+    {
+      "path": "themes/org/fixture-theme-throwaway.yaml",
+      "size": 664,
+      "sha256": "fb4c20120c2e4ec57fbaa7ab6f52d127343539e943472b68b6a417f871bc4bd1"
+    }
+  ],
+  "migrations": [
+    "20260921080129_Initial",
+    "20260929083325_Assets",
+    "20260929094216_AddAuth",
+    "20260929101728_AddAuditActorUserId",
+    "20260930214345_AddSecurityEventsAndTokenExpiry",
+    "20260930222757_AddDocumentEtag",
+    "20260930233553_AddDocumentBin",
+    "20261001092923_AddPasswordResetTokens"
+  ],
+  "rowCounts": {
+    "__EFMigrationsHistory": 8,
+    "__EFMigrationsLock": 0,
+    "api_tokens": 5,
+    "assets": 1,
+    "audit": 25,
+    "document_updates": 0,
+    "document_versions": 9,
+    "documents": 13,
+    "password_reset_tokens": 0,
+    "security_events": 19,
+    "sessions": 4,
+    "users": 3
+  },
+  "integrityCheck": "ok",
+  "dataFolderSha256": "d9a4fc4d4457dab1b28b30d4bcdb69ca949337cddf55c453f847c9530052353a"
+}

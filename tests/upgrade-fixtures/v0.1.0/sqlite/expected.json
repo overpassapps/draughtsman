@@ -1,0 +1,870 @@
+{
+  "formatVersion": 1,
+  "label": "v0.1.0",
+  "createdAt": "2026-10-24T11:50:17.501Z",
+  "features": {
+    "tokenExpiry": true,
+    "tokenScope": true,
+    "flythrough": true,
+    "agentCheckpoints": true,
+    "namedSnapshots": true,
+    "assets": true,
+    "bin": true,
+    "branding": true,
+    "orgThemes": true,
+    "aiSettings": "skipped: settings 400, key 200",
+    "emailSettings": true,
+    "securityEvents": true,
+    "audit": true
+  },
+  "users": [
+    {
+      "key": "admin",
+      "id": "usr_7c7cc7c8d50d",
+      "email": "fixture-admin@example.invalid",
+      "displayName": "Fixture Admin (throwaway)",
+      "role": "Admin",
+      "password": "Fixture-Admin-THROWAWAY-pw-1",
+      "active": true
+    },
+    {
+      "key": "editor",
+      "id": "usr_08b4588ff9cf",
+      "email": "fixture-editor@example.invalid",
+      "displayName": "Fixture Editor (throwaway)",
+      "role": "Editor",
+      "password": "Fixture-Editor-THROWAWAY-pw-2",
+      "active": true
+    },
+    {
+      "key": "retired",
+      "id": "usr_be68c2410ecc",
+      "email": "fixture-retired@example.invalid",
+      "displayName": "Fixture Retired (throwaway)",
+      "role": "Editor",
+      "password": "Fixture-Retired-THROWAWAY-pw-3",
+      "active": false
+    }
+  ],
+  "tokens": [
+    {
+      "id": "tok_a8e3b9df336b",
+      "name": "fixture-agent (throwaway)",
+      "owner": "admin",
+      "secret": "dst_Tr7p1SqXcsEu7M1lAeaUGR00Ex-DYvJwu1zwa8Qc-5g",
+      "scope": "full",
+      "expiresAt": "2027-01-22T11:50:17.952Z",
+      "revoked": false
+    },
+    {
+      "id": "tok_0f9d64783868",
+      "name": "fixture-expiring-90d (throwaway)",
+      "owner": "admin",
+      "secret": "dst_iH2MlM5RjQi9APX_wWhcUAMjn-0spF9XUa-EtAhHmJo",
+      "scope": "full",
+      "expiresAt": "2027-01-22T11:50:17.961Z",
+      "revoked": false
+    },
+    {
+      "id": "tok_047fc83d1181",
+      "name": "fixture-read-only (throwaway)",
+      "owner": "admin",
+      "secret": "dst_URtox_Fpu2-Pw3j4fF8UbW5oqtt2249UosR63L5VSow",
+      "scope": "read",
+      "expiresAt": "2027-01-22T11:50:17.962Z",
+      "revoked": false
+    },
+    {
+      "id": "tok_4ce7c455fe90",
+      "name": "fixture-editor-token (throwaway)",
+      "owner": "editor",
+      "secret": "dst_YjyaSa0AYliXnex4MMs_oCZH89uF5EAQw1S4ZAuxqxY",
+      "scope": "full",
+      "expiresAt": "2027-01-22T11:50:17.964Z",
+      "revoked": false
+    },
+    {
+      "id": "tok_c0495db1792c",
+      "name": "fixture-revoked (throwaway)",
+      "owner": "admin",
+      "secret": "dst_BCVs7wlmy6xIZ0ejt3hNm47pZ84lEYJIrh0gVjuF870",
+      "scope": "full",
+      "expiresAt": "2027-01-22T11:50:17.965Z",
+      "revoked": true
+    }
+  ],
+  "documents": [
+    {
+      "id": "fx_image_node",
+      "title": "A diagram with an uploaded image",
+      "type": "freeform",
+      "nodes": 1,
+      "edges": 0,
+      "bytes": 396,
+      "hasFlythrough": false,
+      "createdBy": "user:Fixture Admin (throwaway)",
+      "updatedAt": "2026-10-24T11:50:18.292Z",
+      "etag": "\"dv1:7c24bad8b5ecc85f7948878a37fd7ab7\"",
+      "sha256": "32c4dc251a7077d9fe8eac03c2681ccfdc1415f9abf880f7a9ea8131242ee179",
+      "dslSha256": "63af1effbfe84789b069af71301d1ed0f08c7c9527f80c2459f1bf317b179adc"
+    },
+    {
+      "id": "fx_order-service",
+      "title": "Order service",
+      "type": "architecture",
+      "nodes": 5,
+      "edges": 3,
+      "bytes": 2077,
+      "hasFlythrough": true,
+      "createdBy": "user:Fixture Editor (throwaway)",
+      "updatedAt": "2026-10-24T11:50:18.269Z",
+      "etag": "\"dv1:4444b04b740a4ecea9df67cb2d931ded\"",
+      "sha256": "12303247406a0f1455349237bc03c57845d7448a9c75c7bcee4a130e3456f4b2",
+      "dslSha256": "6593dd7321223f08fb642357a2022ef8b2f9992b822e1cca5b912251333988b5"
+    },
+    {
+      "id": "fx_perf-2000n-2500e",
+      "title": "Perf benchmark (2000 nodes, 2500 edges)",
+      "type": "architecture",
+      "nodes": 2000,
+      "edges": 2500,
+      "bytes": 434950,
+      "hasFlythrough": false,
+      "createdBy": "agent:upgrade-fixture/throwaway-model",
+      "updatedAt": "2026-10-24T11:50:18.218Z",
+      "etag": "\"dv1:cdbb1321c0c14b5ad5635b8b069ec6de\"",
+      "sha256": "05d8ea0d392d26695b6041321c5cb1e49825756d5e94c74c734fc469e88202e5",
+      "dslSha256": "712a9a27958bea4b81aff0eda4341e6cd2dd41a9e20ffc64c8dc38203a944da9"
+    },
+    {
+      "id": "fx_medium_chain",
+      "title": "A 40-node chain",
+      "type": "architecture",
+      "nodes": 40,
+      "edges": 39,
+      "bytes": 7459,
+      "hasFlythrough": false,
+      "createdBy": "user:Fixture Admin (throwaway)",
+      "updatedAt": "2026-10-24T11:50:18.119Z",
+      "etag": "\"dv1:125853306950ead4523e5cf8fdb3ca56\"",
+      "sha256": "0e8e610e50782fed7617a250f081bd7e253d20d0f0e6bd25437cd4c53a657329",
+      "dslSha256": "1e19dfff2e28a35052f7c9e37e54d29de53a0eb56895e3f4759b6a1f0b2210e1"
+    },
+    {
+      "id": "fx_decision-flow",
+      "title": "Decision flow",
+      "type": "flowchart",
+      "nodes": 5,
+      "edges": 5,
+      "bytes": 1644,
+      "hasFlythrough": false,
+      "createdBy": "agent:upgrade-fixture/throwaway-model",
+      "updatedAt": "2026-10-24T11:50:18.112Z",
+      "etag": "\"dv1:155576f545ba159a311ef8e7cc680a66\"",
+      "sha256": "edf0d70867aa4161958ed1526d1a46404f99cd45c07525ec778b3ba4963c8104",
+      "dslSha256": "d34abeccdca6ffe273977e082f13004d4dcecac436a26292b5acc75f754bc64b"
+    },
+    {
+      "id": "fx_flythrough",
+      "title": "Order flow with a tour",
+      "type": "architecture",
+      "nodes": 3,
+      "edges": 2,
+      "bytes": 1077,
+      "hasFlythrough": true,
+      "createdBy": "user:Fixture Admin (throwaway)",
+      "updatedAt": "2026-10-24T11:50:18.085Z",
+      "etag": "\"dv1:e2c31b5b761233ca3a5ec18a94d77bc6\"",
+      "sha256": "f740143e2ab43eccdaeaa09ab48590227feab996d345e7dfb20392d1c9ee0a90",
+      "dslSha256": "5f8d3f6d0e4b03a53dd9245cf5369d62d59de9d6287694f9c63fbc60eaafef2d"
+    },
+    {
+      "id": "fx_shop-schema",
+      "title": "Shop schema",
+      "type": "architecture",
+      "nodes": 4,
+      "edges": 3,
+      "bytes": 1931,
+      "hasFlythrough": false,
+      "createdBy": "user:Fixture Editor (throwaway)",
+      "updatedAt": "2026-10-24T11:50:18.078Z",
+      "etag": "\"dv1:a1247d49eb2bd242a359a07d6408f08a\"",
+      "sha256": "2bd38ad0abb6ebef63c559b908699b097bf5cbd123ab34ae496266f6feb2693a",
+      "dslSha256": "5c3d546f583a8e777a67294a0599af92f38fae104f9966e9dfb25961fa6d7d00"
+    },
+    {
+      "id": "fx_sample-order-approval",
+      "title": "Order approval",
+      "type": "flowchart",
+      "nodes": 8,
+      "edges": 8,
+      "bytes": 3349,
+      "hasFlythrough": false,
+      "createdBy": "user:Fixture Admin (throwaway)",
+      "updatedAt": "2026-10-24T11:50:18.075Z",
+      "etag": "\"dv1:478cc38c29441cbba70000ff7c763b5a\"",
+      "sha256": "99c3e0d83c79d1acd10ba4c5645f6b51dbe2bcaf15743dedefbd517854b6cc88",
+      "dslSha256": "7ae30bca4c61cabaf7ee222cba7247aa40ce7fb790d8032b9fb1068b1302c651"
+    },
+    {
+      "id": "fx_editor-session",
+      "title": "Full editing session",
+      "type": "freeform",
+      "nodes": 106,
+      "edges": 5,
+      "bytes": 29935,
+      "hasFlythrough": false,
+      "createdBy": "user:Fixture Admin (throwaway)",
+      "updatedAt": "2026-10-24T11:50:18.015Z",
+      "etag": "\"dv1:9cd853ba8ffba65fa99a86e93b5543b4\"",
+      "sha256": "8c2beb56212c418a189f452eee4c3ef668f86b80e55093bf16b66f0b779e8abb",
+      "dslSha256": "45d3f840f4b64b96eb92c16aa2c605e83a75d7735e14e917bd1427fa992bf24c"
+    },
+    {
+      "id": "fx_checkout-sequence",
+      "title": "Checkout",
+      "type": "sequence",
+      "nodes": 4,
+      "edges": 7,
+      "bytes": 1302,
+      "hasFlythrough": false,
+      "createdBy": "user:Fixture Editor (throwaway)",
+      "updatedAt": "2026-10-24T11:50:18.003Z",
+      "etag": "\"dv1:f368682da09d1dc4c5a1bd578167ba69\"",
+      "sha256": "0d796befb079b36f86fbe92076e6f95b08d27423d824998fc4ee8c23a1370439",
+      "dslSha256": "39d530384aad39c4a202ac281e6df45dda1ce96d56ddda1848256c565af44dc3"
+    },
+    {
+      "id": "fx_checkout-fragments",
+      "title": "Checkout with a fragment, a note, and a created participant",
+      "type": "sequence",
+      "nodes": 6,
+      "edges": 10,
+      "bytes": 1938,
+      "hasFlythrough": false,
+      "createdBy": "user:Fixture Admin (throwaway)",
+      "updatedAt": "2026-10-24T11:50:17.973Z",
+      "etag": "\"dv1:3eb228fb337d2f2b53c01fcc4bb38277\"",
+      "sha256": "d47d9585825ba7ba98d621701f2cac4bf5545ae0b72cce6a328aef7a40b34dfa",
+      "dslSha256": "502b63bb89c5013ea7ae261ef56c5501621adde4e08325c28c0808fcbd8a10cb"
+    }
+  ],
+  "binned": [
+    {
+      "id": "fx_empty",
+      "deletedBy": "editor",
+      "sha256": "5d83ea6aba00cea216cda5f5e6eceea737c045bd4d12d5bf95ecde683c2b0e63",
+      "title": "An empty diagram"
+    },
+    {
+      "id": "fx_unicode",
+      "deletedBy": "admin",
+      "sha256": "ee5b4647bef3885cdc521213e8dd7c1770b794d4957ef761b4bc2db983627640",
+      "title": "Unicode & quoting: café ☕ 日本語 العربية \"quoted\" <angle> & ampersand"
+    }
+  ],
+  "versions": [
+    {
+      "documentId": "fx_order-service",
+      "id": "v_8df31c4f9b6427ad14e5e",
+      "name": "Fixture: before the rework",
+      "actor": "user:Fixture Admin (throwaway)",
+      "reason": "throwaway named snapshot",
+      "size": 2077,
+      "createdAt": "2026-10-24T11:50:18.272Z",
+      "documentSha256": "12303247406a0f1455349237bc03c57845d7448a9c75c7bcee4a130e3456f4b2"
+    },
+    {
+      "documentId": "fx_order-service",
+      "id": "v_8df31c4f99cfc666123fb",
+      "name": "checkpoint",
+      "actor": "agent:upgrade-fixture/throwaway-model",
+      "reason": "Before replace by agent:upgrade-fixture/throwaway-model",
+      "size": 2056,
+      "createdAt": "2026-10-24T11:50:18.106Z",
+      "documentSha256": "25f22e218c267092000c5b685b3b2c5db9a5b4e7cb6138636d75d1cc6b59eb14"
+    },
+    {
+      "documentId": "fx_order-service",
+      "id": "v_8df31c4f99b5050626b8f",
+      "name": "checkpoint",
+      "actor": "agent:upgrade-fixture/throwaway-model",
+      "reason": "Before replace by agent:upgrade-fixture/throwaway-model",
+      "size": 2041,
+      "createdAt": "2026-10-24T11:50:18.095Z",
+      "documentSha256": "8341801e4588b01e9a3bdb83bbac4f1ad752dd4d4c847755c9190c93b8a08402"
+    },
+    {
+      "documentId": "fx_perf-2000n-2500e",
+      "id": "v_8df31c4f9b2dd24bfcf82",
+      "name": "checkpoint",
+      "actor": "agent:upgrade-fixture/throwaway-model",
+      "reason": "Before replace by agent:upgrade-fixture/throwaway-model",
+      "size": 434950,
+      "createdAt": "2026-10-24T11:50:18.249Z",
+      "documentSha256": "bd225530d64f934458a132a7de41b5eec4b81726ce34365192a969b8d4cba699"
+    },
+    {
+      "documentId": "fx_perf-2000n-2500e",
+      "id": "v_8df31c4f9a6d04260c30b",
+      "name": "checkpoint",
+      "actor": "agent:upgrade-fixture/throwaway-model",
+      "reason": "Before replace by agent:upgrade-fixture/throwaway-model",
+      "size": 434935,
+      "createdAt": "2026-10-24T11:50:18.170Z",
+      "documentSha256": "04ae6a7d5152d5a1b51f1eaab2ff3c3f6596fcc26f821d427ac806fe27988eec"
+    },
+    {
+      "documentId": "fx_medium_chain",
+      "id": "v_8df31c4f99f0c2cb3fe29",
+      "name": "checkpoint",
+      "actor": "agent:upgrade-fixture/throwaway-model",
+      "reason": "Before replace by agent:upgrade-fixture/throwaway-model",
+      "size": 7459,
+      "createdAt": "2026-10-24T11:50:18.120Z",
+      "documentSha256": "491b2299421bae62fc36029f2ceda5c9ba5b2bde4f40d597de21651f9c2b3de7"
+    },
+    {
+      "documentId": "fx_medium_chain",
+      "id": "v_8df31c4f99e799ce576c4",
+      "name": "checkpoint",
+      "actor": "agent:upgrade-fixture/throwaway-model",
+      "reason": "Before replace by agent:upgrade-fixture/throwaway-model",
+      "size": 7444,
+      "createdAt": "2026-10-24T11:50:18.116Z",
+      "documentSha256": "4055c6d79b8c610d6aee98e437cbe4194e2aba0aa0ad5cd40b5013d8eb6878c6"
+    },
+    {
+      "documentId": "fx_decision-flow",
+      "id": "v_8df31c4f99df3f06371e1",
+      "name": "checkpoint",
+      "actor": "agent:upgrade-fixture/throwaway-model",
+      "reason": "Before replace by agent:upgrade-fixture/throwaway-model",
+      "size": 1644,
+      "createdAt": "2026-10-24T11:50:18.112Z",
+      "documentSha256": "a099a9d1305e935054f276ae38971eaaadc37d281227db435776c556f5d84f85"
+    },
+    {
+      "documentId": "fx_decision-flow",
+      "id": "v_8df31c4f99d865e837054",
+      "name": "checkpoint",
+      "actor": "agent:upgrade-fixture/throwaway-model",
+      "reason": "Before replace by agent:upgrade-fixture/throwaway-model",
+      "size": 1629,
+      "createdAt": "2026-10-24T11:50:18.110Z",
+      "documentSha256": "940c56431cca5ab8749e3525ac1fcd22164b203aec2b140398deebdd1f60c51b"
+    }
+  ],
+  "assets": [
+    {
+      "id": "asset_ec6cf6f9dbf0",
+      "sha256": "3b5ff76fcbdc9f5eba83cb93bfc74e83a52bde92e58d8a1cc37ab5a40cd8d00e",
+      "bytes": 88,
+      "contentType": "image/png"
+    }
+  ],
+  "audit": {
+    "fx_image_node": [
+      {
+        "action": "created",
+        "actor": "Fixture Admin (throwaway)",
+        "at": "2026-10-24T11:50:18.293Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      }
+    ],
+    "fx_order-service": [
+      {
+        "action": "snapshotted",
+        "actor": "Fixture Admin (throwaway)",
+        "at": "2026-10-24T11:50:18.272Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      },
+      {
+        "action": "replaced",
+        "actor": "Fixture Admin (throwaway)",
+        "at": "2026-10-24T11:50:18.270Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      },
+      {
+        "action": "replaced",
+        "actor": "upgrade-fixture",
+        "at": "2026-10-24T11:50:18.107Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      },
+      {
+        "action": "replaced",
+        "actor": "upgrade-fixture",
+        "at": "2026-10-24T11:50:18.103Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      },
+      {
+        "action": "created",
+        "actor": "Fixture Editor (throwaway)",
+        "at": "2026-10-24T11:50:18.025Z",
+        "actorUserId": "usr_08b4588ff9cf"
+      }
+    ],
+    "fx_perf-2000n-2500e": [
+      {
+        "action": "replaced",
+        "actor": "upgrade-fixture",
+        "at": "2026-10-24T11:50:18.259Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      },
+      {
+        "action": "replaced",
+        "actor": "upgrade-fixture",
+        "at": "2026-10-24T11:50:18.181Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      },
+      {
+        "action": "created",
+        "actor": "upgrade-fixture",
+        "at": "2026-10-24T11:50:18.065Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      }
+    ],
+    "fx_medium_chain": [
+      {
+        "action": "replaced",
+        "actor": "upgrade-fixture",
+        "at": "2026-10-24T11:50:18.120Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      },
+      {
+        "action": "replaced",
+        "actor": "upgrade-fixture",
+        "at": "2026-10-24T11:50:18.116Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      },
+      {
+        "action": "created",
+        "actor": "Fixture Admin (throwaway)",
+        "at": "2026-10-24T11:50:18.084Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      }
+    ],
+    "fx_decision-flow": [
+      {
+        "action": "replaced",
+        "actor": "upgrade-fixture",
+        "at": "2026-10-24T11:50:18.113Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      },
+      {
+        "action": "replaced",
+        "actor": "upgrade-fixture",
+        "at": "2026-10-24T11:50:18.110Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      },
+      {
+        "action": "created",
+        "actor": "upgrade-fixture",
+        "at": "2026-10-24T11:50:18.013Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      }
+    ],
+    "fx_flythrough": [
+      {
+        "action": "created",
+        "actor": "Fixture Admin (throwaway)",
+        "at": "2026-10-24T11:50:18.085Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      }
+    ],
+    "fx_shop-schema": [
+      {
+        "action": "created",
+        "actor": "Fixture Editor (throwaway)",
+        "at": "2026-10-24T11:50:18.079Z",
+        "actorUserId": "usr_08b4588ff9cf"
+      }
+    ],
+    "fx_sample-order-approval": [
+      {
+        "action": "created",
+        "actor": "Fixture Admin (throwaway)",
+        "at": "2026-10-24T11:50:18.076Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      }
+    ],
+    "fx_editor-session": [
+      {
+        "action": "created",
+        "actor": "Fixture Admin (throwaway)",
+        "at": "2026-10-24T11:50:18.019Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      }
+    ],
+    "fx_checkout-sequence": [
+      {
+        "action": "created",
+        "actor": "Fixture Editor (throwaway)",
+        "at": "2026-10-24T11:50:18.004Z",
+        "actorUserId": "usr_08b4588ff9cf"
+      }
+    ],
+    "fx_checkout-fragments": [
+      {
+        "action": "created",
+        "actor": "Fixture Admin (throwaway)",
+        "at": "2026-10-24T11:50:17.995Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      }
+    ],
+    "fx_empty": [
+      {
+        "action": "deleted",
+        "actor": "Fixture Editor (throwaway)",
+        "at": "2026-10-24T11:50:18.305Z",
+        "actorUserId": "usr_08b4588ff9cf"
+      },
+      {
+        "action": "created",
+        "actor": "Fixture Admin (throwaway)",
+        "at": "2026-10-24T11:50:18.082Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      }
+    ],
+    "fx_unicode": [
+      {
+        "action": "deleted",
+        "actor": "Fixture Admin (throwaway)",
+        "at": "2026-10-24T11:50:18.309Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      },
+      {
+        "action": "created",
+        "actor": "Fixture Admin (throwaway)",
+        "at": "2026-10-24T11:50:18.081Z",
+        "actorUserId": "usr_7c7cc7c8d50d"
+      }
+    ]
+  },
+  "securityEvents": [
+    {
+      "id": 16,
+      "type": "sign_in.failed",
+      "at": "2026-10-24T11:50:18.438Z",
+      "hash": "25d323b12dcefeac6d9c73decb388d43af96697112bb46ae9037e8a1cc99f755"
+    },
+    {
+      "id": 15,
+      "type": "email.settings_changed",
+      "at": "2026-10-24T11:50:18.368Z",
+      "hash": "735881cb75090a5fe08314d02779bed3c84e422159cdee76de70216165c15510"
+    },
+    {
+      "id": 14,
+      "type": "ai.endpoint_refused",
+      "at": "2026-10-24T11:50:18.356Z",
+      "hash": "d34df893c212e5983d1196eee7ebe5d5df07062f6c9c3421f9521674c6b2f79a"
+    },
+    {
+      "id": 13,
+      "type": "document.deleted",
+      "at": "2026-10-24T11:50:18.309Z",
+      "hash": "d46201b2bad13c6b7b9d2b0f2ba38ec45550e84506259f002524d93c7250e54a"
+    },
+    {
+      "id": 12,
+      "type": "document.deleted",
+      "at": "2026-10-24T11:50:18.307Z",
+      "hash": "b1d2157fdfe684b26a6fcfb0cf281a62c20db52a6b92072e845c92573e983509"
+    },
+    {
+      "id": 11,
+      "type": "token.revoked",
+      "at": "2026-10-24T11:50:17.969Z",
+      "hash": "3717442d30c989ecefed83b26e3cd576230a54779f700b472c1206805a4eca73"
+    },
+    {
+      "id": 10,
+      "type": "token.created",
+      "at": "2026-10-24T11:50:17.965Z",
+      "hash": "e19506adb536dc751efe0bff38c5b4de3c999ca4abd4bfa6b1b76fe519db426c"
+    },
+    {
+      "id": 9,
+      "type": "token.created",
+      "at": "2026-10-24T11:50:17.964Z",
+      "hash": "df188bb3a633b16a67635b0b0653ea2fbdcf7ae42bfb7e4b35f9366ac46a781e"
+    },
+    {
+      "id": 8,
+      "type": "token.created",
+      "at": "2026-10-24T11:50:17.963Z",
+      "hash": "110c7e360af09f7c9afe4d4001810c2785f6cf92f3285936da1d227c59b57642"
+    },
+    {
+      "id": 7,
+      "type": "token.created",
+      "at": "2026-10-24T11:50:17.961Z",
+      "hash": "1a12977c03e121527644fae773b292c18299dd5f6b2615dc9203eeec48e1f842"
+    },
+    {
+      "id": 6,
+      "type": "token.created",
+      "at": "2026-10-24T11:50:17.958Z",
+      "hash": "e4fcb9ecea40cc90eddd7acdbb5998413a543524af77b6d377f278795ff1c9e8"
+    },
+    {
+      "id": 5,
+      "type": "user.deactivated",
+      "at": "2026-10-24T11:50:17.944Z",
+      "hash": "75bf685a5cc7b81540d9ab0713a21ed107a832989f21e8da1f8014fd72dc8904"
+    },
+    {
+      "id": 4,
+      "type": "sign_in.succeeded",
+      "at": "2026-10-24T11:50:17.935Z",
+      "hash": "a7f11885994fd7c17f9fe3472bfc9141244569bde66425488e563465fccd6baa"
+    },
+    {
+      "id": 3,
+      "type": "user.created",
+      "at": "2026-10-24T11:50:17.863Z",
+      "hash": "2355a0b5dae8da18316a52c3c5a0a15a2a2786961e0fd165916df3c3fa486f49"
+    },
+    {
+      "id": 2,
+      "type": "user.created",
+      "at": "2026-10-24T11:50:17.792Z",
+      "hash": "80cd5f16e934f5f0c5408b2e7393f08e5367103ecd943a194022154f6714071a"
+    },
+    {
+      "id": 1,
+      "type": "first_run.completed",
+      "at": "2026-10-24T11:50:17.691Z",
+      "hash": "85bf2e97a4a6db828945f8a32fb97ddae914d5e1ac4b85cda8eefd0e1d848b31"
+    }
+  ],
+  "skippedDocuments": [],
+  "build": {
+    "reportedVersion": null
+  },
+  "branding": {
+    "productName": "Fixture Diagrams (throwaway)",
+    "uploads": {
+      "logo": {
+        "status": 200,
+        "sha256": "b4c18a5be60fe1c811be5c7fc0b83ade087bb22e56ba21204f817c33bf06e143",
+        "bytes": 99
+      },
+      "logo-light": {
+        "status": 200,
+        "sha256": "a0dda6e0c1b0742e7d4f9e38ef5a76e101300538ee3d46baf0193d01b52c2f84",
+        "bytes": 174
+      },
+      "favicon": {
+        "status": 200,
+        "sha256": "6432a7a1adf1f205fbe8831e08b57a72ae05ba5470e7953da5aacdd18788cf2d",
+        "bytes": 79
+      }
+    },
+    "served": {
+      "logo": {
+        "sha256": "b4c18a5be60fe1c811be5c7fc0b83ade087bb22e56ba21204f817c33bf06e143",
+        "contentType": "image/png"
+      },
+      "logo-light": {
+        "sha256": "a0dda6e0c1b0742e7d4f9e38ef5a76e101300538ee3d46baf0193d01b52c2f84",
+        "contentType": "image/svg+xml"
+      },
+      "favicon": {
+        "sha256": "6432a7a1adf1f205fbe8831e08b57a72ae05ba5470e7953da5aacdd18788cf2d",
+        "contentType": "image/png"
+      }
+    },
+    "state": {
+      "themeName": "Overpass",
+      "themeProductName": "Draughtsman",
+      "productName": "Fixture Diagrams (throwaway)",
+      "mode": "dark",
+      "logo": "/api/theme/logo",
+      "logoLight": "/api/theme/logo-light",
+      "favicon": "/api/theme/favicon",
+      "overridden": {
+        "productName": true,
+        "logo": true,
+        "logoLight": true,
+        "favicon": true
+      }
+    },
+    "themeProductName": "Fixture Diagrams (throwaway)"
+  },
+  "themes": {
+    "defaultId": "fixture-theme-throwaway",
+    "putStatus": 200,
+    "defaultStatus": 200,
+    "secondId": "fixture-second-theme-throwaway",
+    "list": {
+      "defaultId": "fixture-theme-throwaway",
+      "themes": [
+        {
+          "id": "fixture-second-theme-throwaway",
+          "name": "Fixture Second Theme (throwaway)",
+          "mode": "dark",
+          "chrome": {
+            "dark": {
+              "brand": "#c0392b",
+              "brandText": "#ffffff",
+              "surface": "#0a0e1a",
+              "surfaceRaised": "#151e33",
+              "border": "#202a42",
+              "text": "#f2f2f2",
+              "textMuted": "#9aa4b8",
+              "accent": "#e04832",
+              "danger": "#ff4d4f"
+            },
+            "light": {
+              "brand": "#c0392b",
+              "brandText": "#ffffff",
+              "surface": "#ffffff",
+              "surfaceRaised": "#f4f6fa",
+              "border": "#d6dae4",
+              "text": "#151e33",
+              "textMuted": "#616b7b",
+              "accent": "#c0392b",
+              "danger": "#d4380d"
+            },
+            "radius": 6,
+            "fonts": {
+              "ui": "Inter, system-ui, sans-serif",
+              "mono": "JetBrains Mono, monospace"
+            }
+          },
+          "diagram": {
+            "base": "overpass",
+            "palette": {},
+            "fonts": {}
+          },
+          "updatedAt": "2026-10-24T11:50:18.348Z",
+          "isDefault": false
+        },
+        {
+          "id": "fixture-theme-throwaway",
+          "name": "Fixture Theme (throwaway)",
+          "mode": "dark",
+          "chrome": {
+            "dark": {
+              "brand": "#c0392b",
+              "brandText": "#ffffff",
+              "surface": "#0a0e1a",
+              "surfaceRaised": "#151e33",
+              "border": "#202a42",
+              "text": "#f2f2f2",
+              "textMuted": "#9aa4b8",
+              "accent": "#e04832",
+              "danger": "#ff4d4f"
+            },
+            "light": {
+              "brand": "#c0392b",
+              "brandText": "#ffffff",
+              "surface": "#ffffff",
+              "surfaceRaised": "#f4f6fa",
+              "border": "#d6dae4",
+              "text": "#151e33",
+              "textMuted": "#616b7b",
+              "accent": "#c0392b",
+              "danger": "#d4380d"
+            },
+            "radius": 6,
+            "fonts": {
+              "ui": "Inter, system-ui, sans-serif",
+              "mono": "JetBrains Mono, monospace"
+            }
+          },
+          "diagram": {
+            "base": "overpass",
+            "palette": {
+              "red": "#00aa55"
+            },
+            "canvasBackground": "#0b1f2a",
+            "fonts": {}
+          },
+          "updatedAt": "2026-10-24T11:50:18.346Z",
+          "isDefault": true
+        }
+      ],
+      "bases": [
+        "overpass",
+        "neutral",
+        "mono"
+      ]
+    },
+    "listHash": "201b699c379b0f645fd0e528673d2bd57d59c55fb38212ebd5b810c22a999763"
+  },
+  "ai": {
+    "provider": "openai",
+    "model": "fixture-model-throwaway",
+    "endpoint": "https://ai.example.invalid/v1",
+    "apiKey": "sk-THROWAWAY-upgrade-fixture-not-a-real-key-0123456789",
+    "putStatus": 400,
+    "keyStatus": 200,
+    "state": {
+      "enabled": false,
+      "problem": "No AI provider is configured.",
+      "effective": {},
+      "file": {},
+      "overrides": {},
+      "key": {
+        "source": "stored",
+        "environmentVariable": "DRAUGHTSMAN_AI_KEY",
+        "environmentSet": false,
+        "storedSet": true,
+        "storedUnreadable": false,
+        "required": true
+      },
+      "providers": [
+        "ollama",
+        "openai",
+        "anthropic",
+        "azure-openai"
+      ],
+      "keyRing": {
+        "state": "protected",
+        "provider": "key",
+        "message": "The key ring is protected by key-encryption key from the environment variable DRAUGHTSMAN_KEY_ENCRYPTION_KEY.",
+        "unreadableKeys": 0,
+        "migration": "none",
+        "storedSecrets": []
+      }
+    }
+  },
+  "email": {
+    "putStatus": 200,
+    "password": "THROWAWAY-smtp-password-not-real-0123456789",
+    "state": {
+      "configured": true,
+      "provider": "smtp",
+      "from": "Draughtsman Fixture <noreply@example.invalid>",
+      "host": "smtp.example.invalid",
+      "port": 587,
+      "tls": "starttls",
+      "user": "fixture-mailer",
+      "passwordSet": true,
+      "passwordKind": "saved",
+      "passwordUnreadable": false,
+      "passwordSource": "saved on this server (encrypted)",
+      "publicUrl": "https://draughtsman.example.invalid",
+      "locked": {},
+      "hasSaved": true,
+      "selfServiceEnabled": true,
+      "selfServiceAvailable": true,
+      "emailedLinkMinutes": 60,
+      "adminLinkHours": 24,
+      "problems": [],
+      "keyRing": {
+        "state": "protected",
+        "provider": "key",
+        "message": "The key ring is protected by key-encryption key from the environment variable DRAUGHTSMAN_KEY_ENCRYPTION_KEY.",
+        "unreadableKeys": 0,
+        "migration": "none",
+        "storedSecrets": []
+      }
+    }
+  },
+  "documentListTotal": 11,
+  "dslExport": true
+}

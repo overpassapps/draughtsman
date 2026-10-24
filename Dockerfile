@@ -120,6 +120,9 @@ COPY docker/draughtsman /usr/local/bin/draughtsman
 RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/draughtsman \
     && chown -R draughtsman:draughtsman /app /data
 
+# Ownership marker the official MCP Registry checks on an OCI package (server.json at the repo root must use the same name).
+LABEL io.modelcontextprotocol.server.name="io.github.overpassapps/draughtsman"
+
 USER draughtsman
 EXPOSE 5180
 VOLUME ["/data"]
