@@ -4,11 +4,16 @@
 # server framework-dependent (no -r), so the same publish output runs under either arch's aspnet runtime image and
 # buildx can produce x64+arm64 from one Dockerfile without per-arch publish steps (see README's release command).
 #
+# Every build stage is pinned to the builder's own platform (FROM --platform=$BUILDPLATFORM), so a multi-platform build
+# never runs node or dotnet under QEMU (dotnet publish segfaults there, exit 139); only the runtime stage is built once
+# per target platform. A multi-platform build needs a docker-container builder, created once:
+#   docker buildx create --name multi --driver docker-container --use
+#
 # Chromium for PDF (build-spec-v0.1.md section 7) is optional and off by default: pass
 # --build-arg INSTALL_CHROMIUM=true to install it and enable it for a data folder that doesn't already have a
 # draughtsman.yaml. It is never forced onto an existing config (see docker/entrypoint.sh).
 
-FROM node:22-bookworm-slim AS sidecar-build
+FROM --platform=$BUILDPLATFORM node:22-bookworm-slim AS sidecar-build
 # route.document bundles the editor's router from web/src (canvas/routeDocument.ts) rather than copying it, so the
 # sources it reaches must sit alongside sidecar/ as they do in the repo: web/src, and the kind vocabularies its model
 # modules import as JSON. No web dependencies are installed; scripts/build.mjs aliases yjs to the sidecar's own.
@@ -25,7 +30,7 @@ RUN DRAUGHTSMAN_RELEASE=1 node scripts/build.mjs
 COPY scripts/check-offline-bundles.mjs /src/scripts/check-offline-bundles.mjs
 RUN node /src/scripts/check-offline-bundles.mjs sidecar /src/sidecar/dist/sidecar.js
 
-FROM node:22-bookworm-slim AS web-build
+FROM --platform=$BUILDPLATFORM node:22-bookworm-slim AS web-build
 WORKDIR /src
 # The type check and generated example fixtures reach three levels up from web/src for the shared document schema,
 # kind vocabularies and examples (web/tsconfig paths), so those repo-root folders must sit alongside web/ here too.
@@ -42,7 +47,10 @@ RUN npm run build
 COPY scripts/check-offline-bundles.mjs /src/scripts/check-offline-bundles.mjs
 RUN node /src/scripts/check-offline-bundles.mjs web /src/web/dist
 
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS publish
+# The Node binary the SBOM step runs, pinned to the build platform like every other build stage.
+FROM --platform=$BUILDPLATFORM node:22-bookworm-slim AS node-bin
+
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0 AS publish
 # The date this build was made, shown on the About page. A release passes --build-arg DRAUGHTSMAN_BUILD_DATE=YYYY-MM-DD;
 # empty means today, UTC.
 ARG DRAUGHTSMAN_BUILD_DATE=
@@ -58,7 +66,7 @@ COPY docs/spec/dsl.grammar docs/spec/dsl.grammar
 COPY --from=sidecar-build /src/sidecar/dist sidecar/dist
 # Only to write the software bill of materials below (scripts/generate-sbom.mjs reads this stage's NuGet restore, and the two lock
 # files); the SDK image has no Node, and the publish itself still needs none.
-COPY --from=node:22-bookworm-slim /usr/local/bin/node /usr/local/bin/node
+COPY --from=node-bin /usr/local/bin/node /usr/local/bin/node
 COPY scripts/generate-sbom.mjs scripts/check-sbom.mjs scripts/node-runtime.txt scripts/
 COPY web/package.json web/package-lock.json web/
 COPY sidecar/package.json sidecar/package-lock.json sidecar/

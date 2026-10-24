@@ -428,9 +428,12 @@ docker build --build-arg INSTALL_CHROMIUM=true -t draughtsman:local-chromium .
 ### Publishing an image (not done)
 
 No image is published, and no registry namespace has been chosen. Building only this machine's architecture is enough for local
-use; a release image for both `linux/amd64` and `linux/arm64` comes from one buildx invocation against whichever registry you use:
+use; a release image for both `linux/amd64` and `linux/arm64` comes from one buildx invocation against whichever registry you use.
+It needs a docker-container builder (created once); every build stage is pinned to the builder's platform, so nothing but the
+runtime stage is emulated:
 
 ```sh
+docker buildx create --name multi --driver docker-container --use
 docker buildx build --platform linux/amd64,linux/arm64 -t <registry>/draughtsman:<ver> --push .
 ```
 
