@@ -43,6 +43,13 @@ docker logs draughtsman 2>&1 | grep "setup code"
 
 Open <http://localhost:5180>, enter the one-time setup code from the log, and create the first administrator. The port is published to loopback only; put a reverse proxy in front for anyone else ([`docs/deployment.md`](docs/deployment.md)). Full Docker guide: [`docs/install-docker.md`](docs/install-docker.md).
 
+To publish a multi-platform image (linux/amd64 and linux/arm64, built from one Dockerfile on any machine, Apple silicon included), use a docker-container builder; the default builder cannot push a multi-platform image. The build stages run natively on your machine and only the final runtime stage differs per platform:
+
+```sh
+docker buildx create --name multi --driver docker-container --use    # once
+docker buildx build --platform linux/amd64,linux/arm64 -t docker.io/wroolie/draughtsman:<ver> --push .
+```
+
 ### Release archive
 
 Archives for macOS (Apple silicon and Intel), Linux (x64, arm64) and Windows (x64, arm64) are one folder with nothing else to install: no .NET, no Node. No release has been cut yet, so there is no download to link to; `scripts/publish.sh <platform>` builds an archive from source, and [`docs/install.md`](docs/install.md) covers unpacking, running as a service and checksums.
