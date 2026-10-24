@@ -116,6 +116,8 @@ Draughtsman is free software, released under the **GNU Affero General Public Lic
 
 If the AGPL does not suit you, Overpass also offers Draughtsman under a **commercial licence** ([`COMMERCIAL-LICENSE.md`](COMMERCIAL-LICENSE.md)). It lets your organisation change Draughtsman and connect it to your own systems for internal use, and keep those changes private, without the AGPL's duty to offer source to network users. It costs **£1,500** one-off for a team of up to 50 people, or **£3,000** one-off with no limit on people. Each includes 12 months of updates and email support, and renewing updates costs 25% of list a year. It covers running Draughtsman inside your own organisation; to embed it in a product or service for others, ask about a separate agreement. To buy or ask, write to **draughtsman@overpass.co.uk**.
 
+**Buying a commercial licence.** Commercial licences are bought by email: write to **draughtsman@overpass.co.uk** with your organisation's name and the tier you want, and we reply with an order to confirm and an invoice. The licence text is [`COMMERCIAL-LICENSE.md`](COMMERCIAL-LICENSE.md); the version in force when you buy is the one you accept.
+
 Third-party components keep their own licences: see [`THIRD-PARTY-NOTICES.txt`](THIRD-PARTY-NOTICES.txt).
 
 ## Contributing
